@@ -1,5 +1,7 @@
-<%@page import="model.Usuario"%>
 <%@page import="web.dbListener"%>
+<%@page import="model.Usuario"%>
+<%@page import="model.Role"%>
+<%@page import="model.Animal"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

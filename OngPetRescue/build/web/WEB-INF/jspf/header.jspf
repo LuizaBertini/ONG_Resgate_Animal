@@ -16,6 +16,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href='<%= request.getContextPath()%>/index.jsp'>Inicio</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href='<%= request.getContextPath()%>/animais.jsp'>Lista dos Animais</a>
+                </li>
                 <%--Link temporário para vizualização dos papeis--%>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath()%>/role.jsp">Papés</a>
@@ -25,6 +28,9 @@
                 <%--Essa lista é somente para a página do usuário--%>
                 <li class="nav-item">
                     <a class="nav-link" href='<%= request.getContextPath()%>/usuario.jsp'>Usuário</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href='<%= request.getContextPath()%>/registerUser.jsp'>Cadastrar</a>
                 </li>
             </ul>
         </div>

@@ -39,7 +39,7 @@ public class Role {
     }
      public static String getCreateStatement(){
         return "CREATE TABLE IF NOT EXISTS ROLE("      
-         +"nome VARCHAR2(50) PRIMARY KEY NOT NULL, "
+         +"nome VARCHAR(50) NOT NULL,"
          +"descricao VARCHAR(200)  NOT NULL"
          + ");" ;
     }

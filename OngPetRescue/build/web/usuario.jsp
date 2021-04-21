@@ -56,7 +56,9 @@
         <title>Usuarios</title>
     </head>
     <body>
-       
+            <%@include file="WEB-INF/jspf/header.jspf"%>
+            <%@include file="WEB-INF/jspf/style.jspf"%>
+
             <h2>Usuarios</h2>
             
             <%if(exceptionMessage != null){%>

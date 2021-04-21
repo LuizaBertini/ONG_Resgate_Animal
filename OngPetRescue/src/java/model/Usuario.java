@@ -51,9 +51,9 @@ public class Usuario {
     }
      public static String getCreateStatement(){
         return "CREATE TABLE IF NOT EXISTS sql10403882.USUARIO ("      
-         +"id NUMBER PRIMARY KEY NOT NULL, "
+         +"id INTEGER PRIMARY KEY NOT NULL, "
          +"username VARCHAR(200)  NOT NULL, "
-         +"senha VARCHAR2(200) NOT NULL"
+         +"senha VARCHAR(200) NOT NULL"
          + ")" ;
     }
      
