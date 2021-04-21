@@ -16,7 +16,7 @@
     if(request.getParameter("formInsert") != null){
         try {
             String username = request.getParameter("username");
-           String senha = request.getParameter("senha");
+            String senha = request.getParameter("senha");
             Usuario.Insert(username, senha);
             response.sendRedirect(request.getRequestURI());
             
@@ -27,10 +27,10 @@
     }
     if(request.getParameter("formUpdate") != null){
         try {
-           // String usernameAntigo = request.getParameter("usernameAntigo");
-           // String username = request.getParameter("username");
-           // String senha = request.getParameter("senha");
-           // Usuario.Update(usernameAntigo, username, senha);
+            int id = Integer.parseInt(request.getParameter("id"));
+            String username = request.getParameter("username");
+            String senha = request.getParameter("senha");
+            Usuario.Update(id, username, senha);
             response.sendRedirect(request.getRequestURI());
             
         } catch (Exception ex) {
@@ -40,8 +40,8 @@
     }
     if(request.getParameter("formDelete") != null){
         try {
-           // Int id = request.getParameter("id");
-           // Usuario.Delete(id);
+            int id = Integer.parseInt(request.getParameter("id"));
+            Usuario.DeletetList(id);
             response.sendRedirect(request.getRequestURI());
             
         } catch (Exception ex) {
@@ -73,22 +73,33 @@
             <%}else if(request.getParameter("prepUpdate") != null){%>
             <h3>Alterar Registro</h3>
                 <form>
-                    <%String username = request.getParameter("username");
+                    <%int id = Integer.parseInt(request.getParameter("id"));
                       String senha = request.getParameter("senha");
-                    %>
-                    <input type="hidden" name="usernameAntigo" value="<%= username%>">
+                      String username = request.getParameter("username");
+                    %>                   
                     Username: <input type="text" name="username" value="<%= username%>">
                     Senha: <input type="text" name="senha" value="<%= senha%>">
+                    <input type="hidden" name="id" value="<%= id%>">
                     <input type="submit" name="formUpdate" value="Alterar">
                     <input type="submit" name="cancelar" value="Cancelar">
                 </form>
             <%}else if(request.getParameter("prepDelete") != null){%>
             <h3>Deletar Registro</h3>
                 <form>
-                    <%String username = request.getParameter("username");%>
-                    <input type="hidden" name="username" value="<%= username%>">
+                    <%String username = request.getParameter("username");
+                    int id = Integer.parseInt(request.getParameter("id"));%>
+                    <input type="hidden" name="id" value="<%= id%>">
                     Excluir o Registro <b><%= username%></b>?
                     <input type="submit" name="formDelete" value="Deletar">
+                    <input type="submit" name="cancelar" value="Cancelar">
+                </form>
+             <%}else if(request.getParameter("prepDelete") != null){%>
+            <h3>Aprovar Usuário</h3>
+                <form>
+                    <%String username = request.getParameter("username");%>
+                    <input type="hidden" name="username" value="<%= username%>">
+                    Deseja aprovar a inscrição do usuario? <b><%= username%></b>?
+                    <input type="submit" name="formAprove" value="Aprovar">
                     <input type="submit" name="cancelar" value="Cancelar">
                 </form>
             <%}else{%>
@@ -111,10 +122,12 @@
                 <td><%= u.getSenha()%></td>
                 <td>
                     <form>
+                        <input type="hidden" name="id" value="<%= u.getId()%>">
                         <input type="hidden" name="username" value="<%= u.getUsername()%>">
                         <input type="hidden" name="senha" value="<%= u.getSenha()%>">
                         <input type="submit" name="prepUpdate" value="Alterar">
                         <input type="submit" name="prepDelete" value="Excluir">
+                        <input type="submit" name="prepAprove" value="Aprovar">
                     </form>
                 </td>
                 </tr>

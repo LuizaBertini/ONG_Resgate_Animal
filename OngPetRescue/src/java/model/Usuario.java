@@ -7,6 +7,8 @@
 package model;
 import java.util.ArrayList;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import web.dbListener;
 /**
  *
@@ -142,7 +144,7 @@ public class Usuario {
            try{ con.close();}catch(Exception ex2){}     
         }   
     }
-       public static void UpdatetSenha(int id, String username, String senha, String newSenha) throws Exception{
+       public static void Update(int id, String username, String senha) throws Exception{
         Connection con = null;
         PreparedStatement stmt = null;
         Exception methodException = null;
@@ -151,14 +153,12 @@ public class Usuario {
                   
             con = dbListener.getConnection(); 
             stmt = con.prepareStatement("UPDATE USUARIO "
-                            + "SET id  = ?, "
-                            + "username = ?, "
+                            + "SET username = ?, "
                             + "senha = ? "
                            + "WHERE id = ?");  
-            stmt.setInt(1, id);
-            stmt.setString(2, username);
-            stmt.setString(3, newSenha);
-            stmt.setInt(4, id);
+            stmt.setString(1, username);
+            stmt.setString(2, senha);
+            stmt.setInt(3, id);
             stmt.execute();
             
         } catch(Exception ex){
@@ -168,7 +168,48 @@ public class Usuario {
            try{ con.close();}catch(Exception ex2){}     
         }   
     }
-        public static void DeletetList(int id) throws Exception{
+     
+      public static String InsertNewUsuario(String nome,String username, String senha, String endereco, String email, String dtnascimento, String rg, String cpf, String telefone) throws Exception{
+       Connection con = null;
+        PreparedStatement stmt = null;
+        Statement st;
+        Exception methodException = null;
+        ResultSet rs = null;
+        int id = 0;
+        String ponto = "";
+        try{        
+            
+
+            con = dbListener.getConnection(); 
+            st = con.createStatement(); 
+            rs = st.executeQuery("SELECT max(id)+1 id FROM USUARIO;");           
+            while(rs.next()){
+                id = rs.getInt("id");
+            } 
+            stmt = con.prepareStatement("INSERT INTO USUARIO "
+                            + "(id, nome, username, senha, endereco, email, registro_geral, cpf, telefone) VALUES "
+                           + "(?, ?, ?, ?, ?, ?, ?, ?, ? );");  
+            stmt.setInt(1, id);
+            stmt.setString(2, nome);
+            stmt.setString(3, username);
+            stmt.setString(4, senha);
+            stmt.setString(5, endereco);
+            stmt.setString(6, email);            
+            stmt.setString(7, rg);
+            stmt.setString(8, cpf);
+            stmt.setString(9, telefone);           
+            stmt.execute();
+        } catch(Exception ex){
+            methodException =  ex;
+            ponto = methodException.toString();
+        }finally{            
+           try{stmt.close(); }catch(Exception ex2){}         
+           try{ con.close();}catch(Exception ex2){}     
+        }   
+        return ponto;
+    }
+       
+    public static void DeletetList(int id) throws Exception{
         Connection con = null;
         PreparedStatement stmt = null;
         Exception methodException = null;
