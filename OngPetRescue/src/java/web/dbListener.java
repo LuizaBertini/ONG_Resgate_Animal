@@ -56,7 +56,6 @@ public class dbListener implements ServletContextListener{
             etapa = "Desconectando do Banco de Dados";
         
         } catch (Exception ex) {
-            
             exceptionMessage = etapa+": "+ex.getLocalizedMessage();
         }finally{
             try{stmt.close();}catch(Exception ex2){}
