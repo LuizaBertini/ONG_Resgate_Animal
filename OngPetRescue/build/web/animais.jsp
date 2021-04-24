@@ -5,6 +5,8 @@
 
 --%>
 <%@page import="model.Animal"%>
+<%@page import="model.Raca"%>
+<%@page import="model.Especie"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
@@ -17,10 +19,11 @@
         try {
             String nomeAnimal = request.getParameter("nomeAnimal");
             String corAnimal = request.getParameter("corAnimal");
-            float pesoAnimal = Float.parseFloat(request.getParameter("pesoAnimal"));
             String dtResgate = request.getParameter("dtResgate");
-            String dtAdocao = request.getParameter("dtAdocao");
-            Animal.Insert(nomeAnimal, corAnimal, dtResgate, dtAdocao, pesoAnimal);
+            float pesoAnimal = Float.parseFloat(request.getParameter("pesoAnimal"));
+            int idRacaFK = Integer.parseInt(request.getParameter("idRacaFK"));
+            int idEspecieFK = Integer.parseInt(request.getParameter("idEspecieFK"));
+            Animal.Insert(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK);
             response.sendRedirect(request.getRequestURI());
 
         } catch (Exception ex) {
@@ -36,7 +39,9 @@
             String dtAdocao = request.getParameter("dtAdocao");
             int idAnimal = Integer.parseInt(request.getParameter("idAnimal"));
             float pesoAnimal = Float.parseFloat(request.getParameter("pesoAnimal"));
-            Animal.Update(nomeAnimal, corAnimal, dtResgate, dtAdocao, idAnimal, pesoAnimal);
+            int idRacaFK = Integer.parseInt(request.getParameter("idRacaFK"));
+            int idEspecieFK = Integer.parseInt(request.getParameter("idEspecieFK"));
+            Animal.Update(nomeAnimal, corAnimal, dtResgate, dtAdocao, idAnimal, pesoAnimal, idRacaFK, idEspecieFK);
             response.sendRedirect(request.getRequestURI());
         } catch (Exception ex) {
             exceptionMessage = ex.getLocalizedMessage();
@@ -73,11 +78,24 @@
         <%if (request.getParameter("prepInsert") != null) {%>
         <h3>Inserir Registro de Animal</h3>
         <form method="post">
-            Nome Animal: <input type="text" name="nomeAnimal">
-            Cor Animal <input type="text" name="corAnimal">
-            Peso Animal <input type="text" name="pesoAnimal">
-            Data de Resgate <input type="date" name="dtResgate">
-            Data de Adoção <input type="date" name="dtAdocao">
+            Nome Animal: <input type="text" name="nomeAnimal" required>
+            Cor Animal <input type="text" name="corAnimal" required>
+            Peso Animal <input type="float" name="pesoAnimal" required>
+            <br/>
+            Data de Resgate <input type="date" name="dtResgate" required>
+            Raça <select name="idRacaFK" required>
+                        <option value=""></option>
+                        <%for(Raca r: Raca.getList()){%>
+                                <option value="<%= r.getIdRaca()%>"><%= r.getNmRaca()%></option>
+                        <%}%>
+                        </select>
+                        
+            Espécie <select name="idEspecieFK" required>
+                        <option value=""></option>
+                        <%for(Especie e: Especie.getList()){%>
+                                <option value="<%= e.getIdEspecie()%>"><%= e.getNmEspecie()%></option>
+                        <%}%>
+                        </select>
             <input type="submit" name="formInsert" value="Inserir">
             <input type="submit" name="cancelar" value="Cancelar">
         </form>        
@@ -99,7 +117,19 @@
             Cor Animal: <input type="text" name="corAnimal" value="<%= corAnimal%>">
             Peso do Animal: <input type="float" name="pesoAnimal" value="<%= pesoAnimal%>">
             Data de Resgate: <input type="date" name="dtResgate" value="<%= dtResgate%>">
-            Data de Adoção: <input type="date" name="dtAdocao" value="<%= dtAdocao%>">
+            Raça <select name="idRacaFK" required>
+                        <option value=""></option>
+                        <%for(Raca r: Raca.getList()){%>
+                                <option value="<%= r.getIdRaca()%>"><%= r.getNmRaca()%></option>
+                        <%}%>
+                        </select>
+                        
+            Espécie <select name="idEspecieFK" required>
+                        <option value=""></option>
+                        <%for(Especie e: Especie.getList()){%>
+                                <option value="<%= e.getIdEspecie()%>"><%= e.getNmEspecie()%></option>
+                        <%}%>
+                        </select>
             <input type="submit" name="formUpdate" value="Alterar">
             <input type="submit" name="cancelar" value="Cancelar">
         </form>
@@ -110,8 +140,9 @@
         
         <form method="post">
             <%String idAnimal = request.getParameter("idAnimal");%>
+            <%String nomeAnimal = request.getParameter("nomeAnimal");%>
             <input type="hidden" name="idAnimal" value="<%= idAnimal%>">
-            Excluir o Registro <b><%= idAnimal%></b>?
+            Excluir o Registro <b><%= idAnimal%> de nome <%= nomeAnimal%></b>?
             <input type="submit" name="formDelete" value="Deletar">
             <input type="submit" name="cancelar" value="Cancelar">
         </form>
@@ -129,6 +160,8 @@
                 <th>Id do Animal</th>
                 <th>Nome do Animal</th>
                 <th>Cor do Animal</th>
+                <th>Espécie</th>
+                <th>Raça</th>
                 <th>Peso do Animal</th>
                 <th>Data do Resgate</th>
                 <th>Data de Adoção</th>
@@ -139,6 +172,8 @@
                 <td><%= a.getIdAnimal()%></td>
                 <td><%= a.getNomeAnimal()%></td>
                 <td><%= a.getCorAnimal()%></td>
+                <td><%= a.getNmEspecie()%></td>
+                <td><%= a.getNmRaca()%></td>               
                 <td><%= a.getPesoAnimal()%></td>
                 <td><%= a.getDtResgate()%></td>
                 <td><%= a.getDtAdocao()%></td>
@@ -149,7 +184,8 @@
                         <input type="hidden" name="corAnimal" value="<%= a.getCorAnimal()%>">
                         <input type="hidden" name="pesoAnimal" value="<%= a.getPesoAnimal()%>">
                         <input type="hidden" name="dtResgate" value="<%= a.getDtResgate()%>">
-                        <input type="hidden" name="dtAdocao" value="<%= a.getDtAdocao()%>">
+                        <input type="hidden" name="dtResgate" value="<%= a.getIdEspecieFK()%>">
+                        <input type="hidden" name="dtResgate" value="<%= a.getIdRacaFK()%>">
                         <input type="submit" name="prepUpdate" value="Alterar">
                         <input type="submit" name="prepDelete" value="Excluir">
                     </form>

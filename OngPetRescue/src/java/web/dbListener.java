@@ -8,7 +8,9 @@ import java.sql.*;
 import model.Animal;
 import model.Usuario;
 import model.Role;
-import javax.swing.JOptionPane;
+import model.Especie;
+import model.Raca;
+//import javax.swing.JOptionPane;
 
 /**
  * Web application lifecycle listener.
@@ -54,6 +56,20 @@ public class dbListener implements ServletContextListener {
             etapa = "Criando a Tabela de Roles";
             stmt.execute(Role.getCreateStatement());
 
+            etapa = "Criando a Tabela das Raças";
+            stmt.execute(Raca.getCreateStatement());
+            if (Raca.getList().isEmpty()) {
+                stmt.execute("INSERT INTO sql10403882.RACAS(nmRaca) VALUES("
+                        + "'nao-identificada');");
+            }
+            
+            etapa = "Criando a Tabela das Espécies";
+            stmt.execute(Especie.getCreateStatement());
+            if (Especie.getList().isEmpty()) {
+                stmt.execute("INSERT INTO sql10403882.ESPECIES(nmEspecie) VALUES("
+                        + "'nao-identificada');");
+            }
+            
             etapa = "Criando a Tabela dos Animais";
             stmt.execute(Animal.getCreateStatement());
 
