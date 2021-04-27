@@ -1,0 +1,45 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="web.dbListener"%>
+<%@page pageEncoding="UTF-8" %>
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FFB84B">
+
+    <div class="navbar-brand" href="#">
+        <img src="https://drive.google.com/uc?export=view&id=1EoWd7KN_xTXe_aeQNjmeHE66Xa9CIiRg" width="50" height="50">                         
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <%--Essa lista é para colocar os links das páginas--%>
+                <li class="nav-item">
+                    <a class="nav-link" href='<%= request.getContextPath()%>/index.jsp'>Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href='<%= request.getContextPath()%>/animais.jsp'>Lista dos Animais</a>
+                </li>
+                <%--Link temporário para vizualização dos papeis--%>
+                <li class="nav-item">
+                    <a class="nav-link" href="<%= request.getContextPath()%>/role.jsp">Papés</a>
+                </li>
+            </ul>       
+            <ul class="navbar-nav  my-2 my-lg-0">        
+                <%--Essa lista é somente para a página do usuário--%>
+                <li class="nav-item">
+                    <a class="nav-link" href='<%= request.getContextPath()%>/usuario.jsp'>Usuário</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href='<%= request.getContextPath()%>/registerUser.jsp'>Cadastrar</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+                    
+<%--Esta função mostra se houve algum erro na hora de conectar ao banco de dados--%>
+<%if (dbListener.exceptionMessage != null) {%>
+<div style="background-color: red; color: white">
+    <%= dbListener.exceptionMessage%>
+</div>
+<%}%>
