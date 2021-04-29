@@ -4,13 +4,15 @@
 
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FFB84B">
 
-    <div class="navbar-brand" href="#">
-        <img src="https://drive.google.com/uc?export=view&id=1EoWd7KN_xTXe_aeQNjmeHE66Xa9CIiRg" width="50" height="50">                         
-    </div>
+    <span class="navbar-brand" href="#">
+        <img src="imgs/LogoOng.png" width="50" height="50">                         
+    </span>
 
-    <div class="container-fluid">
-
-        <div class="collapse navbar-collapse">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+        <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
                 <%--Essa lista é para colocar os links das páginas--%>
                 <li class="nav-item">
@@ -24,6 +26,7 @@
                     <a class="nav-link" href="<%= request.getContextPath()%>/role.jsp">Papés</a>
                 </li>
             </ul>       
+                <hr/>
             <ul class="navbar-nav  my-2 my-lg-0">        
                 <%--Essa lista é somente para a página do usuário--%>
                 <li class="nav-item">
@@ -34,7 +37,6 @@
                 </li>
             </ul>
         </div>
-    </div>
 </nav>
                     
 <%--Esta função mostra se houve algum erro na hora de conectar ao banco de dados--%>

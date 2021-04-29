@@ -8,14 +8,14 @@
     <head>
         <title>ONG</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     </head>
+    <%@include file="WEB-INF/jspf/style.jspf"%>
     <body>
         <%@include file="WEB-INF/jspf/header.jspf"%>
-        <%@include file="WEB-INF/jspf/style.jspf"%>
         <div align="center" class="container">
             <div class="col-md-auto">
-                <img src="https://drive.google.com/uc?export=view&id=1QHIkqFK1qfU_g4FGtED5Zcch0NaGiMrM">
+                <img class="img-fluid" src="imgs/animal.jpg">
                 <h3>
                     O site ainda esta em construção
                     <br>

@@ -56,68 +56,131 @@
     <body>
         <%@include file="WEB-INF/jspf/header.jspf"%>
         <%@include file="WEB-INF/jspf/style.jspf"%>
-        <h2>Roles</h2>
 
+        <h1></h1>
+        <div>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr  align="center">
+                        <th colspan="4"><h2>Roles</h2></th>                    
+                    </tr>
+                </thead>
+            </table>  
+        </div>
+        
         <%if (exceptionMessage != null) {%>
         <div style="color: red"><%= exceptionMessage%></div>
         <%}%>
         <%if (request.getParameter("prepInsert") != null) {%>
-        <h3>Inserir Registro</h3>
+
         <form>
-            Nome: <input type="text" name="nome">
-            Descrição: <input type="text" name="descricao">
-            <input type="submit" name="formInsert" value="Inserir">
-            <input type="submit" name="cancelar" value="Cancelar">
+            <h3 align="center">Inserir Registro</h3>
+            <table class="table" style="width: 50%" align="center">
+                <th style="width: 50%">    
+                    <div class="form-group"> 
+
+                        <div class="input-group mb-3">
+                            <div>
+                                <span class="input-group-text">Nome:</span>
+                            </div>
+                            <input class="form-control" type="text" name="nome">
+                        </div>    
+
+                        <div class="input-group mb-3">
+                            <div>
+                                <span class="input-group-text">Descrição:</span> 
+                            </div>
+                            <input class="form-control" type="text" name="descricao">
+                        </div>
+
+                        <input class="btn btn-secondary" type="submit" name="formInsert" value="Inserir">
+                        <input class="btn btn-dark" type="submit" name="cancelar" value="Cancelar">
+
+                    </div>
+                </th>
+            </table>
         </form>
+
         <%} else if (request.getParameter("prepUpdate") != null) {%>
-        <h3>Alterar Registro</h3>
+
+
+
         <form>
-            <%String nome = request.getParameter("nome");
-                String descricao = request.getParameter("descricao");
-            %>
-            <input type="hidden" name="nomeAntigo" value="<%= nome%>">
-            Nome: <input type="text" name="nome" value="<%= nome%>">
-            Descrição: <input type="text" name="descricao" value="<%= descricao%>">
-            <input type="submit" name="formUpdate" value="Alterar">
-            <input type="submit" name="cancelar" value="Cancelar">
+            <h3 align="center">Alterar Registro</h3>
+            <table class="table" style="width: 50%" align="center">
+                <th style="width: 50%">
+                    <div class="form-group">
+                        <%String nome = request.getParameter("nome");
+                            String descricao = request.getParameter("descricao");
+                        %>
+                        <input type="hidden" name="nomeAntigo" value="<%= nome%>">
+
+                        <div class="input-group mb-3">
+                            <div>
+                                <span class="input-group-text">Nome:</span>
+                            </div>        
+                            <input class="form-control" type="text" name="nome" value="<%= nome%>">
+                        </div>  
+
+                        <div class="input-group mb-3">
+                            <div>
+                                <span class="input-group-text">Descrição:</span>
+                            </div>        
+                            <input class="form-control" type="text" name="descricao" value="<%= descricao%>">
+                        </div>            
+                        <input class="btn btn-secondary" type="submit" name="formUpdate" value="Alterar">
+                        <input class="btn btn-dark" type="submit" name="cancelar" value="Cancelar">
+                    </div>
+                </th>
+            </table>
         </form>
+
+
         <%} else if (request.getParameter("prepDelete") != null) {%>
-        <h3>Deletar Registro</h3>
-        <form>
+        <h3 align="center">Deletar Registro</h3>
+        <form align="center">
             <%String nome = request.getParameter("nome");%>
             <input type="hidden" name="nome" value="<%= nome%>">
             Excluir o Registro <b><%= nome%></b>?
-            <input type="submit" name="formDelete" value="Deletar">
-            <input type="submit" name="cancelar" value="Cancelar">
+            <input class="btn btn-secondary" type="submit" name="formDelete" value="Deletar">
+            <input class="btn btn-secondary" type="submit" name="cancelar" value="Cancelar">
         </form>
+        <br/>
         <%} else {%>
-        <form method="post">
-            <input type="submit" name="prepInsert" value="Inserir">
+        <form method="post" align="center">
+            <input class="btn btn-secondary" type="submit" name="prepInsert" value="Inserir">
         </form>
+        <br/>
         <%}%>
-        <h3>Lista</h3>
-        <table border="1">
-            <tr>                   
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Comandos</th>
-            </tr>
-            <%for (Role u : Role.getList()) {%>
-            <tr>
-                <td><%= u.getNome()%></td>
-                <td><%= u.getDescricao()%></td>
-                <td>
-                    <form>
-                        <input type="hidden" name="nome" value="<%= u.getNome()%>">
-                        <input type="hidden" name="descricao" value="<%= u.getDescricao()%>">
-                        <input type="submit" name="prepUpdate" value="Alterar">
-                        <input type="submit" name="prepDelete" value="Excluir">
-                    </form>
-                </td>
-            </tr>
-            <%}%>
-        </table>
 
+        <div class=" table-responsive">
+            <table class="table-bordered table-hover" align="center">
+                <h3 align="center">Lista</h3>
+                <thead>
+                    <tr>                   
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Comandos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%for (Role u : Role.getList()) {%>
+                    <tr>
+                        <td><%= u.getNome()%></td>
+                        <td><%= u.getDescricao()%></td>
+                        <td>
+                            <form>
+                                <input type="hidden" name="nome" value="<%= u.getNome()%>">
+                                <input type="hidden" name="descricao" value="<%= u.getDescricao()%>">
+                                <input class="btn btn-secondary" type="submit" name="prepUpdate" value="Alterar">
+                                <input class="btn btn-secondary" type="submit" name="prepDelete" value="Excluir">
+                            </form>
+                        </td>
+                    </tr>
+                    <%}%>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
 

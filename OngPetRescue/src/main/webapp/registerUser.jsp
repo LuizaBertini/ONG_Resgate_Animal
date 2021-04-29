@@ -51,7 +51,7 @@
                 <table  class="table">
                 <thead class="thead-dark">
                     <tr>
-                        <th colspan="4">Ficha de Cadastro</th>                    
+                        <th colspan="4"><h2 align="center">Ficha de Cadastro<h2></th>                    
                     </tr>
                 </thead>
                 </table>
