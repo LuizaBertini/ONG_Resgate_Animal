@@ -186,14 +186,14 @@
                         <input type="hidden" name="id" value="<%= u.getId()%>">
                         <input type="hidden" name="username" value="<%= u.getUsername()%>">
                         <input type="hidden" name="senha" value="<%= u.getSenha()%>">
-                        <input type="submit" name="prepUpdate" value="Alterar">
-                        <input type="submit" name="prepDelete" value="Excluir">
-                        <input type="submit" name="prepAprove" value="Aprovar">
+                        <input class="btn btn-secondary" type="submit" name="prepUpdate" value="Alterar">
+                        <input class="btn btn-secondary" type="submit" name="prepDelete" value="Excluir">
+                        <input class="btn btn-secondary" type="submit" name="prepAprove" value="Aprovar">
                     </form>
                 </td>
             </tr>
             <%}%>
-            </tbody>>
+            </tbody>
         </table>
         <div>
     </body>
