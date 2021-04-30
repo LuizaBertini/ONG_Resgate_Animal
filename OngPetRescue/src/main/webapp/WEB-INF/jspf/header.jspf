@@ -1,6 +1,34 @@
 <%-- any content can be specified here e.g.: --%>
 <%@page import="web.dbListener"%>
+<%@page import="model.Usuario"%>
 <%@page pageEncoding="UTF-8" %>
+
+<%
+    String requestExceptionMessage = null;
+    if (request.getParameter("LoginInput") != null) {
+        String username = request.getParameter("username");
+        String senha = request.getParameter("senha");
+        Usuario u = Usuario.getUsuario(username, senha);
+        if (u == null) {
+            requestExceptionMessage = "Usuário e/ou Senha Inválido(s)";
+        } else {
+            session.setAttribute("session.username", u.getUsername());
+            session.setAttribute("session.senha", u.getSenha());
+            session.setAttribute("session.id", u.getId());
+            session.setAttribute("session.role", u.getRole());
+            session.setAttribute("session.email", u.getEmail());
+            response.sendRedirect(request.getRequestURI());
+        }
+    }
+    if (request.getParameter("LogoutForm") != null) {
+        session.removeAttribute("session.username");
+        session.removeAttribute("session.senha");
+        session.removeAttribute("session.id");
+        session.removeAttribute("session.role");
+        session.removeAttribute("session.email");
+        response.sendRedirect(request.getRequestURI());
+    }
+%>
 
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FFB84B">
 
@@ -11,34 +39,61 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <%--Essa lista é para colocar os links das páginas--%>
-                <li class="nav-item">
-                    <a class="nav-link" href='<%= request.getContextPath()%>/index.jsp'>Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href='<%= request.getContextPath()%>/animais.jsp'>Lista dos Animais</a>
-                </li>
-                <%--Link temporário para vizualização dos papeis--%>
-                <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath()%>/role.jsp">Papés</a>
-                </li>
-            </ul>       
-                <hr/>
-            <ul class="navbar-nav  my-2 my-lg-0">        
-                <%--Essa lista é somente para a página do usuário--%>
-                <li class="nav-item">
-                    <a class="nav-link" href='<%= request.getContextPath()%>/usuario.jsp'>Usuário</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href='<%= request.getContextPath()%>/registerUser.jsp'>Cadastrar</a>
-                </li>
-            </ul>
-        </div>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <%--Essa lista é para colocar os links das páginas--%>
+            <li class="nav-item">
+                <a class="nav-link" href='<%= request.getContextPath()%>/index.jsp'>Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href='<%= request.getContextPath()%>/animais.jsp'>Lista dos Animais</a>
+            </li>
+            <%--Link para vizualização dos papeis--%>
+            <%if (session.getAttribute("session.role") != null) {%>
+            <li class="nav-item">
+                <a class="nav-link" href="<%= request.getContextPath()%>/role.jsp">Papés</a>
+            </li>
+            <%}%>
+
+        </ul>       
+        <hr/>
+        <ul class="navbar-nav  my-2 my-lg-0">        
+            <%--Essa lista é somente para a página do usuário--%>
+            <%--<li class="nav-item">
+                <a class="nav-link" href='<%= request.getContextPath()%>/usuario.jsp'>Usuário</a>
+            </li>--%>
+
+            <%--<li class="nav-item">
+                <a class="nav-link" href='<%= request.getContextPath()%>/login.jsp'>Login</a>
+            </li>--%>
+
+            <li class="nav-item">
+                <%if (session.getAttribute("session.username") == null) {%>
+
+                <form class="d-flex" method="post">
+                    <a class="btn btn-outline-danger my-2 my-sm-0" href='<%= request.getContextPath()%>/registerUser.jsp'>Cadastrar</a>&nbsp;
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="LoginInput" value="Entrar">Login</button>&nbsp;                  
+                    <input class="form-control" type="text" name="username" placeholder="Nome">&nbsp;
+                    <input class="form-control" type="password" name="senha" placeholder="Senha">
+                </form> 
+                <%} else {%>
+                <form class="d-flex" method="post">
+                    <a class="nav-link" href="<%= request.getContextPath()%>/usuario.jsp"><%= session.getAttribute("session.username")%></a>&nbsp;
+                    <input class="btn btn-outline-danger my-2 my-sm-0" type="submit" name="LogoutForm" value="Sair">
+                    <%--<a href='<%= request.getContextPath()%>/perfil.jsp'>PERFIL</a>
+                    //<%if(session.getAttribute("session.papel").equals("ADMINISTRADOR")){%>    
+                        | <a href='<%= request.getContextPath()%>/admin.jsp'>ADMINISTRAÇÃO DO SITE</a>
+                    <%}%>
+                    | <a href='<%= request.getContextPath()%>/categorias.jsp'>CATEGORIAS</a>
+                    | <a href='<%= request.getContextPath()%>/transacoes.jsp'>TRANSAÇÕES</a> --%>
+                </form>
+                <%}%>
+            </li>
+        </ul>
+
 </nav>
-                    
+
 <%--Esta função mostra se houve algum erro na hora de conectar ao banco de dados--%>
 <%if (dbListener.exceptionMessage != null) {%>
 <div style="background-color: red; color: white">

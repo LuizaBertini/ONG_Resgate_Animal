@@ -16,7 +16,23 @@ import web.dbListener;
  */
 public class Usuario {    
 
-    private String username, senha;
+    private String username, senha, role, email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
     private int id;
 
     public String getUsername() {
@@ -44,10 +60,12 @@ public class Usuario {
     }
   
     
-    public Usuario(int id, String username, String senha){        
+    public Usuario(int id, String username, String senha, String role, String email){        
         this.id = id;
         this.username = username;
         this.senha = senha;
+        this.role = role;
+        this.email = email;
     }
      public static String getCreateStatement(){
         return "CREATE TABLE IF NOT EXISTS sql10403882.USUARIO ("      
@@ -68,12 +86,14 @@ public class Usuario {
             con = dbListener.getConnection();
             stmt = con.createStatement(); 
                    
-            rs = stmt.executeQuery("SELECT id, username, senha FROM USUARIO;");
+            rs = stmt.executeQuery("SELECT id, username, senha, role, email FROM USUARIO;");
             while(rs.next()){
             list.add(new Usuario(
             rs.getInt("id"),
             rs.getString("username"),
-            rs.getString("senha")       
+            rs.getString("senha"),       
+            rs.getString("role"),
+            rs.getString("email")       
             ));
             
             }
@@ -229,5 +249,63 @@ public class Usuario {
            try{ con.close();}catch(Exception ex2){}     
         }   
     }
+    
+    public static Usuario getUsuario(String username, String senha) throws Exception{
+        Usuario user = null;
+        Connection con = null; PreparedStatement stmt = null; ResultSet rs = null;
+        Exception methodException = null;
+        try {
+            con = dbListener.getConnection();
+            stmt = con.prepareStatement("SELECT * FROM USUARIO "
+                    + "WHERE username = ? AND senha = ?");
+            stmt.setString(1, username);
+            stmt.setString(2, senha);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                user = new Usuario(               
+                rs.getInt("id"),
+                rs.getString("username"),
+                rs.getString("senha"),
+                rs.getString("role"),
+                rs.getString("email")
+                );
+            }
+        } catch (Exception ex) {
+           methodException = ex;
+           
+        }finally{
+            try{stmt.close();}catch(Exception ex2){}
+            try{con.close();}catch(Exception ex2){}
+            try{rs.close();}catch(Exception ex2){}
+            
+        }
+        if(methodException != null) throw methodException;
+        return user;
+    }
+    
+    public static void changePassword(String username, String novaSenha) throws Exception{
+        Usuario user = null;
+        Connection con = null; PreparedStatement stmt = null; ResultSet rs = null;
+        Exception methodException = null;
+        try {
+            con = dbListener.getConnection();
+            stmt = con.prepareStatement("UPDATE USUARIO SET senha = ? WHERE username = ?");
+            stmt.setString(1, novaSenha);
+            stmt.setString(2, username);
+            stmt.execute();
+        } catch (Exception ex) {
+           methodException = ex;
+           
+        }finally{
+            try{stmt.close();}catch(Exception ex2){}
+            try{con.close();}catch(Exception ex2){}
+            try{rs.close();}catch(Exception ex2){}
+            
+        }
+        if(methodException != null) throw methodException;
+        
+    }
+    
+    
 }
 
