@@ -5,10 +5,12 @@
  */
 package model;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.sql.*;
 import web.dbListener;
-
 /**
  *
  * @author trize
@@ -18,7 +20,9 @@ public class Animal {
     private String nomeAnimal, corAnimal, dtResgate, dtAdocao, nmRaca, nmEspecie;
     private int idAnimal, idRacaFK, idEspecieFK;
     private float pesoAnimal;
-
+    String imgAnimal; //uiam
+    
+    
     public Animal(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK, String nmRaca, String nmEspecie) {
         this.nomeAnimal = nomeAnimal;
         this.corAnimal = corAnimal;
@@ -41,7 +45,8 @@ public class Animal {
                 +"nomeAnimal VARCHAR(200),"
                 +"corAnimal VARCHAR(50)," 
                 +"dtResgate DATE,"
-                +"dtAdocao DATE," 
+                +"dtAdocao DATE,"
+                +"imgAnimal," //uiam
                 +"FOREIGN KEY (idRacaFK) REFERENCES sql10403882.RACAS(idRaca)," 
                 +"FOREIGN KEY (idEspecieFK) REFERENCES sql10403882.ESPECIES(idEspecie));";
     }
@@ -86,17 +91,20 @@ public class Animal {
         return list;
     }
 
-    public static void InsertList(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK) throws Exception {
+    public static void InsertList(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK
+    ,String imgAnimal //uiam
+    ) throws Exception {
         Connection con = null;
         PreparedStatement stmt = null;
         Exception methodException = null;
         ResultSet rs = null;
+        FileInputStream  fis = null;
         try {
 
             con = dbListener.getConnection();
             stmt = con.prepareStatement("INSERT INTO ANIMAIS"
-                    + "(nomeAnimal, corAnimal, dtResgate, dtAdocao, idAnimal, pesoAnimal, idRacaFK, idEspecieFK)"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    + "(nomeAnimal, corAnimal, dtResgate, dtAdocao, idAnimal, pesoAnimal, idRacaFK, idEspecieFK, imgAnimal)" //uiam
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"); //uiam
             stmt.setString(1, nomeAnimal);
             stmt.setString(2, corAnimal);
             stmt.setString(3, dtResgate);
@@ -105,7 +113,9 @@ public class Animal {
             stmt.setFloat(6, pesoAnimal);
             stmt.setInt(7, idRacaFK);
             stmt.setInt(8, idEspecieFK);
-
+            File image= new File(imgAnimal);
+            fis=new FileInputStream(image);
+            stmt.setBinaryStream(9, (InputStream) fis, (int) (image.length()));
             stmt.execute();
 
         } catch (Exception ex) {
@@ -122,26 +132,30 @@ public class Animal {
         }
     }
 
-    public static void Insert(String nomeAnimal, String corAnimal, String dtResgate, float pesoAnimal, int idRacaFK, int idEspecieFK) throws Exception {
+    public static void Insert(String nomeAnimal, String corAnimal, String dtResgate, float pesoAnimal, int idRacaFK, int idEspecieFK
+      ,String imgAnimal ) throws Exception {
         Connection con = null;
         PreparedStatement stmt = null;
         Statement st;
         Exception methodException = null;
         ResultSet rs = null;
+        File file = new File(imgAnimal);
+        FileInputStream input = new FileInputStream(file);
         try {
             con = dbListener.getConnection();
             st = con.createStatement();
             rs = st.executeQuery("SELECT idAnimal FROM ANIMAIS;");
             stmt = con.prepareStatement("INSERT INTO ANIMAIS"
-                    + "(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK)"
-                    + "VALUES (?, ?, ?, ?, ?, ?)");
+                    + "(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK, imgAnimal, urlImgAnimal)" //uiam
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"); 
             stmt.setString(1, nomeAnimal);
             stmt.setString(2, corAnimal);
             stmt.setString(3, dtResgate);
             stmt.setFloat(4, pesoAnimal);
             stmt.setInt(5, idRacaFK);
             stmt.setInt(6, idEspecieFK);
-
+            stmt.setBinaryStream(7, (InputStream) input, (int) (file.length()));
+            stmt.setString(8, imgAnimal);
             stmt.execute();
 
         } catch (Exception ex) {
@@ -159,16 +173,24 @@ public class Animal {
         }
     }
 
-    public static void Update(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK) throws Exception {
+    public static void Update(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK
+      ,String imgAnimal 
+    ) throws Exception 
+            
+    {
+        String etapa = "";
         Connection con = null;
         PreparedStatement stmt = null;
         Exception methodException = null;
         ResultSet rs = null;
+        File file = new File(imgAnimal);
+        FileInputStream input = new FileInputStream(file);
         try {
             con = dbListener.getConnection();
             stmt = con.prepareStatement("UPDATE ANIMAIS "
                     + "SET nomeAnimal = ?, corAnimal = ?, "
                     + "dtResgate = ?, dtAdocao = ?, pesoAnimal = ?, idRacaFK = ?, idEspecieFK = ?"
+                    + ", imgAnimal = ?, urlImgAnimal = ? "
                     + "WHERE idAnimal = ?;");
             stmt.setString(1, nomeAnimal);
             stmt.setString(2, corAnimal);
@@ -176,21 +198,24 @@ public class Animal {
             stmt.setString(4, dtAdocao);
             stmt.setFloat(5, pesoAnimal);
             stmt.setFloat(6, idRacaFK);
-            stmt.setFloat(7, idEspecieFK);
-            stmt.setInt(8, idAnimal);
-            
-            stmt.execute();
+            stmt.setFloat(7, idEspecieFK);       
+            stmt.setBinaryStream(8, (InputStream) input, (int) (file.length()));
+            stmt.setString(9, imgAnimal);
+            stmt.setInt(10, idAnimal);
+            stmt.execute();          
 
         } catch (Exception ex) {
-            methodException = ex;
+            methodException =   ex;
         } finally {
             try {
                 stmt.close();
             } catch (Exception ex2) {
+                methodException =   ex2;
             }
             try {
                 con.close();
             } catch (Exception ex2) {
+                methodException =   ex2;
             }
         }
     }
@@ -301,50 +326,5 @@ public class Animal {
 
     public void setNmEspecie(String nmEspecie) {
         this.nmEspecie = nmEspecie;
-    }
-/*    
-    public static ArrayList<Animal> getRacaEspecie() throws Exception {
-        ArrayList<Animal> lst = new ArrayList<>();
-        Connection con = null;
-        Statement stmt = null;
-        ResultSet rs;
-        Exception methodException;
-        try {
-            con = dbListener.getConnection();
-            stmt = con.createStatement();
-            rs = stmt.executeQuery("SELECT e.nmEspecie, r.nmRaca"
-                                    +"FROM ESPECIES e, RACAS r, ANIMAIS a" 
-                                    +"WHERE r.idRaca = a.idRacaFK" 
-                                    +"AND e.idEspecie = a.idEspecieFK;");
-            while (rs.next()) {
-                lst.add(new Animal(
-                        rs.getString("nomeAnimal"),
-                        rs.getString("corAnimal"),
-                        rs.getString("dtResgate"),
-                        rs.getString("dtAdocao"),
-                        rs.getInt("idAnimal"),
-                        rs.getFloat("pesoAnimal"),
-                        rs.getInt("idRacaFK"),
-                        rs.getInt("idEspecieFK"),
-                        Especie.setNmEspecie(rs.getString("nmEspecie"))
-                ));
-            }
-        } catch (Exception ex) {
-            methodException = ex;
-
-        } finally {
-            try {
-                stmt.close();
-            } catch (Exception ex2) {
-            }
-            try {
-                con.close();
-            } catch (Exception ex2) {
-            }
-        }
-        return lst;
-    }
-*/    
-    
-    
+    } 
 }

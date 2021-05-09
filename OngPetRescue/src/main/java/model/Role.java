@@ -9,7 +9,6 @@ package model;
 import java.util.ArrayList;
 import java.sql.*;
 import web.dbListener;
-
 /**
  *
  * @author uilsa
