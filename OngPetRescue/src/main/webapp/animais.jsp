@@ -23,7 +23,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    String ver ="";
+    String ver = "";
     String exceptionMessage = null;
     if (request.getParameter("cancelar") != null) {
         response.sendRedirect(request.getRequestURI());
@@ -36,8 +36,8 @@
             String dtResgate = request.getParameter("dtResgate");
             float pesoAnimal = Float.parseFloat(request.getParameter("pesoAnimal"));
             int idRacaFK = Integer.parseInt(request.getParameter("idRacaFK"));
-            int idEspecieFK = Integer.parseInt(request.getParameter("idEspecieFK"));   
-                    
+            int idEspecieFK = Integer.parseInt(request.getParameter("idEspecieFK"));
+
             Animal.Insert(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK, request.getParameter("imgAnimal")); //uiam
             response.sendRedirect(request.getRequestURI());
 
@@ -49,7 +49,7 @@
     if (request.getParameter("formUpdate") != null) {
         Connection con = null;
         PreparedStatement stmt = null;
-         Exception methodException = null;
+        Exception methodException = null;
         try {
             String nomeAnimal = request.getParameter("nomeAnimal");
             String corAnimal = request.getParameter("corAnimal");
@@ -63,7 +63,7 @@
             response.sendRedirect(request.getRequestURI());
         } catch (Exception ex) {
             exceptionMessage = ex.getLocalizedMessage();
-        }finally {
+        } finally {
             try {
                 stmt.close();
             } catch (Exception ex2) {
@@ -99,20 +99,24 @@
         <%@include file="WEB-INF/jspf/header.jspf"%>
         <%@include file="WEB-INF/jspf/style.jspf"%>
 
+
+
+        <%if (exceptionMessage != null) {%>
+        <div style="color: red"><%= exceptionMessage%></div>
+        <%}%>
+
+
+        <%if (session.getAttribute("session.role") != null) {%>
+
         <h1></h1>
         <div>
             <table class="table">
                 <thead class="thead-dark">
                     <tr  align="center">
-                        <th colspan="4"><h2>Animais Disponíveis para adoção</h2></th>                    
+                        <th colspan="4"><h2>Lista de Animais</h2></th>                    
                     </tr>
                 </thead>
-            </table>        
-
-            <%if (exceptionMessage != null) {%>
-            <div style="color: red"><%= exceptionMessage%></div>
-            <%}%>
-            <br/>
+            </table>   
 
             <%if (request.getParameter("prepInsert") != null) {%>
             <form method="post">
@@ -176,15 +180,15 @@
                                     <%}%>
                                 </select>
                             </div>
-                                <%--uiam --%>   
-                             <div class="input-group mb-3"> 
+                            <%--uiam --%>   
+                            <div class="input-group mb-3"> 
                                 <div>
                                     <span class="input-group-text">Foto do Animal:</span>
                                 </div>    
                                 <input class="form-control" type="file" name="imgAnimal">
                             </div>
-                             <%--uiam --%>  
-                                
+                            <%--uiam --%>  
+
                             <input class="btn btn-secondary" type="submit" name="formInsert" value="Inserir">
                             <input class="btn btn-dark" type="submit" name="cancelar" value="Cancelar">
 
@@ -266,7 +270,7 @@
                                         <%}%>
                                 </select>
                             </div>    
-                             <%--uiam --%>      
+                            <%--uiam --%>      
                             <div class="input-group mb-3"> 
                                 <div>
                                     <span class="input-group-text">Foto do Animal:</span>
@@ -317,7 +321,7 @@
                             <th>Comandos Adiministrativos</th>
                         </tr>
                     </thead>
-                   <%for (Animal a: Animal.getList()) {%>
+                    <%for (Animal a : Animal.getList()) {%>
                     <tbody>
                         <tr>
                             <td><%= a.getIdAnimal()%></td>
@@ -346,5 +350,63 @@
                     <%}%> 
                 </table>
             </div>
-    </body>
-</html>
+
+            <%-- Tabela para usuário Comum --%>
+
+            <%} else {%>
+
+            <h1></h1>
+            <div>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr  align="center">
+                            <th colspan="4"><h2>Animais Disponíveis para adoção</h2></th>                    
+                        </tr>
+                    </thead>
+                </table>   
+
+                <div class="table">
+                    <table class="thead-dark" align="center">
+                        <thead>
+                            <tr>
+                                <th>Id do Animal</th>
+                                <th>Nome do Animal</th>
+                                <th>Cor do Animal</th>
+                                <th>Espécie</th>
+                                <th>Raça</th>
+                                <th>Peso do Animal</th>
+                                <th>Data do Resgate</th>
+                                <th>Comandos Adiministrativos</th>
+                            </tr>
+                        </thead>
+                        <%for (Animal a : Animal.getListNadt()) {%>
+                        <tbody>
+                            <tr>
+                                <td><%= a.getIdAnimal()%></td>
+                                <td><%= a.getNomeAnimal()%></td>
+                                <td><%= a.getCorAnimal()%></td>
+                                <td><%= a.getNmEspecie()%></td>
+                                <td><%= a.getNmRaca()%></td>               
+                                <td><%= a.getPesoAnimal()%></td>
+                                <td><%= a.getDtResgate()%></td>
+                                <td>
+                                    <form method="post" action="adotar.jsp">
+                                        <input type="hidden" name="idAnimal" value="<%= a.getIdAnimal()%>">
+                                        <input type="hidden" name="nomeAnimal" value="<%= a.getNomeAnimal()%>">
+                                        <input type="hidden" name="corAnimal" value="<%= a.getCorAnimal()%>">
+                                        <input type="hidden" name="pesoAnimal" value="<%= a.getPesoAnimal()%>">
+                                        <input type="hidden" name="dtResgate" value="<%= a.getDtResgate()%>">
+                                        <input type="hidden" name="idE" value="<%= a.getIdEspecieFK()%>">
+                                        <input type="hidden" name="idR" value="<%= a.getIdRacaFK()%>">
+                                        <input class="btn btn-success" type="submit" name="prepAdotar" value="Adotar">
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <%}%> 
+                    </table>
+                </div>
+                <%}%>
+
+                </body>
+                </html>

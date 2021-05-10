@@ -90,6 +90,46 @@ public class Animal {
         }
         return list;
     }
+    
+    public static ArrayList<Animal> getListNadt() throws Exception {
+        ArrayList<Animal> list = new ArrayList<>();
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs;
+        Exception methodException;
+        try {
+            con = dbListener.getConnection();
+            stmt = con.createStatement();
+            rs = stmt.executeQuery("SELECT e.nmEspecie, r.nmRaca, a.*    FROM ESPECIES e, RACAS r, ANIMAIS a   WHERE r.idRaca = a.idRacaFK    AND e.idEspecie = a.idEspecieFK AND dtAdocao IS NULL;");
+            while (rs.next()) {
+                list.add(new Animal(
+                        rs.getString("nomeAnimal"),
+                        rs.getString("corAnimal"),
+                        rs.getString("dtResgate"),
+                        rs.getString("dtAdocao"),
+                        rs.getInt("idAnimal"),
+                        rs.getFloat("pesoAnimal"),
+                        rs.getInt("idRacaFK"),
+                        rs.getInt("idEspecieFK"),
+                        rs.getString("nmRaca"),
+                        rs.getString("nmEspecie")
+                ));
+            }
+        } catch (Exception ex) {
+            methodException = ex;
+
+        } finally {
+            try {
+                stmt.close();
+            } catch (Exception ex2) {
+            }
+            try {
+                con.close();
+            } catch (Exception ex2) {
+            }
+        }
+        return list;
+    }
 
     public static void InsertList(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK
     ,String imgAnimal //uiam
