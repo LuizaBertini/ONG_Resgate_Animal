@@ -19,7 +19,7 @@ if (request.getParameter("EnviaEmail") != null) {
 
 
 %>
-<h1><%=Erro %></h1>
+
 <html>
     <head>
         <title>ONG</title>
@@ -31,6 +31,7 @@ if (request.getParameter("EnviaEmail") != null) {
         <%@include file="WEB-INF/jspf/header.jspf"%>
         <div align="center" class="container">
             <div class="col-md-auto">
+                <h1><%=Erro %></h1>
                 <%--<img class="img-fluid" src="imgs/animal.jpg">--%>
                 <%@include file="WEB-INF/jspf/galeriaanimais.jspf"%>
                 <h3>

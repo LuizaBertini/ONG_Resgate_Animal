@@ -49,12 +49,12 @@
             <li class="nav-item">
                 <a class="nav-link" href='<%= request.getContextPath()%>/animais.jsp'>Lista dos Animais</a>
             </li>
-            <%--Link para vizualização dos papeis--%>
+            <%--
             <%if (session.getAttribute("session.role") != null) {%>
             <li class="nav-item">
                 <a class="nav-link" href="<%= request.getContextPath()%>/role.jsp">Papés</a>
             </li>
-            <%}%>
+            <%}%>Link para vizualização dos papeis--%>
 
         </ul>       
         <hr/>

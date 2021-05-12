@@ -5,11 +5,13 @@
  */
 
 package model;
-import java.util.ArrayList;
+import java.util.*;
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import web.dbListener;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 /**
  *
  * @author uilsa
@@ -17,6 +19,15 @@ import web.dbListener;
 public class Usuario {    
 
     private String username, senha, role, email;
+    private String dtAprovacao;
+
+    public String getDtAprovacao() {
+        return dtAprovacao;
+    }
+
+    public void setDtAprovacao(String dtAprovacao) {
+        this.dtAprovacao = dtAprovacao;
+    }
 
     public String getEmail() {
         return email;
@@ -60,12 +71,13 @@ public class Usuario {
     }
   
     
-    public Usuario(int id, String username, String senha, String role, String email){        
+    public Usuario(int id, String username, String senha, String role, String email, String dtAprovacao){        
         this.id = id;
         this.username = username;
         this.senha = senha;
         this.role = role;
         this.email = email;
+        this.dtAprovacao = dtAprovacao;
     }
      public static String getCreateStatement(){
         return "CREATE TABLE IF NOT EXISTS sql10403882.USUARIO ("      
@@ -86,14 +98,15 @@ public class Usuario {
             con = dbListener.getConnection();
             stmt = con.createStatement(); 
                    
-            rs = stmt.executeQuery("SELECT id, username, senha, role, email FROM USUARIO;");
+            rs = stmt.executeQuery("SELECT id, username, senha, role, email, dt_aprovacao FROM USUARIO;");
             while(rs.next()){
             list.add(new Usuario(
             rs.getInt("id"),
             rs.getString("username"),
             rs.getString("senha"),       
             rs.getString("role"),
-            rs.getString("email")       
+            rs.getString("email"),
+            rs.getString("dt_aprovacao")
             ));
             
             }
@@ -164,7 +177,8 @@ public class Usuario {
            try{ con.close();}catch(Exception ex2){}     
         }   
     }
-       public static void Update(int id, String username, String senha) throws Exception{
+   
+   public static void Update(int id, String username, String senha) throws Exception{
         Connection con = null;
         PreparedStatement stmt = null;
         Exception methodException = null;
@@ -188,8 +202,8 @@ public class Usuario {
            try{ con.close();}catch(Exception ex2){}     
         }   
     }
-     
-      public static String InsertNewUsuario(String nome,String username, String senha, String endereco, String email, String dtnascimento, String rg, String cpf, String telefone) throws Exception{
+   
+   public static String InsertNewUsuario(String nome,String username, String senha, String endereco, String email, String dtnascimento, String rg, String cpf, String telefone) throws Exception{
        Connection con = null;
         PreparedStatement stmt = null;
         Statement st;
@@ -229,7 +243,7 @@ public class Usuario {
         return ponto;
     }
        
-    public static void DeletetList(int id) throws Exception{
+   public static void DeletetList(int id) throws Exception{
         Connection con = null;
         PreparedStatement stmt = null;
         Exception methodException = null;
@@ -250,7 +264,7 @@ public class Usuario {
         }   
     }
     
-    public static Usuario getUsuario(String username, String senha) throws Exception{
+   public static Usuario getUsuario(String username, String senha) throws Exception{
         Usuario user = null;
         Connection con = null; PreparedStatement stmt = null; ResultSet rs = null;
         Exception methodException = null;
@@ -267,7 +281,8 @@ public class Usuario {
                 rs.getString("username"),
                 rs.getString("senha"),
                 rs.getString("role"),
-                rs.getString("email")
+                rs.getString("email"),
+                rs.getString("dt_aprovacao")        
                 );
             }
         } catch (Exception ex) {
@@ -283,7 +298,7 @@ public class Usuario {
         return user;
     }
     
-    public static void changePassword(String username, String novaSenha) throws Exception{
+   public static void changePassword(String username, String novaSenha) throws Exception{
         Usuario user = null;
         Connection con = null; PreparedStatement stmt = null; ResultSet rs = null;
         Exception methodException = null;
@@ -306,6 +321,35 @@ public class Usuario {
         
     }
     
+   public static void AproveUser(int id) throws Exception{
+        Connection con = null;
+        PreparedStatement stmt = null;
+        Exception methodException = null;
+        ResultSet rs = null;
+        Date d = null;
+        try{        
+            // data/hora atual
+            LocalDateTime agora = LocalDateTime.now();
+
+            // formatar a data
+            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataFormatada = formatterData.format(agora);
+
+                           
+            con = dbListener.getConnection(); 
+            stmt = con.prepareStatement("UPDATE USUARIO "
+                            + "SET dt_aprovacao = ? "                          
+                           + "WHERE id = ?;");  
+            stmt.setString(1, dataFormatada);
+            stmt.setInt(2, id);
+            stmt.execute();
+            
+        } catch(Exception ex){
+            methodException =  ex;
+        }finally{            
+           try{stmt.close(); }catch(Exception ex2){}         
+           try{ con.close();}catch(Exception ex2){}     
+        }   
+    }
     
 }
-

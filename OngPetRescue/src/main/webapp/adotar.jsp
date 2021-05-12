@@ -57,7 +57,7 @@
         <h4 align="center">Ao clicar no botão abaixo você deverá ter completa certeza pois um animal é uma vida, e uma vida deve ser espeitada.</h4>
         <h4 align="center">Por-favor, se não tiver certeza que irá cuidar do seu novo amigo, não continue.</h4>
         
-        <form>
+        <form action="animais.jsp">
             <%
                     String idAnimal = request.getParameter("idAnimal");
                     String nomeAnimal = request.getParameter("nomeAnimal");

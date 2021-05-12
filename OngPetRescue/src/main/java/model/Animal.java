@@ -131,9 +131,8 @@ public class Animal {
         return list;
     }
 
-    public static void InsertList(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK
-    ,String imgAnimal //uiam
-    ) throws Exception {
+    public static void InsertList(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK) //uiam
+    throws Exception {
         Connection con = null;
         PreparedStatement stmt = null;
         Exception methodException = null;
@@ -153,9 +152,9 @@ public class Animal {
             stmt.setFloat(6, pesoAnimal);
             stmt.setInt(7, idRacaFK);
             stmt.setInt(8, idEspecieFK);
-            File image= new File(imgAnimal);
+            /*File image= new File(imgAnimal);
             fis=new FileInputStream(image);
-            stmt.setBinaryStream(9, (InputStream) fis, (int) (image.length()));
+            stmt.setBinaryStream(9, (InputStream) fis, (int) (image.length()));*/
             stmt.execute();
 
         } catch (Exception ex) {
@@ -173,29 +172,29 @@ public class Animal {
     }
 
     public static void Insert(String nomeAnimal, String corAnimal, String dtResgate, float pesoAnimal, int idRacaFK, int idEspecieFK
-      ,String imgAnimal ) throws Exception {
+     /* ,String imgAnimal*/ ) throws Exception {
         Connection con = null;
         PreparedStatement stmt = null;
         Statement st;
         Exception methodException = null;
         ResultSet rs = null;
-        File file = new File(imgAnimal);
-        FileInputStream input = new FileInputStream(file);
+        /*File file = new File(imgAnimal);
+        FileInputStream input = new FileInputStream(file);*/
         try {
             con = dbListener.getConnection();
             st = con.createStatement();
             rs = st.executeQuery("SELECT idAnimal FROM ANIMAIS;");
             stmt = con.prepareStatement("INSERT INTO ANIMAIS"
-                    + "(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK, imgAnimal, urlImgAnimal)" //uiam
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"); 
+                    + "(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK)" //uiam , imgAnimal, urlImgAnimal
+                    + "VALUES (?, ?, ?, ?, ?, ?)"); /*, ?, ?*/
             stmt.setString(1, nomeAnimal);
             stmt.setString(2, corAnimal);
             stmt.setString(3, dtResgate);
             stmt.setFloat(4, pesoAnimal);
             stmt.setInt(5, idRacaFK);
             stmt.setInt(6, idEspecieFK);
-            stmt.setBinaryStream(7, (InputStream) input, (int) (file.length()));
-            stmt.setString(8, imgAnimal);
+            /*stmt.setBinaryStream(7, (InputStream) input, (int) (file.length()));
+            stmt.setString(8, imgAnimal);*/
             stmt.execute();
 
         } catch (Exception ex) {
@@ -214,7 +213,7 @@ public class Animal {
     }
 
     public static void Update(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK
-      ,String imgAnimal 
+     /* ,String imgAnimal*/ 
     ) throws Exception 
             
     {
@@ -223,14 +222,14 @@ public class Animal {
         PreparedStatement stmt = null;
         Exception methodException = null;
         ResultSet rs = null;
-        File file = new File(imgAnimal);
-        FileInputStream input = new FileInputStream(file);
+        /*File file = new File(imgAnimal);
+        FileInputStream input = new FileInputStream(file);*/
         try {
             con = dbListener.getConnection();
             stmt = con.prepareStatement("UPDATE ANIMAIS "
                     + "SET nomeAnimal = ?, corAnimal = ?, "
                     + "dtResgate = ?, dtAdocao = ?, pesoAnimal = ?, idRacaFK = ?, idEspecieFK = ?"
-                    + ", imgAnimal = ?, urlImgAnimal = ? "
+                    /*+ ", imgAnimal = ?, urlImgAnimal = ? "*/
                     + "WHERE idAnimal = ?;");
             stmt.setString(1, nomeAnimal);
             stmt.setString(2, corAnimal);
@@ -239,8 +238,8 @@ public class Animal {
             stmt.setFloat(5, pesoAnimal);
             stmt.setFloat(6, idRacaFK);
             stmt.setFloat(7, idEspecieFK);       
-            stmt.setBinaryStream(8, (InputStream) input, (int) (file.length()));
-            stmt.setString(9, imgAnimal);
+            /*stmt.setBinaryStream(8, (InputStream) input, (int) (file.length()));
+            stmt.setString(9, imgAnimal);*/
             stmt.setInt(10, idAnimal);
             stmt.execute();          
 

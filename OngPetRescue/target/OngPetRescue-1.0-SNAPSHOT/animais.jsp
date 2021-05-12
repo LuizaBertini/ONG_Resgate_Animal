@@ -38,7 +38,7 @@
             int idRacaFK = Integer.parseInt(request.getParameter("idRacaFK"));
             int idEspecieFK = Integer.parseInt(request.getParameter("idEspecieFK"));
 
-            Animal.Insert(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK, request.getParameter("imgAnimal")); //uiam
+            Animal.Insert(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK); //uiam
             response.sendRedirect(request.getRequestURI());
 
         } catch (Exception ex) {
@@ -59,7 +59,7 @@
             float pesoAnimal = Float.parseFloat(request.getParameter("pesoAnimal"));
             int idRacaFK = Integer.parseInt(request.getParameter("idRacaFK"));
             int idEspecieFK = Integer.parseInt(request.getParameter("idEspecieFK"));
-            Animal.Update(nomeAnimal, corAnimal, dtResgate, dtAdocao, idAnimal, pesoAnimal, idRacaFK, idEspecieFK, request.getParameter("imgAnimal"));//uiam
+            Animal.Update(nomeAnimal, corAnimal, dtResgate, dtAdocao, idAnimal, pesoAnimal, idRacaFK, idEspecieFK);//uiam
             response.sendRedirect(request.getRequestURI());
         } catch (Exception ex) {
             exceptionMessage = ex.getLocalizedMessage();
@@ -180,14 +180,14 @@
                                     <%}%>
                                 </select>
                             </div>
-                            <%--uiam --%>   
+                            <%--uiam  
                             <div class="input-group mb-3"> 
                                 <div>
                                     <span class="input-group-text">Foto do Animal:</span>
                                 </div>    
                                 <input class="form-control" type="file" name="imgAnimal">
                             </div>
-                            <%--uiam --%>  
+                            uiam --%>  
 
                             <input class="btn btn-secondary" type="submit" name="formInsert" value="Inserir">
                             <input class="btn btn-dark" type="submit" name="cancelar" value="Cancelar">
@@ -270,14 +270,14 @@
                                         <%}%>
                                 </select>
                             </div>    
-                            <%--uiam --%>      
+                            <%--uiam      
                             <div class="input-group mb-3"> 
                                 <div>
                                     <span class="input-group-text">Foto do Animal:</span>
                                 </div>    
                                 <input class="form-control" type="file" name="imgAnimal">
                             </div>    
-                            <%--uiam --%>    
+                            uiam --%>    
                             <input class="btn btn-secondary" type="submit" name="formUpdate" value="Alterar">
                             <input class="btn btn-dark" type="submit" name="cancelar" value="Cancelar">
 
@@ -365,48 +365,29 @@
                     </thead>
                 </table>   
 
-                <div class="table">
-                    <table class="thead-dark" align="center">
-                        <thead>
-                            <tr>
-                                <th>Id do Animal</th>
-                                <th>Nome do Animal</th>
-                                <th>Cor do Animal</th>
-                                <th>Espécie</th>
-                                <th>Raça</th>
-                                <th>Peso do Animal</th>
-                                <th>Data do Resgate</th>
-                                <th>Comandos Adiministrativos</th>
-                            </tr>
-                        </thead>
-                        <%for (Animal a : Animal.getListNadt()) {%>
-                        <tbody>
-                            <tr>
-                                <td><%= a.getIdAnimal()%></td>
-                                <td><%= a.getNomeAnimal()%></td>
-                                <td><%= a.getCorAnimal()%></td>
-                                <td><%= a.getNmEspecie()%></td>
-                                <td><%= a.getNmRaca()%></td>               
-                                <td><%= a.getPesoAnimal()%></td>
-                                <td><%= a.getDtResgate()%></td>
-                                <td>
-                                    <form method="post" action="adotar.jsp">
-                                        <input type="hidden" name="idAnimal" value="<%= a.getIdAnimal()%>">
-                                        <input type="hidden" name="nomeAnimal" value="<%= a.getNomeAnimal()%>">
-                                        <input type="hidden" name="corAnimal" value="<%= a.getCorAnimal()%>">
-                                        <input type="hidden" name="pesoAnimal" value="<%= a.getPesoAnimal()%>">
-                                        <input type="hidden" name="dtResgate" value="<%= a.getDtResgate()%>">
-                                        <input type="hidden" name="idE" value="<%= a.getIdEspecieFK()%>">
-                                        <input type="hidden" name="idR" value="<%= a.getIdRacaFK()%>">
-                                        <input class="btn btn-success" type="submit" name="prepAdotar" value="Adotar">
-                                    </form>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <%}%> 
-                    </table>
-                </div>
-                <%}%>
-
-                </body>
-                </html>
+                <div class="d-flex p-4 justify-content-center">
+                <%for (Animal a : Animal.getListNadt()) {%>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <p class="card-text"><%= a.getNomeAnimal()%></p>
+                        <p class="card-text"><%= a.getCorAnimal()%></p>
+                        <p class="card-text"><%= a.getNmRaca()%></p>
+                        <p class="card-text"><%= a.getPesoAnimal()%></p>
+                        <p class="card-text"><%= a.getDtResgate()%></p>
+                        <form method="post" action="adotar.jsp">
+                            <input type="hidden" name="idAnimal" value="<%= a.getIdAnimal()%>">
+                            <input type="hidden" name="nomeAnimal" value="<%= a.getNomeAnimal()%>">
+                            <input type="hidden" name="corAnimal" value="<%= a.getCorAnimal()%>">
+                            <input type="hidden" name="pesoAnimal" value="<%= a.getPesoAnimal()%>">
+                            <input type="hidden" name="dtResgate" value="<%= a.getDtResgate()%>">
+                            <input type="hidden" name="idE" value="<%= a.getIdEspecieFK()%>">
+                            <input type="hidden" name="idR" value="<%= a.getIdRacaFK()%>">
+                            <input class="btn btn-success" type="submit" name="prepAdotar" value="Adotar">
+                        </form>
+                    </div>
+                </div>&nbsp; &nbsp;
+                <%}%> 
+            </div>
+            <%}%>
+    </body>
+</html>

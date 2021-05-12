@@ -4,6 +4,7 @@
     Author     : uilsa
 
 --%>
+<%@page import="model.Adotados"%>
 <%@page import="model.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -49,24 +50,34 @@
 
         }
     }
+    if (request.getParameter("formAprove") != null) {
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            Usuario.AproveUser(id);
+            response.sendRedirect(request.getRequestURI());
+        } catch (Exception ex) {
+            exceptionMessage = ex.getLocalizedMessage();
+        }
+    }
     if (request.getParameter("trocaSenha") != null) {
         try {
-            String username = (String)session.getAttribute("session.username");
+            String username = (String) session.getAttribute("session.username");
             String senha = request.getParameter("senha");
             String novaSenha = request.getParameter("novaSenha");
             String novaSenha2 = request.getParameter("novaSenha2");
-            if(Usuario.getUsuario(username, senha) == null){
+            if (Usuario.getUsuario(username, senha) == null) {
                 exceptionMessage = "Senha Inválida!";
-            }else if(!novaSenha.equals(novaSenha2)){
+            } else if (!novaSenha.equals(novaSenha2)) {
                 exceptionMessage = "Senhas não conferem";
-            }else{
-            Usuario.changePassword(username, novaSenha);
-            response.sendRedirect(request.getRequestURI());
+            } else {
+                Usuario.changePassword(username, novaSenha);
+                response.sendRedirect(request.getRequestURI());
             }
         } catch (Exception ex) {
             exceptionMessage = ex.getLocalizedMessage();
 
         }
+
     }
 %>
 <html>
@@ -119,7 +130,7 @@
                             <div>
                                 <span class="input-group-text">Senha:</span> 
                             </div>
-                            <input class="form-control" type="text" name="senha">
+                            <input class="form-control" type="password" name="senha">
                         </div>
 
                         <input class="btn btn-secondary" type="submit" name="formInsert" value="Inserir">
@@ -129,7 +140,6 @@
                 </th>
             </table>
         </form>
-
         <%} else if (request.getParameter("prepUpdate") != null) {%>
 
         <form>
@@ -151,7 +161,7 @@
                             <div>
                                 <span class="input-group-text">Senha:</span>
                             </div>  
-                            <input class="form-control" type="text" name="senha" value="<%= senha%>">
+                            <input class="form-control" type="password" name="senha" value="<%= senha%>">
                         </div>
                         <input type="hidden" name="id" value="<%= id%>">
                         <input class="btn btn-secondary" type="submit" name="formUpdate" value="Alterar">
@@ -173,9 +183,11 @@
         <%} else if (request.getParameter("prepAprove") != null) {%>
         <h3 align="center">Aprovar Usuário</h3>
         <form align="center">
-            <%String username = request.getParameter("username");%>
+            <%String username = request.getParameter("username");
+                int id = Integer.parseInt(request.getParameter("id"));%>
             <input type="hidden" name="username" value="<%= username%>">
-            Deseja aprovar a inscrição do usuario? <b><%= username%></b>?
+            <input type="hidden" name="id" value="<%= id%>">
+            Deseja aprovar a inscrição do usuario <b><%= username%></b>?
             <input class="btn btn-secondary" type="submit" name="formAprove" value="Aprovar">
             <input class="btn btn-dark" type="submit" name="cancelar" value="Cancelar">
         </form>
@@ -192,15 +204,16 @@
 
         <%if (session.getAttribute("session.role") != null) {%>
 
-        <h3 align="center">Lista</h3>
-        <div class="table-responsive">
-            <table class="table-bordered table-hover" align="center">
+        <h3 align="center">Lista de Usuários</h3>
+        <div class="table">
+            <table class="thead-dark"  align="center">
                 <thead>
                     <tr>
                         <th>Id</th>
                         <th>Usuario</th>
-                        <th>Senha</th>
+                        <th>Data Aprovação</th>
                         <th>Comandos</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -208,12 +221,11 @@
                     <tr>
                         <td><%= u.getId()%></td>
                         <td><%= u.getUsername()%></td>
-                        <td><%= u.getSenha()%></td>
+                        <td><%= u.getDtAprovacao()%></td>
                         <td>
                             <form>
                                 <input type="hidden" name="id" value="<%= u.getId()%>">
                                 <input type="hidden" name="username" value="<%= u.getUsername()%>">
-                                <input type="hidden" name="senha" value="<%= u.getSenha()%>">
                                 <input class="btn btn-secondary" type="submit" name="prepUpdate" value="Alterar">
                                 <input class="btn btn-secondary" type="submit" name="prepDelete" value="Excluir">
                                 <input class="btn btn-secondary" type="submit" name="prepAprove" value="Aprovar">
@@ -251,8 +263,34 @@
                             </tr>
                         </tbody>
                     </table>
+                                </hr>
+                                </br>
+                    <h3 align="center">Animais Adotados:</h3>
+                    <div class="table-responsive">
+                        <table class="table-bordered table-hover" align="center">
+                            <thead align="center">
+                                <tr>
+                                    <th>Nome do Animal</th>
+                                    <th>Cor do Animal</th>
+                                    <th>Data de Adoção</th>
+                                </tr>
+                            </thead>
+                            <% for (Adotados ad : Adotados.getListADT()) { %>
+                            <tbody align="center">
+                                <tr>
+                                    <td><%= ad.getNomeAnimal()%></td>
+                                    <td><%= ad.getCorAnimal()%></td>
+                                    <td><%= ad.getDtAdocao()%></td>
+                                </tr>
+                               
+                            </tbody>
+                             <%}%>
+                        </table>
 
-                    <%}%>
-                    <%}%>
-                    </body>
-                    </html>
+
+                        <%}%>
+
+
+                        <%}%>
+                        </body>
+                        </html>
