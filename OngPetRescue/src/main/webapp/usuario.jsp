@@ -84,15 +84,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Usuarios</title>
+    
+        <%@include file="WEB-INF/jspf/style.jspf"%>
     </head>
     <body>
         <%@include file="WEB-INF/jspf/header.jspf"%>
-        <%@include file="WEB-INF/jspf/style.jspf"%>
 
         <h1></h1>
         <div>
             <table class="table">
-                <thead class="thead-dark">
+                <thead class="text-light" style="background-color: #FFB84B">
                     <tr  align="center">
                         <th colspan="4"><h2>Portal do Usuario</h2></th>                    
                     </tr>
@@ -192,12 +193,7 @@
             <input class="btn btn-dark" type="submit" name="cancelar" value="Cancelar">
         </form>
         <%} else {%>
-        <%if (session.getAttribute("session.role") != null) {%>
-        <form method="post" align="center">
-            <input class="btn btn-secondary" type="submit" name="prepInsert" value="Inserir">
-        </form>
-
-        <%}%>
+        
         <%}%>
 
         <br/>
@@ -226,9 +222,9 @@
                             <form>
                                 <input type="hidden" name="id" value="<%= u.getId()%>">
                                 <input type="hidden" name="username" value="<%= u.getUsername()%>">
-                                <input class="btn btn-secondary" type="submit" name="prepUpdate" value="Alterar">
-                                <input class="btn btn-secondary" type="submit" name="prepDelete" value="Excluir">
-                                <input class="btn btn-secondary" type="submit" name="prepAprove" value="Aprovar">
+                                <input class="btn btn-info" type="submit" name="prepUpdate" value="Alterar">
+                                <input class="btn btn-danger" type="submit" name="prepDelete" value="Excluir">
+                                <input class="btn btn-success" type="submit" name="prepAprove" value="Aprovar">
                             </form>
                         </td>
                     </tr>
@@ -257,7 +253,7 @@
                                         <div>Nova senha:<div> <input type="password" name="novaSenha"></div></div>
                                         <div>Confirmação nova senha:<div><input type="password" name="novaSenha2"></div></div>
                                         <br/>
-                                        <input type="submit" name="trocaSenha" value="Alterar">
+                                        <input type="submit" class="btn btn-info" name="trocaSenha" value="Alterar">
                                     </form>
                                 </td>
                             </tr>
@@ -286,11 +282,15 @@
                             </tbody>
                              <%}%>
                         </table>
-
+                        <br>
+                        <br>
+                        <br>
 
                         <%}%>
 
 
                         <%}%>
+                                                <%@include file="WEB-INF/jspf/footer.jspf"%>
+
                         </body>
                         </html>

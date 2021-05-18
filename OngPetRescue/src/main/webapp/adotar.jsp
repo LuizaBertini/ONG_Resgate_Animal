@@ -31,7 +31,7 @@
             String dataAdc = request.getParameter("dataAdc");
             Adocao.InsertList(idAnimal, idUsuario);
             Adocao.InsertDtAdocao(dataAdc, idAnimal);
-            response.sendRedirect(request.getRequestURI());
+            response.sendRedirect("animais.jsp");
 
         } catch (Exception ex) {
             exceptionMessage = ex.getLocalizedMessage();
@@ -46,24 +46,36 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Adotar</title>
+        
     </head>
             <%@include file="WEB-INF/jspf/style.jspf"%>
     <body>
         <%@include file="WEB-INF/jspf/header.jspf"%>
         <%if (session.getAttribute("session.username") != null) {%>
         
+        <h1></h1>
+        <div>
+            <table class="table">
+                <thead class="text-light" style="background-color: #FFB84B">
+                    <tr  align="center">
+                        <th colspan="4"><h2>Adotar</h2></th>                    
+                    </tr>
+                </thead>
+            </table>   
+            
         <h4 align="center">Adoção é um assunto de extrema importância e deve ser levado com cautela.</h4>
         <h4 align="center">Ao clicar no botão abaixo você deverá ter completa certeza pois um animal é uma vida, e uma vida deve ser espeitada.</h4>
         <h4 align="center">Por-favor, se não tiver certeza que irá cuidar do seu novo amigo, não continue.</h4>
         
-        <form action="animais.jsp">
+        <form method="POST">
             <%
                     String idAnimal = request.getParameter("idAnimal");
                     String nomeAnimal = request.getParameter("nomeAnimal");
                     String corAnimal = request.getParameter("corAnimal");
                     String dtResgate = request.getParameter("dtResgate");
                     String pesoAnimal = request.getParameter("pesoAnimal");
+                    String nmEspecie = request.getParameter("nmEspecie");
                 %>
                 <h3 align="center">Adotar Animal</h3>
                 <table class="table"  style="width: 50%" align="center">
@@ -82,6 +94,10 @@
                             <div>
                                 Peso do Animal: <%= pesoAnimal%>
                             </div>
+                            
+                            <div>
+                                Raça do Animal: <%= nmEspecie%>
+                            </div>
                                 
                             <div>
                                 Data de resgate do Animal: <%= dtResgate%>
@@ -91,9 +107,8 @@
                                 Data atual para o registro da adoção do Animal: <%= new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>
                             </div>
                             <input type="hidden" name="dataAdc" value="<%= new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>">   
-                            <input class="btn btn-secondary" type="submit" name="Adotar" value="Adotar">
-                            <input class="btn btn-dark" type="submit" name="cancelar" value="Cancelar">
-
+                            <input class="btn btn-success" type="submit" name="Adotar" value="Adotar">
+                            <input class="btn btn-danger" type="submit" name="cancelar" value="Cancelar">
                         </div>
                     </th>
                 </table>
@@ -104,5 +119,9 @@
         <%}else{%>
         <h1 align="center">Você precisa estar cadastrado para adotar!!!</h1>
         <%}%>
+        
+        <%@include file="WEB-INF/jspf/footer.jspf"%>
+        
+        
     </body>
 </html>

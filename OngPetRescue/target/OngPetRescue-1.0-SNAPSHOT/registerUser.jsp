@@ -11,7 +11,7 @@
         String ponto = "";
     String exceptionMessage = null;
     if(request.getParameter("cancelar") != null){
-            response.sendRedirect(request.getRequestURI());
+            response.sendRedirect("index.jsp");
         
     }
     if(request.getParameter("Cadastrar") != null){
@@ -40,16 +40,17 @@
 %>
 <html>
     <head>
+        
+        <%@include file="WEB-INF/jspf/style.jspf"%>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
         <%@include file="WEB-INF/jspf/header.jspf"%>
-        <%@include file="WEB-INF/jspf/style.jspf"%>
         <h1><%=ponto%></h1>
         <form>
             <div>
                 <table  class="table">
-                <thead class="thead-dark">
+                <thead class="text-light" style="background-color: #FFB84B">
                     <tr>
                         <th colspan="4"><h2 align="center">Ficha de Cadastro<h2></th>                    
                     </tr>
@@ -78,10 +79,12 @@
             </div>          
            <div class="input-group mb-3"><div ><span class="input-group-text" id="basic-addon1">telefone</span> </div>
             <input type="text" class="form-control" name="telefone" aria-describedby="basic-addon1"></div>
-           <input type="submit" class="btn btn-secondary" name="Cancelar" value="Cancelar">
-           <input type="submit" class="btn btn-dark" name="Cadastrar" value="Cadastrar">
+           <input type="submit" class="btn btn-success" name="Cadastrar" value="Cadastrar">
+            <input type="submit" class="btn btn-danger" name="cancelar" value="Cancelar">
+           
            </form>
         </th>
 </table>
+           <%@include file="WEB-INF/jspf/footer.jspf"%>
     </body>
 </html>

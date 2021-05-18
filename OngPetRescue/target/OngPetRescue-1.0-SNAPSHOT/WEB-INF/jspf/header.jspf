@@ -30,7 +30,7 @@
     }
 %>
 
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FFB84B">
+<nav class="navbar navbar-expand-lg" style="background-color: #FFB84B">
 
     <span class="navbar-brand" href="#">
         <img src="imgs/LogoOng.png" width="50" height="50">                         
@@ -44,10 +44,10 @@
         <ul class="navbar-nav mr-auto">
             <%--Essa lista é para colocar os links das páginas--%>
             <li class="nav-item">
-                <a class="nav-link" href='<%= request.getContextPath()%>/index.jsp'>Inicio</a>
+                <a class="nav-link text-light" href='<%= request.getContextPath()%>/index.jsp'>Inicio</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href='<%= request.getContextPath()%>/animais.jsp'>Lista dos Animais</a>
+                <a class="nav-link text-light" href='<%= request.getContextPath()%>/animais.jsp'>Lista dos Animais</a>
             </li>
             <%--
             <%if (session.getAttribute("session.role") != null) {%>
@@ -68,7 +68,7 @@
                 <a class="nav-link" href='<%= request.getContextPath()%>/login.jsp'>Login</a>
             </li>--%>
 
-            <li class="nav-item">
+            <li class="nav-item text-light">
                 <%if (session.getAttribute("session.username") == null) {%>
 
                 <form class="d-flex" method="post">
@@ -79,7 +79,7 @@
                 </form> 
                 <%} else {%>
                 <form class="d-flex" method="post">
-                    <a class="nav-link" href="<%= request.getContextPath()%>/usuario.jsp"><%= session.getAttribute("session.username")%></a>&nbsp;
+                    <a class="nav-link text-light" href="<%= request.getContextPath()%>/usuario.jsp"><%= session.getAttribute("session.username")%></a>&nbsp;
                     <input class="btn btn-outline-danger my-2 my-sm-0" type="submit" name="LogoutForm" value="Sair">
                     <%--<a href='<%= request.getContextPath()%>/perfil.jsp'>PERFIL</a>
                     //<%if(session.getAttribute("session.papel").equals("ADMINISTRADOR")){%>    

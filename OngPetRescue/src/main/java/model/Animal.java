@@ -60,7 +60,7 @@ public class Animal {
         try {
             con = dbListener.getConnection();
             stmt = con.createStatement();
-            rs = stmt.executeQuery("SELECT e.nmEspecie, r.nmRaca, a.*    FROM ESPECIES e, RACAS r, ANIMAIS a    WHERE r.idRaca = a.idRacaFK    AND e.idEspecie = a.idEspecieFK;;");
+            rs = stmt.executeQuery("SELECT e.nmEspecie, r.nmRaca, a.*    FROM ESPECIES e, RACAS r, ANIMAIS a    WHERE r.idRaca = a.idRacaFK    AND e.idEspecie = a.idEspecieFK ORDER BY idAnimal;");
             while (rs.next()) {
                 list.add(new Animal(
                         rs.getString("nomeAnimal"),

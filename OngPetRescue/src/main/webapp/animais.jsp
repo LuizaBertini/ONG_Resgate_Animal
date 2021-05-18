@@ -20,7 +20,7 @@
 <%@page import="java.sql.*"%>
 <%@page import="javax.swing.JFileChooser"%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <%
     String ver = "";
@@ -94,10 +94,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Animais</title>
+        <%@include file="WEB-INF/jspf/style.jspf"%>
     </head>
     <body>
+        
         <%@include file="WEB-INF/jspf/header.jspf"%>
-        <%@include file="WEB-INF/jspf/style.jspf"%>
+        
 
 
 
@@ -111,7 +113,7 @@
         <h1></h1>
         <div>
             <table class="table">
-                <thead class="thead-dark">
+                <thead class="text-light" style="background-color: #FFB84B">
                     <tr  align="center">
                         <th colspan="4"><h2>Lista de Animais</h2></th>                    
                     </tr>
@@ -157,7 +159,7 @@
 
                             <div class="input-group mb-3"> 
                                 <div>    
-                                    <span class="input-group-text">RaÃ§a do animal:</span>
+                                    <span class="input-group-text">Raça do animal:</span>
                                 </div>    
 
                                 <select class="custom-select" name="idRacaFK">
@@ -170,7 +172,7 @@
 
                             <div class="input-group mb-3"> 
                                 <div>     
-                                    <span class="input-group-text">EspÃ©cie do animal:</span>
+                                    <span class="input-group-text">Espécie do animal:</span>
                                 </div>    
 
                                 <select class="custom-select" name="idEspecieFK">
@@ -189,8 +191,8 @@
                             </div>
                             uiam --%>  
 
-                            <input class="btn btn-secondary" type="submit" name="formInsert" value="Inserir">
-                            <input class="btn btn-dark" type="submit" name="cancelar" value="Cancelar">
+                            <input class="btn btn-success" type="submit" name="formInsert" value="Inserir">
+                            <input class="btn btn-danger" type="submit" name="cancelar" value="Cancelar">
 
                         </div>
                     </th>
@@ -245,7 +247,7 @@
 
                             <div class="input-group mb-3"> 
                                 <div>    
-                                    <span class="input-group-text">RaÃ§a do animal:</span>
+                                    <span class="input-group-text">Raça do animal:</span>
                                 </div>    
 
                                 <select class="custom-select" name="idRacaFK">
@@ -259,7 +261,7 @@
 
                             <div class="input-group mb-3"> 
                                 <div>     
-                                    <span class="input-group-text">EspÃ©cie do animal:</span>
+                                    <span class="input-group-text">Espécie do animal:</span>
                                 </div>    
 
                                 <select class="custom-select" name="idEspecieFK">
@@ -278,8 +280,8 @@
                                 <input class="form-control" type="file" name="imgAnimal">
                             </div>    
                             uiam --%>    
-                            <input class="btn btn-secondary" type="submit" name="formUpdate" value="Alterar">
-                            <input class="btn btn-dark" type="submit" name="cancelar" value="Cancelar">
+                            <input class="btn btn-info" type="submit" name="formUpdate" value="Alterar">
+                            <input class="btn btn-danger" type="submit" name="cancelar" value="Cancelar">
 
                         </div>
                     </th>
@@ -295,13 +297,13 @@
                 <%String nomeAnimal = request.getParameter("nomeAnimal");%>
                 <input type="hidden" name="idAnimal" value="<%= idAnimal%>">
                 Excluir o Registro <b><%= idAnimal%> de nome <%= nomeAnimal%></b>?
-                <input class="btn btn-secondary" type="submit" name="formDelete" value="Deletar">
-                <input class="btn btn-dark" type="submit" name="cancelar" value="Cancelar">
+                <input class="btn btn-warning" type="submit" name="formDelete" value="Deletar">
+                <input class="btn btn-danger" type="submit" name="cancelar" value="Cancelar">
             </form>
 
             <%} else {%>
             <form method="post" align="center">
-                <input class="btn btn-secondary" type="submit" name="prepInsert" value="Inserir">
+                <input class="btn btn-success" type="submit" name="prepInsert" value="Inserir">
             </form>
             <%}%>
 
@@ -313,11 +315,11 @@
                             <th>Id do Animal</th>
                             <th>Nome do Animal</th>
                             <th>Cor do Animal</th>
-                            <th>EspÃ©cie</th>
-                            <th>RaÃ§a</th>
+                            <th>Espécie</th>
+                            <th>Raça</th>
                             <th>Peso do Animal</th>
                             <th>Data do Resgate</th>
-                            <th>Data de AdoÃ§Ã£o</th>
+                            <th>Data de Adoção</th>
                             <th>Comandos Adiministrativos</th>
                         </tr>
                     </thead>
@@ -341,8 +343,8 @@
                                     <input type="hidden" name="dtResgate" value="<%= a.getDtResgate()%>">
                                     <input type="hidden" name="idE" value="<%= a.getIdEspecieFK()%>">
                                     <input type="hidden" name="idR" value="<%= a.getIdRacaFK()%>">
-                                    <input class="btn btn-secondary" type="submit" name="prepUpdate" value="Alterar">
-                                    <input class="btn btn-secondary" type="submit" name="prepDelete" value="Excluir">
+                                    <input class="btn btn-info" type="submit" name="prepUpdate" value="Alterar">
+                                    <input class="btn btn-danger" type="submit" name="prepDelete" value="Excluir">
                                 </form>
                             </td>
                         </tr>
@@ -351,22 +353,23 @@
                 </table>
             </div>
 
-            <%-- Tabela para usuÃ¡rio Comum --%>
+            <%-- Tabela para usuário Comum --%>
 
             <%} else {%>
 
             <h1></h1>
             <div>
                 <table class="table">
-                    <thead class="thead-dark">
+                    <thead  class="text-light" style="background-color: #FFB84B">
                         <tr  align="center">
-                            <th colspan="4"><h2>Animais DisponÃ­veis para adoÃ§Ã£o</h2></th>                    
+                            <th colspan="4"><h2>Animais Disponíveis para adoção</h2></th>                    
                         </tr>
                     </thead>
                 </table>   
 
                 <div class="d-flex p-4 justify-content-center">
-                <%for (Animal a : Animal.getListNadt()) {%>
+                <div class="row row-cols-1 row-cols-md-6 justify-content-center">
+                    <%for (Animal a : Animal.getListNadt()) {%>
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <p class="card-text"><%= a.getNomeAnimal()%></p>
@@ -374,12 +377,14 @@
                         <p class="card-text"><%= a.getNmRaca()%></p>
                         <p class="card-text"><%= a.getPesoAnimal()%></p>
                         <p class="card-text"><%= a.getDtResgate()%></p>
+                        <p class="card-text"><%= a.getNmEspecie()%></p>
                         <form method="post" action="adotar.jsp">
                             <input type="hidden" name="idAnimal" value="<%= a.getIdAnimal()%>">
                             <input type="hidden" name="nomeAnimal" value="<%= a.getNomeAnimal()%>">
                             <input type="hidden" name="corAnimal" value="<%= a.getCorAnimal()%>">
                             <input type="hidden" name="pesoAnimal" value="<%= a.getPesoAnimal()%>">
                             <input type="hidden" name="dtResgate" value="<%= a.getDtResgate()%>">
+                            <input type="hidden" name="nmEspecie" value="<%= a.getNmEspecie()%>">
                             <input type="hidden" name="idE" value="<%= a.getIdEspecieFK()%>">
                             <input type="hidden" name="idR" value="<%= a.getIdRacaFK()%>">
                             <input class="btn btn-success" type="submit" name="prepAdotar" value="Adotar">
@@ -388,6 +393,10 @@
                 </div>&nbsp; &nbsp;
                 <%}%> 
             </div>
+            <br/>
+            </div>
             <%}%>
+                        <%@include file="WEB-INF/jspf/footer.jspf"%>
     </body>
+    
 </html>
