@@ -306,8 +306,9 @@
                 <input class="btn btn-success" type="submit" name="prepInsert" value="Inserir">
             </form>
             <%}%>
-
+            
             <br/>
+            <main role="main">
             <div class="table">
                 <table class="thead-dark" align="center">
                     <thead>
@@ -352,11 +353,12 @@
                     <%}%> 
                 </table>
             </div>
-
+        </main>
             <%-- Tabela para usuário Comum --%>
 
             <%} else {%>
-
+            
+            <main role="main">
             <h1></h1>
             <div>
                 <table class="table">
@@ -395,6 +397,7 @@
             </div>
             <br/>
             </div>
+            </main>
             <%}%>
             <%@include file="WEB-INF/jspf/footer.jspf"%>
     </body>

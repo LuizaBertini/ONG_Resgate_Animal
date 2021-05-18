@@ -53,7 +53,7 @@
     <body>
         <%@include file="WEB-INF/jspf/header.jspf"%>
         <%if (session.getAttribute("session.username") != null) {%>
-        
+        <main role="main">
         <h1></h1>
         <div>
             <table class="table">
@@ -77,7 +77,6 @@
                     String pesoAnimal = request.getParameter("pesoAnimal");
                     String nmEspecie = request.getParameter("nmEspecie");
                 %>
-                <h3 align="center">Adotar Animal</h3>
                 <table class="table"  style="width: 50%" align="center">
                     <th style="width: 50%">
                       
@@ -115,7 +114,7 @@
             </form>
             
         </form>
-        
+        </main>
         <%}else{%>
         <h1 align="center">Você precisa estar cadastrado para adotar!!!</h1>
         <%}%>

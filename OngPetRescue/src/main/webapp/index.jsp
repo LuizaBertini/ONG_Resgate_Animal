@@ -109,7 +109,7 @@
                 </div><!-- /.row -->
 
 
-            </div><!-- /.container -->
+            </div></main><!-- /.container -->
 
             <%@include file="WEB-INF/jspf/footer.jspf"%>
 

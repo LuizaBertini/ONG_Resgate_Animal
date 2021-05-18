@@ -142,7 +142,7 @@
             </table>
         </form>
         <%} else if (request.getParameter("prepUpdate") != null) {%>
-
+        
         <form>
             <h3 align="center">Alterar Registro</h3>
             <table class="table" style="width: 50%" align="center">
@@ -199,7 +199,7 @@
         <br/>
 
         <%if (session.getAttribute("session.role") != null) {%>
-
+        <main role="main">
         <h3 align="center">Lista de Usuários</h3>
         <div class="table">
             <table class="thead-dark"  align="center">
@@ -232,7 +232,9 @@
                 </tbody>
             </table>
             <div>
+                </main>
                 <%} else {%>
+                <main role="main">
                 <h3 align="center">Configurações</h3>
                 <div class="table-responsive">
                     <table class="table-bordered table-hover" align="center">
@@ -282,6 +284,7 @@
                             </tbody>
                              <%}%>
                         </table>
+                        </main>
                         <br>
                         <br>
                         <br>
