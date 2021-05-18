@@ -396,7 +396,7 @@
             <br/>
             </div>
             <%}%>
-                        <%@include file="WEB-INF/jspf/footer.jspf"%>
+            <%@include file="WEB-INF/jspf/footer.jspf"%>
     </body>
     
 </html>

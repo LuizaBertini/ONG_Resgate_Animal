@@ -30,7 +30,7 @@
     }
 %>
 
-<nav class="navbar navbar-expand-lg" style="background-color: #FFB84B">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FFB84B">
 
     <span class="navbar-brand" href="#">
         <img src="imgs/LogoOng.png" width="50" height="50">                         
@@ -71,7 +71,7 @@
             <li class="nav-item text-light">
                 <%if (session.getAttribute("session.username") == null) {%>
 
-                <form class="d-flex" method="post">
+                <form class="d-flex justify-content-center" method="post">
                     <a class="btn btn-outline-danger my-2 my-sm-0" href='<%= request.getContextPath()%>/registerUser.jsp'>Cadastrar</a>&nbsp;
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="LoginInput" value="Entrar">Login</button>&nbsp;                  
                     <input class="form-control" type="text" name="username" placeholder="Nome">&nbsp;
