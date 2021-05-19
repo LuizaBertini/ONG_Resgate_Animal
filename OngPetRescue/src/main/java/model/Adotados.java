@@ -50,7 +50,7 @@ public class Adotados {
     public static ArrayList<Adotados> getListADT() throws Exception{
         ArrayList<Adotados> lista = new ArrayList<>();              
         Connection con = null; Statement stmt = null; ResultSet rs;
-        String query = ("SELECT a.nomeAnimal, a.dtAdocao, a.corAnimal FROM ADOCAO ad, ANIMAIS a, USUARIO u "
+        String query = ("SELECT a.nomeAnimal, a.dtAdocao, a.corAnimal, u. FROM ADOCAO ad, ANIMAIS a, USUARIO u "
                     + " WHERE ad.idUsuario = u.id"
                     + " AND ad.idAnimal = a.idAnimal;");
         Exception methodException;
@@ -76,4 +76,4 @@ public class Adotados {
     return lista;
     }
     
-}
+ }

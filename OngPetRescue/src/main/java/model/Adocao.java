@@ -8,6 +8,8 @@ package model;
 
 import java.util.ArrayList;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import web.dbListener;
 /**
  *
@@ -48,7 +50,6 @@ public class Adocao {
         this.dtAdocao = dtAdocao;
     }
     
-
     
      public static String getCreateStatement(){
         return "CREATE TABLE IF NOT EXISTS sql10403882.ADOCAO(" +
@@ -93,14 +94,18 @@ public class Adocao {
         Exception methodException = null;
         ResultSet rs = null;
         try{                   
+            LocalDateTime agora = LocalDateTime.now();
+            // formatar a data
+            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataFormatada = formatterData.format(agora);
             
             con = dbListener.getConnection();            
             stmt = con.prepareStatement("INSERT INTO ADOCAO "
-                            + "(idAnimal, idUsuario) VALUES "
-                           + "(?, ?)");  
+                            + "(idAnimal, idUsuario, dtRequisicao) VALUES "
+                           + "(?, ?, ?)");  
             stmt.setInt(1, idAnimal);
             stmt.setInt(2, idUsuario);
-           
+            stmt.setString(3, dataFormatada);
             stmt.execute();
             
         } catch(Exception ex){
@@ -119,7 +124,7 @@ public class Adocao {
             
             con = dbListener.getConnection();
             stmt = con.prepareStatement("UPDATE ANIMAIS SET dtAdocao = ?"
-                            + "WHERE idAnimal = ?;"); 
+                            + " WHERE idAnimal = ?;"); 
             stmt.setString(1, dtAdocao);
             stmt.setInt(2, idAnimal);
             
@@ -132,6 +137,7 @@ public class Adocao {
            try{ con.close();}catch(Exception ex2){}     
         }   
     }
+    
     
    /* public static void UpdateList(String nome, String nomeAntigo, String descricao) throws Exception{
         Connection con = null;

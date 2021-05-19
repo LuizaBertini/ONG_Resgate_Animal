@@ -9,3 +9,4 @@ model\Animal.class
 model\Especie.class
 model\Adotados.class
 model\Usuario.class
+model\AguardaAdocao.class

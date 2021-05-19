@@ -30,8 +30,8 @@
             int idUsuario = (int) session.getAttribute("session.id");
             String dataAdc = request.getParameter("dataAdc");
             Adocao.InsertList(idAnimal, idUsuario);
-            Adocao.InsertDtAdocao(dataAdc, idAnimal);
-            response.sendRedirect("animais.jsp");
+            //Adocao.InsertDtAdocao(dataAdc, idAnimal);
+           response.sendRedirect("animais.jsp");
 
         } catch (Exception ex) {
             exceptionMessage = ex.getLocalizedMessage();
@@ -44,7 +44,7 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
+    <head>       
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Adotar</title>
         
