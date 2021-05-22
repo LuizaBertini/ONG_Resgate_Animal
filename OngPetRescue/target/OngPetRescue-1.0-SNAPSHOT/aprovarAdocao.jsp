@@ -34,6 +34,9 @@
     </head>
     <body>
         <%@include file="WEB-INF/jspf/header.jspf"%>
+        <%if(session.getAttribute("session.role")==null){%>
+            <div align="center"><h1>Você não tem permissão de acesso</h1></div>
+        <%}else{%>
         <table class="table" align="center">
             <thead align="center">
                  <tr>
@@ -60,6 +63,7 @@
             </tbody>
             <%}%>
         </table>
+        <%}%>
         <%@include file="WEB-INF/jspf/footer.jspf"%>   
     </body>  
 </html>

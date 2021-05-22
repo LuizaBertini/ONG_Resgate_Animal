@@ -236,19 +236,21 @@
                 <%} else {%>
                 <main role="main">
                 <h3 align="center">Configurações</h3>
+                <div align="center">
+                <div class="card p-4 d-flex" style="width: 45rem;">
                 <div class="table-responsive">
-                    <table class="table-bordered table-hover" align="center">
-                        <thead align="center">
+                    <table class="table" align="center">
                             <tr>
                                 <th>Nome de usuário</th>
-                                <th>Email</th>
-                                <th>Alterar Senha</th>
-                            </tr>
-                        </thead>
-                        <tbody align="center">
-                            <tr>
                                 <td><%= session.getAttribute("session.username")%></td>
+                            </tr>    
+                            <tr>    
+                                <th>Email</th>
                                 <td><%= session.getAttribute("session.email")%></td>
+                            </tr>
+                            
+                            <tr>
+                                <th>Alterar Senha</th>
                                 <td>
                                     <form method="post">
                                         <div>Senha atual:<div> <input type="password" name="senha"></div></div>
@@ -258,14 +260,18 @@
                                         <input type="submit" class="btn btn-info" name="trocaSenha" value="Alterar">
                                     </form>
                                 </td>
-                            </tr>
+                            </tr>                            
+                                
                         </tbody>
                     </table>
+                </div>
+                </div>
+                </div>
                                 </hr>
                                 </br>
                     <h3 align="center">Animais Adotados:</h3>
-                    <div class="table-responsive">
-                        <table class="table-bordered table-hover" align="center">
+                    <div class="d-flex p-4 table-responsive">
+                        <table class="table table-bordered table-hover" align="center">
                             <thead align="center">
                                 <tr>
                                     <th>Nome do Animal</th>
@@ -273,7 +279,8 @@
                                     <th>Data de Adoção</th>
                                 </tr>
                             </thead>
-                            <% for (Adotados ad : Adotados.getListADT()) { %>
+                            <%int id = (int) session.getAttribute("session.id");
+                              for (Adotados ad : Adotados.getListADT(id)) { %>
                             <tbody align="center">
                                 <tr>
                                     <td><%= ad.getNomeAnimal()%></td>

@@ -46,18 +46,19 @@
             <li class="nav-item">
                 <a class="nav-link text-light" href='<%= request.getContextPath()%>/index.jsp'>Inicio</a>
             </li>
+            
+            
+            <%--Link para vizualização dos animais registrados--%>  
             <li class="nav-item">
                 <a class="nav-link text-light" href='<%= request.getContextPath()%>/animais.jsp'>Lista dos Animais</a>
             </li>
+            
+            <%--Link para vizualização das adoções pendentes(ação exclusiva para administradores)--%>  
+            <%if (session.getAttribute("session.role") != null) {%>
             <li class="nav-item">
                 <a class="nav-link text-light" href='<%= request.getContextPath()%>/aprovarAdocao.jsp'>Aprovar Adoção</a>
             </li>
-            <%--
-            <%if (session.getAttribute("session.role") != null) {%>
-            <li class="nav-item">
-                <a class="nav-link" href="<%= request.getContextPath()%>/role.jsp">Papés</a>
-            </li>
-            <%}%>Link para vizualização dos papeis--%>
+            <%}%>          
 
         </ul>       
         <hr/>

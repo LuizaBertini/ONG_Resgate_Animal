@@ -31,8 +31,8 @@
             String dataAdc = request.getParameter("dataAdc");
             Adocao.InsertList(idAnimal, idUsuario);
             //Adocao.InsertDtAdocao(dataAdc, idAnimal);
-           response.sendRedirect("animais.jsp");
-
+            response.sendRedirect("animais.jsp");
+        
         } catch (Exception ex) {
             exceptionMessage = ex.getLocalizedMessage();
         }
@@ -68,7 +68,7 @@
         <h4 align="center">Ao clicar no botão abaixo você deverá ter completa certeza pois um animal é uma vida, e uma vida deve ser espeitada.</h4>
         <h4 align="center">Por-favor, se não tiver certeza que irá cuidar do seu novo amigo, não continue.</h4>
         
-        <form method="POST">
+        <form method="POST" onsubmit="return demo();">
             <%
                     String idAnimal = request.getParameter("idAnimal");
                     String nomeAnimal = request.getParameter("nomeAnimal");
@@ -123,4 +123,13 @@
         
         
     </body>
+    
+    
+<script>
+    function demo(){
+    alert ("Parabés!!!! Agora é só esperar a aprovação ;)" );
+    }
+</script>
+    
+    
 </html>

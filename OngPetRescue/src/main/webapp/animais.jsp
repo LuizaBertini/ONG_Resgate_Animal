@@ -132,7 +132,7 @@
                                     <span class="input-group-text">Nome Animal:</span>
                                 </div>
 
-                                <input class="form-control" type="text" name="nomeAnimal" required>
+                                <input class="form-control" type="text" name="nomeAnimal" pattern="[A-Za-z]{1,30}">
                             </div>
 
                             <div class="input-group mb-3">
@@ -140,7 +140,7 @@
                                     <span class="input-group-text">Cor do Animal:</span>
                                 </div>
 
-                                <input class="form-control" type="text" name="corAnimal">
+                                <input class="form-control" type="text" name="corAnimal" pattern="[A-Za-z]{1,50}">
                             </div>
 
                             <div class="input-group mb-3">
@@ -205,6 +205,8 @@
                 <%
                     String idAnimal = request.getParameter("idAnimal");
                     String nomeAnimal = request.getParameter("nomeAnimal");
+                    String nmEspecie = request.getParameter("nmEspecie");
+                    String nmRaca = request.getParameter("nmRaca");
                     String corAnimal = request.getParameter("corAnimal");
                     String dtResgate = request.getParameter("dtResgate");
                     String dtAdocao = request.getParameter("dtAdocao");
@@ -221,14 +223,14 @@
                                 <div>
                                     <span class="input-group-text">Nome Animal:</span>
                                 </div>
-                                <input class="form-control" type="text" name="nomeAnimal" value="<%= nomeAnimal%>">
+                                <input class="form-control" type="text" name="nomeAnimal"  pattern="[A-Za-z]{1,30}" value="<%= nomeAnimal%>">
                             </div>
 
                             <div class="input-group mb-3">
                                 <div>
                                     <span class="input-group-text">Cor Animal:</span>
                                 </div>    
-                                <input class="form-control" type="text" name="corAnimal" value="<%= corAnimal%>">
+                                <input class="form-control" type="text" name="corAnimal"  pattern="[A-Za-z]{1,50}" value="<%= corAnimal%>">
                             </div> 
 
                             <div class="input-group mb-3">
@@ -253,7 +255,7 @@
                                 <select class="custom-select" name="idRacaFK">
                                     <option value=""></option>
                                     <%for (Raca r : Raca.getList()) {%>
-                                    <option value="<%= r.getIdRaca()%>" <%= r.getNmRaca().equals(r.getNmRaca()) ? "selected" : ""%>>
+                                    <option value="<%= r.getIdRaca()%>" <%= r.getNmRaca().equals(nmRaca) ? "selected" : ""%>>
                                         <%= r.getNmRaca()%></option>
                                         <%}%>
                                 </select>
@@ -267,9 +269,9 @@
                                 <select class="custom-select" name="idEspecieFK">
                                     <option value=""></option>
                                     <%for (Especie e : Especie.getList()) {%>
-                                    <option value="<%= e.getIdEspecie()%>" <%= e.getNmEspecie().equals(e.getNmEspecie()) ? "selected" : ""%>>
+                                    <option value="<%= e.getIdEspecie()%>" <%= e.getNmEspecie().equals(nmEspecie) ? "selected" : ""%>>
                                         <%= e.getNmEspecie()%></option>
-                                        <%}%>
+                                    <%}%>
                                 </select>
                             </div>    
                             <%--uiam      
@@ -309,7 +311,7 @@
             
             <br/>
             <main role="main">
-            <div class="table">
+            <div class="table d-flex p-4">
                 <table class="thead-dark" align="center">
                     <thead>
                         <tr>
@@ -342,6 +344,8 @@
                                     <input type="hidden" name="corAnimal" value="<%= a.getCorAnimal()%>">
                                     <input type="hidden" name="pesoAnimal" value="<%= a.getPesoAnimal()%>">
                                     <input type="hidden" name="dtResgate" value="<%= a.getDtResgate()%>">
+                                    <input type="hidden" name="nmEspecie" value="<%= a.getNmEspecie()%>">
+                                    <input type="hidden" name="nmRaca" value="<%= a.getNmRaca()%>">
                                     <input type="hidden" name="idE" value="<%= a.getIdEspecieFK()%>">
                                     <input type="hidden" name="idR" value="<%= a.getIdRacaFK()%>">
                                     <input class="btn btn-info" type="submit" name="prepUpdate" value="Alterar">
