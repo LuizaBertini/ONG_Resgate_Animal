@@ -34,11 +34,12 @@
             String nomeAnimal = request.getParameter("nomeAnimal");
             String corAnimal = request.getParameter("corAnimal");
             String dtResgate = request.getParameter("dtResgate");
+            String historico = request.getParameter("historico");
             float pesoAnimal = Float.parseFloat(request.getParameter("pesoAnimal"));
             int idRacaFK = Integer.parseInt(request.getParameter("idRacaFK"));
             int idEspecieFK = Integer.parseInt(request.getParameter("idEspecieFK"));
 
-            Animal.Insert(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK); //uiam
+            Animal.Insert(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK, historico); //uiam
             response.sendRedirect(request.getRequestURI());
 
         } catch (Exception ex) {
@@ -55,11 +56,13 @@
             String corAnimal = request.getParameter("corAnimal");
             String dtResgate = request.getParameter("dtResgate");
             String dtAdocao = request.getParameter("dtAdocao");
+            String historico = request.getParameter("historico");
             int idAnimal = Integer.parseInt(request.getParameter("idAnimal"));
             float pesoAnimal = Float.parseFloat(request.getParameter("pesoAnimal"));
             int idRacaFK = Integer.parseInt(request.getParameter("idRacaFK"));
             int idEspecieFK = Integer.parseInt(request.getParameter("idEspecieFK"));
-            Animal.Update(nomeAnimal, corAnimal, dtResgate, dtAdocao, idAnimal, pesoAnimal, idRacaFK, idEspecieFK);//uiam
+            
+            Animal.Update(nomeAnimal, corAnimal, dtResgate, dtAdocao, idAnimal, pesoAnimal, idRacaFK, idEspecieFK, historico);//uiam
             response.sendRedirect(request.getRequestURI());
         } catch (Exception ex) {
             exceptionMessage = ex.getLocalizedMessage();
@@ -145,6 +148,13 @@
 
                             <div class="input-group mb-3">
                                 <div>
+                                    <span class="input-group-text">Histórico:</span>
+                                </div>
+                                <input class="form-control" type="text" name="historico"">
+                            </div>
+                            
+                            <div class="input-group mb-3">
+                                <div>
                                     <span class="input-group-text">Peso do Animal:</span>
                                 </div>    
                                 <input class="form-control" type="float" name="pesoAnimal">
@@ -211,6 +221,10 @@
                     String dtResgate = request.getParameter("dtResgate");
                     String dtAdocao = request.getParameter("dtAdocao");
                     String pesoAnimal = request.getParameter("pesoAnimal");
+                    String historico = request.getParameter("historico");
+                    if (historico == null){
+                        historico = "";
+                    }
                 %>
                 <h3 align="center">Alterar Registro</h3>
                 <table class="table"  style="width: 50%" align="center">
@@ -232,7 +246,13 @@
                                 </div>    
                                 <input class="form-control" type="text" name="corAnimal"  pattern="[A-Za-z]{1,50}" value="<%= corAnimal%>">
                             </div> 
-
+                            
+                            <div class="input-group mb-3">
+                                <div>
+                                    <span class="input-group-text">Histórico:</span>
+                                </div>
+                                <input class="form-control" type="text" name="historico" value="<%= historico%>">
+                            </div>
                             <div class="input-group mb-3">
                                 <div>
                                     <span class="input-group-text">Peso do Animal: </span>
@@ -315,6 +335,7 @@
                 <table class="thead-dark" align="center">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Id do Animal</th>
                             <th>Nome do Animal</th>
                             <th>Cor do Animal</th>
@@ -329,6 +350,9 @@
                     <%for (Animal a : Animal.getList()) {%>
                     <tbody>
                         <tr>
+                            <td>
+                                <img class="rounded-circle" src="imgs/<%=a.getNomeAnimal()%>.jpg" alt="Generic placeholder image" width="140" height="140">
+                                </td>
                             <td><%= a.getIdAnimal()%></td>
                             <td><%= a.getNomeAnimal()%></td>
                             <td><%= a.getCorAnimal()%></td>
@@ -339,6 +363,7 @@
                             <td><%= a.getDtAdocao()%></td>
                             <td>
                                 <form method="post">
+                                    
                                     <input type="hidden" name="idAnimal" value="<%= a.getIdAnimal()%>">
                                     <input type="hidden" name="nomeAnimal" value="<%= a.getNomeAnimal()%>">
                                     <input type="hidden" name="corAnimal" value="<%= a.getCorAnimal()%>">
@@ -348,6 +373,7 @@
                                     <input type="hidden" name="nmRaca" value="<%= a.getNmRaca()%>">
                                     <input type="hidden" name="idE" value="<%= a.getIdEspecieFK()%>">
                                     <input type="hidden" name="idR" value="<%= a.getIdRacaFK()%>">
+                                    <input type="hidden" name="historico" value="<%= a.getHistorico()%>">
                                     <input class="btn btn-info" type="submit" name="prepUpdate" value="Alterar">
                                     <input class="btn btn-danger" type="submit" name="prepDelete" value="Excluir">
                                 </form>
@@ -378,6 +404,7 @@
                     <%for (Animal a : Animal.getListNadt()) {%>
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
+                        <img class="rounded-circle" src="imgs/<%=a.getNomeAnimal()%>.jpg" alt="Generic placeholder image" width="140" height="140">
                         <p class="card-text"><%= a.getNomeAnimal()%></p>
                         <p class="card-text"><%= a.getCorAnimal()%></p>
                         <p class="card-text"><%= a.getNmRaca()%></p>
@@ -393,6 +420,7 @@
                             <input type="hidden" name="nmEspecie" value="<%= a.getNmEspecie()%>">
                             <input type="hidden" name="idE" value="<%= a.getIdEspecieFK()%>">
                             <input type="hidden" name="idR" value="<%= a.getIdRacaFK()%>">
+                            <input type="hidden" name="historico" value="<%= a.getHistorico()%>">
                             <input class="btn btn-success" type="submit" name="prepAdotar" value="Adotar">
                         </form>
                     </div>

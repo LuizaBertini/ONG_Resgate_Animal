@@ -17,13 +17,21 @@ import web.dbListener;
  */
 public class Animal {
 
-    private String nomeAnimal, corAnimal, dtResgate, dtAdocao, nmRaca, nmEspecie;
+    private String nomeAnimal, corAnimal, dtResgate, dtAdocao, nmRaca, nmEspecie, historico;
+
+    public String getHistorico() {
+        return historico;
+    }
+
+    public void setHistorico(String historico) {
+        this.historico = historico;
+    }
     private int idAnimal, idRacaFK, idEspecieFK;
     private float pesoAnimal;
     String imgAnimal; //uiam
     
     
-    public Animal(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK, String nmRaca, String nmEspecie) {
+    public Animal(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK, String nmRaca, String nmEspecie, String historico) {
         this.nomeAnimal = nomeAnimal;
         this.corAnimal = corAnimal;
         this.dtResgate = dtResgate;
@@ -34,6 +42,7 @@ public class Animal {
         this.idEspecieFK = idEspecieFK;
         this.nmRaca = nmRaca;
         this.nmEspecie = nmEspecie;
+        this.historico = historico;
     }
 
     public static String getCreateStatement() {
@@ -46,7 +55,8 @@ public class Animal {
                 +"corAnimal VARCHAR(50)," 
                 +"dtResgate DATE,"
                 +"dtAdocao DATE,"
-                +"imgAnimal," //uiam
+                +"imgAnimal,"
+                + "historico) " 
                 +"FOREIGN KEY (idRacaFK) REFERENCES sql10403882.RACAS(idRaca)," 
                 +"FOREIGN KEY (idEspecieFK) REFERENCES sql10403882.ESPECIES(idEspecie));";
     }
@@ -72,7 +82,8 @@ public class Animal {
                         rs.getInt("idRacaFK"),
                         rs.getInt("idEspecieFK"),
                         rs.getString("nmRaca"),
-                        rs.getString("nmEspecie")
+                        rs.getString("nmEspecie"),
+                        rs.getString("historico")
                 ));
             }
         } catch (Exception ex) {
@@ -112,7 +123,8 @@ public class Animal {
                         rs.getInt("idRacaFK"),
                         rs.getInt("idEspecieFK"),
                         rs.getString("nmRaca"),
-                        rs.getString("nmEspecie")
+                        rs.getString("nmEspecie"),
+                        rs.getString("historico")
                 ));
             }
         } catch (Exception ex) {
@@ -172,7 +184,7 @@ public class Animal {
     }
 
     public static void Insert(String nomeAnimal, String corAnimal, String dtResgate, float pesoAnimal, int idRacaFK, int idEspecieFK
-     /* ,String imgAnimal*/ ) throws Exception {
+      ,String historico ) throws Exception {
         Connection con = null;
         PreparedStatement stmt = null;
         Statement st;
@@ -185,7 +197,7 @@ public class Animal {
             st = con.createStatement();
             rs = st.executeQuery("SELECT idAnimal FROM ANIMAIS;");
             stmt = con.prepareStatement("INSERT INTO ANIMAIS"
-                    + "(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK)" //uiam , imgAnimal, urlImgAnimal
+                    + "(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK, historico)" //uiam , imgAnimal, urlImgAnimal
                     + "VALUES (?, ?, ?, ?, ?, ?)"); /*, ?, ?*/
             stmt.setString(1, nomeAnimal);
             stmt.setString(2, corAnimal);
@@ -193,6 +205,7 @@ public class Animal {
             stmt.setFloat(4, pesoAnimal);
             stmt.setInt(5, idRacaFK);
             stmt.setInt(6, idEspecieFK);
+            stmt.setString(7, historico);
             /*stmt.setBinaryStream(7, (InputStream) input, (int) (file.length()));
             stmt.setString(8, imgAnimal);*/
             stmt.execute();
@@ -213,7 +226,7 @@ public class Animal {
     }
 
     public static void Update(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK
-     /* ,String imgAnimal*/ 
+      ,String historico 
     ) throws Exception 
             
     {
@@ -228,7 +241,7 @@ public class Animal {
             con = dbListener.getConnection();
             stmt = con.prepareStatement("UPDATE ANIMAIS "
                     + "SET nomeAnimal = ?, corAnimal = ?, "
-                    + "dtResgate = ?, dtAdocao = ?, pesoAnimal = ?, idRacaFK = ?, idEspecieFK = ?"
+                    + "dtResgate = ?, dtAdocao = ?, pesoAnimal = ?, idRacaFK = ?, idEspecieFK = ?, historico = ? "
                     /*+ ", imgAnimal = ?, urlImgAnimal = ? "*/
                     + "WHERE idAnimal = ?;");
             stmt.setString(1, nomeAnimal);
@@ -237,10 +250,11 @@ public class Animal {
             stmt.setString(4, dtAdocao);
             stmt.setFloat(5, pesoAnimal);
             stmt.setFloat(6, idRacaFK);
-            stmt.setFloat(7, idEspecieFK);       
+            stmt.setFloat(7, idEspecieFK); 
+            stmt.setString(8, historico);  
             /*stmt.setBinaryStream(8, (InputStream) input, (int) (file.length()));
             stmt.setString(9, imgAnimal);*/
-            stmt.setInt(10, idAnimal);
+            stmt.setInt(9, idAnimal);
             stmt.execute();          
 
         } catch (Exception ex) {
@@ -366,4 +380,44 @@ public class Animal {
     public void setNmEspecie(String nmEspecie) {
         this.nmEspecie = nmEspecie;
     } 
+    public static ArrayList<Animal> getListTop3() throws Exception {
+        ArrayList<Animal> list = new ArrayList<>();
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs;
+        Exception methodException;
+        try {
+            con = dbListener.getConnection();
+            stmt = con.createStatement();
+            rs = stmt.executeQuery("SELECT e.nmEspecie, r.nmRaca, a.* FROM ESPECIES e, RACAS r, ANIMAIS a   WHERE r.idRaca = a.idRacaFK    AND e.idEspecie = a.idEspecieFK AND dtAdocao IS NULL order by a.idAnimal limit 3;");
+            while (rs.next()) {
+                list.add(new Animal(
+                        rs.getString("nomeAnimal"),
+                        rs.getString("corAnimal"),
+                        rs.getString("dtResgate"),
+                        rs.getString("dtAdocao"),
+                        rs.getInt("idAnimal"),
+                        rs.getFloat("pesoAnimal"),
+                        rs.getInt("idRacaFK"),
+                        rs.getInt("idEspecieFK"),
+                        rs.getString("nmRaca"),
+                        rs.getString("nmEspecie"),
+                        rs.getString("historico")
+                ));
+            }
+        } catch (Exception ex) {
+            methodException = ex;
+
+        } finally {
+            try {
+                stmt.close();
+            } catch (Exception ex2) {
+            }
+            try {
+                con.close();
+            } catch (Exception ex2) {
+            }
+        }
+        return list;
+    }
 }

@@ -87,7 +87,7 @@
 
                 <!-- Three columns of text below the carousel -->
                 <div class="row">
-                    <div class="col-lg-4">
+                   <%--<div class="col-lg-4">
                         <img class="rounded-circle" src="imgs/cao1.jpg" alt="Generic placeholder image" width="140" height="140">
                         <h2>Esse é o Tony</h2>
                         <p>Ele foi resgatado após comer carne estragada dada por seu dono e encontrado com marcas de agressão</p>
@@ -104,11 +104,17 @@
                         <h2>Essa é a Bela</h2>
                         <p>Encontramos ela perdida no centro da cidade, ligamos para seus donos e eles recusaram nós devolvermos ela</p>
                         <p>Foi adotada semana passada por um casal</p>
-
+                    </div><!-- /.col-lg-4 --> 
+                    --%>
+                    <%for (Animal a : Animal.getListTop3()) { %>
+                    <div class="col-lg-4">
+                        <img class="rounded-circle" src="imgs/<%=a.getNomeAnimal()%>.jpg" alt="Generic placeholder image" width="140" height="140">
+                        <h2>Essa é <%=a.getNomeAnimal()%></h2>
+                        <p><%=a.getHistorico()%></p>                        
                     </div><!-- /.col-lg-4 -->
+                    <%}%>
                 </div><!-- /.row -->
-
-
+                 
             </div></main><!-- /.container -->
 
             <%@include file="WEB-INF/jspf/footer.jspf"%>
