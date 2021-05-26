@@ -1,12 +1,12 @@
 model\Teste.class
 model\Adocao.class
+model\SendEmail.class
+model\Animal.class
+model\Usuario.class
+model\AguardaAdocao.class
 model\Role.class
 web\dbListener.class
 model\Raca.class
 model\SimpleAuth.class
-model\SendEmail.class
-model\Animal.class
 model\Especie.class
 model\Adotados.class
-model\Usuario.class
-model\AguardaAdocao.class

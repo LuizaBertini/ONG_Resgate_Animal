@@ -1,4 +1,4 @@
-<%@page import="model.SendEmail"%>
+<%@page import="model.JavaMailApp"%>
 <%@page import="web.dbListener"%>
 <%@page import="model.Usuario"%>
 <%@page import="model.Role"%>
@@ -6,22 +6,6 @@
 <%@page import="model.Teste"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%
-    String Erro = "";
-    if (request.getParameter("EnviaEmail") != null) {
-
-        try {
-            SendEmail mail = new SendEmail();
-            mail.sendMail("ongrescuepet@gmail.com", "uilsantos09@hotmail.com", "TESTE JAVAMAIL", "TESTE");
-        } catch (Exception ex) {
-            Erro = ex.toString();
-        }
-    }
-
-
-%>
-
-
 <html>
     <head>
         <%@include file="WEB-INF/jspf/style.jspf"%>
@@ -116,7 +100,6 @@
                 </div><!-- /.row -->
                  
             </div></main><!-- /.container -->
-
             <%@include file="WEB-INF/jspf/footer.jspf"%>
 
             <!-- Bootstrap core JavaScript
@@ -131,4 +114,6 @@
 
 
             <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" preserveAspectRatio="none" style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;">
-            </body></html>
+        
+    </body>
+</html>
