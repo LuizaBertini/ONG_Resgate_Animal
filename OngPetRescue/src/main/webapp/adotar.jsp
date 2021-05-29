@@ -54,15 +54,11 @@
         <%@include file="WEB-INF/jspf/header.jspf"%>
         <%if (session.getAttribute("session.username") != null) {%>
         <main role="main">
-        <h1></h1>
         <div>
-            <table class="table">
-                <thead class="text-light" style="background-color: #FFB84B">
-                    <tr  align="center">
-                        <th colspan="4"><h2>Adotar</h2></th>                    
-                    </tr>
-                </thead>
-            </table>   
+            <div align="center" class="h-50 p-2" style="background-color: #FFB84B; color: white"> 
+                <h2>Lista de Animais</h2>
+            </div>
+            <br>     
             
         <h4 align="center">Adoção é um assunto de extrema importância e deve ser levado com cautela.</h4>
         <h4 align="center">Ao clicar no botão abaixo você deverá ter completa certeza pois um animal é uma vida, e uma vida deve ser espeitada.</h4>

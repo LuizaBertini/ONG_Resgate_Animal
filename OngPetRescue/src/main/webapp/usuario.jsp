@@ -90,17 +90,10 @@
     <body>
         <%@include file="WEB-INF/jspf/header.jspf"%>
 
-        <h1></h1>
-        <div>
-            <table class="table">
-                <thead class="text-light" style="background-color: #FFB84B">
-                    <tr  align="center">
-                        <th colspan="4"><h2>Portal do Usuario</h2></th>                    
-                    </tr>
-                </thead>
-            </table>  
+        <div align="center" class="h-50 p-2" style="background-color: #FFB84B; color: white"> 
+            <h2>Portal do Usuário</h2>
         </div>
-
+        <br>
 
         <%if (session.getAttribute("session.username") == null) {%>
 

@@ -2,8 +2,10 @@ model\Teste.class
 model\Adocao.class
 model\SendEmail.class
 model\Animal.class
+model\JavaMailApp$1.class
 model\Usuario.class
 model\AguardaAdocao.class
+model\JavaMailApp.class
 model\Role.class
 web\dbListener.class
 model\Raca.class

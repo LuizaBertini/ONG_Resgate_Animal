@@ -5,6 +5,7 @@
 
 <%
     String requestExceptionMessage = null;
+    String requestSuccessMessage = null;
     if (request.getParameter("LoginInput") != null) {
         String username = request.getParameter("username");
         String senha = request.getParameter("senha");
@@ -17,7 +18,8 @@
             session.setAttribute("session.id", u.getId());
             session.setAttribute("session.role", u.getRole());
             session.setAttribute("session.email", u.getEmail());
-            response.sendRedirect(request.getRequestURI());
+            
+            requestSuccessMessage = "Login efetuado com sucesso!!";
         }
     }
     if (request.getParameter("LogoutForm") != null) {
@@ -97,7 +99,13 @@
         </ul>
 
 </nav>
-
+            <%if(requestExceptionMessage != null){%>
+                <div style="background-color: red; color: white" align="center"><%= requestExceptionMessage%></div>
+            <%}else if(requestSuccessMessage != null){%>
+                <div style="background-color: green; color: white" align="center"><%= requestSuccessMessage%></div>
+            <%}else{%>
+            <div style="background-color: #F28526">&nbsp;</div>
+            <%}%>
 <%--Esta função mostra se houve algum erro na hora de conectar ao banco de dados
 <%if (dbListener.exceptionMessage != null) {%>
 <div style="background-color: red; color: white">

@@ -113,15 +113,11 @@
 
         <%if (session.getAttribute("session.role") != null) {%>
 
-        <h1></h1>
         <div>
-            <table class="table">
-                <thead class="text-light" style="background-color: #FFB84B">
-                    <tr  align="center">
-                        <th colspan="4"><h2>Lista de Animais</h2></th>                    
-                    </tr>
-                </thead>
-            </table>   
+            <div align="center" class="h-50 p-2" style="background-color: #FFB84B; color: white"> 
+                <h2>Lista de Animais</h2>
+            </div>
+            <br>   
 
             <%if (request.getParameter("prepInsert") != null) {%>
             <form method="post">
@@ -389,15 +385,11 @@
             <%} else {%>
             
             <main role="main">
-            <h1></h1>
             <div>
-                <table class="table">
-                    <thead  class="text-light" style="background-color: #FFB84B">
-                        <tr  align="center">
-                            <th colspan="4"><h2>Animais Disponíveis para adoção</h2></th>                    
-                        </tr>
-                    </thead>
-                </table>   
+                <div align="center" class="h-50 p-2" style="background-color: #FFB84B; color: white"> 
+                    <h2>Animais Disponíveis Para Adoção</h2>
+               </div>
+               <br>  
 
                 <div class="d-flex p-4 justify-content-center">
                 <div class="row row-cols-1 row-cols-md-6 justify-content-center">

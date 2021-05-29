@@ -93,7 +93,7 @@
                     <%for (Animal a : Animal.getListTop3()) { %>
                     <div class="col-lg-4">
                         <img class="rounded-circle" src="imgs/<%=a.getNomeAnimal()%>.jpg" alt="Generic placeholder image" width="140" height="140">
-                        <h2>Essa é <%=a.getNomeAnimal()%></h2>
+                        <h2>Esse é <%=a.getNomeAnimal()%></h2>
                         <p><%=a.getHistorico()%></p>                        
                     </div><!-- /.col-lg-4 -->
                     <%}%>
