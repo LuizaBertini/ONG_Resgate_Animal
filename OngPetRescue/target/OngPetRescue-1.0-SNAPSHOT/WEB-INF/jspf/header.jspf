@@ -6,6 +6,7 @@
 <%
     String requestExceptionMessage = null;
     String requestSuccessMessage = null;
+    
     if (request.getParameter("LoginInput") != null) {
         String username = request.getParameter("username");
         String senha = request.getParameter("senha");
@@ -18,7 +19,6 @@
             session.setAttribute("session.id", u.getId());
             session.setAttribute("session.role", u.getRole());
             session.setAttribute("session.email", u.getEmail());
-            
             requestSuccessMessage = "Login efetuado com sucesso!!";
         }
     }
@@ -58,7 +58,7 @@
             <%--Link para vizualização das adoções pendentes(ação exclusiva para administradores)--%>  
             <%if (session.getAttribute("session.role") != null) {%>
             <li class="nav-item">
-                <a class="nav-link text-light" href='<%= request.getContextPath()%>/aprovarAdocao.jsp'>Aprovar Adoção</a>
+                <a class="nav-link text-light" href='<%= request.getContextPath()%>/pedidosAdocao.jsp'>Pedidos de Adoção</a>
             </li>
             <%}%>          
 
@@ -77,9 +77,9 @@
             <li class="nav-item text-light">
                 <%if (session.getAttribute("session.username") == null) {%>
 
-                <form class="d-flex justify-content-center" method="post">
+                <form class="d-flex justify-content-center" method="GET">
                     <a class="btn btn-outline-danger my-2 my-sm-0" href='<%= request.getContextPath()%>/registerUser.jsp'>Cadastrar</a>&nbsp;
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="LoginInput" value="Entrar">Login</button>&nbsp;                  
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="LoginInput">Login</button>&nbsp;                  
                     <input class="form-control" type="text" name="username" placeholder="Nome">&nbsp;
                     <input class="form-control" type="password" name="senha" placeholder="Senha">
                 </form> 

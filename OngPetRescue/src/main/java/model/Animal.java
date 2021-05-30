@@ -198,7 +198,7 @@ public class Animal {
             rs = st.executeQuery("SELECT idAnimal FROM ANIMAIS;");
             stmt = con.prepareStatement("INSERT INTO ANIMAIS"
                     + "(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK, historico)" //uiam , imgAnimal, urlImgAnimal
-                    + "VALUES (?, ?, ?, ?, ?, ?)"); /*, ?, ?*/
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?)"); /*, ?, ?*/
             stmt.setString(1, nomeAnimal);
             stmt.setString(2, corAnimal);
             stmt.setString(3, dtResgate);

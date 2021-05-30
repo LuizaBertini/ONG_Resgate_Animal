@@ -24,11 +24,11 @@
             String email = request.getParameter("email");
             String dtnasc = request.getParameter("dtnasc");
             String rg = request.getParameter("rg");
-            String cpf = request.getParameter("dtnasc");
+            String cpf = request.getParameter("cpf");
             String telefone = request.getParameter("telefone");
         
            ponto = Usuario.InsertNewUsuario(nome,username, senha, endereco, email, dtnasc, rg, cpf, telefone);
-            //response.sendRedirect(request.getRequestURI());
+            response.sendRedirect("index.jsp");
             exceptionMessage = "final";
         } catch (Exception ex) {
             exceptionMessage = ex.getLocalizedMessage();

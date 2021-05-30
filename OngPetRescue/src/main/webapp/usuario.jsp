@@ -194,8 +194,8 @@
         <%if (session.getAttribute("session.role") != null) {%>
         <main role="main">
         <h3 align="center">Lista de Usuários</h3>
-        <div class="table">
-            <table class="thead-dark"  align="center">
+        <div class="table p-4 row-cols-2 justify-content-center">
+            <table class="table thead-dark"  align="center">
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -262,7 +262,10 @@
                 </div>
                                 </hr>
                                 </br>
+                                
                     <h3 align="center">Animais Adotados:</h3>
+                    <%int id = (int) session.getAttribute("session.id");
+                                if(Adotados.getListADT(id).size() != 0){%>
                     <div class="d-flex p-4 table-responsive">
                         <table class="table table-bordered table-hover" align="center">
                             <thead align="center">
@@ -272,8 +275,7 @@
                                     <th>Data de Adoção</th>
                                 </tr>
                             </thead>
-                            <%int id = (int) session.getAttribute("session.id");
-                              for (Adotados ad : Adotados.getListADT(id)) { %>
+                            <%for (Adotados ad : Adotados.getListADT(id)) { %>
                             <tbody align="center">
                                 <tr>
                                     <td><%= ad.getNomeAnimal()%></td>
@@ -285,6 +287,9 @@
                              <%}%>
                         </table>
                         </main>
+                        <%}else{%>
+                        <div align="center"><h4>Você ainda não adotou nenhuma animal!!</h4></div>
+                        <%}%>
                         <br>
                         <br>
                         <br>

@@ -392,17 +392,19 @@
                <br>  
 
                 <div class="d-flex p-4 justify-content-center">
-                <div class="row row-cols-1 row-cols-md-6 justify-content-center">
+                <%--<div class="row row-cols-1 row-cols-md-6 justify-content-center">--%>
+                <div class="row justify-content-center">
                     <%for (Animal a : Animal.getListNadt()) {%>
+                    <div class="col-md-3 form-group">
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <img class="rounded-circle" src="imgs/<%=a.getNomeAnimal()%>.jpg" alt="Generic placeholder image" width="140" height="140">
-                        <p class="card-text"><%= a.getNomeAnimal()%></p>
-                        <p class="card-text"><%= a.getCorAnimal()%></p>
-                        <p class="card-text"><%= a.getNmRaca()%></p>
-                        <p class="card-text"><%= a.getPesoAnimal()%></p>
-                        <p class="card-text"><%= a.getDtResgate()%></p>
-                        <p class="card-text"><%= a.getNmEspecie()%></p>
+                        <p class="card-text"><b>Nome: </b><%= a.getNomeAnimal()%></p>
+                        <p class="card-text"><b>Cor: </b><%= a.getCorAnimal()%></p>
+                        <p class="card-text"><b>Espécie: </b><%= a.getNmEspecie()%></p>
+                        <p class="card-text"><b>Raça: </b><%= a.getNmRaca()%></p>
+                        <p class="card-text"><b>Peso: </b><%= a.getPesoAnimal()%> Kg</p>
+                        <p class="card-text"><b>Data de Resgate: </b><%= a.getDtResgate()%></p>
                         <form method="post" action="adotar.jsp">
                             <input type="hidden" name="idAnimal" value="<%= a.getIdAnimal()%>">
                             <input type="hidden" name="nomeAnimal" value="<%= a.getNomeAnimal()%>">
@@ -417,9 +419,10 @@
                         </form>
                     </div>
                 </div>&nbsp; &nbsp;
+                </div>
                 <%}%> 
             </div>
-            <br/>
+            
             </div>
             </main>
             <%}%>

@@ -64,7 +64,7 @@
         <h4 align="center">Ao clicar no botão abaixo você deverá ter completa certeza pois um animal é uma vida, e uma vida deve ser espeitada.</h4>
         <h4 align="center">Por-favor, se não tiver certeza que irá cuidar do seu novo amigo, não continue.</h4>
         
-        <form method="POST" onsubmit="return demo();">
+        <form method="POST">
             <%
                     String idAnimal = request.getParameter("idAnimal");
                     String nomeAnimal = request.getParameter("nomeAnimal");
@@ -102,7 +102,7 @@
                                 Data atual para o registro da adoção do Animal: <%= new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>
                             </div>
                             <input type="hidden" name="dataAdc" value="<%= new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>">   
-                            <input class="btn btn-success" type="submit" name="Adotar" value="Adotar">
+                            <input class="btn btn-success" type="submit" name="Adotar" value="Adotar" onclick="return demo();">
                             <input class="btn btn-danger" type="submit" name="cancelar" value="Cancelar">
                         </div>
                     </th>
@@ -123,7 +123,7 @@
     
 <script>
     function demo(){
-    alert ("Parabés!!!! Agora é só esperar a aprovação ;)" );
+    alert ("Parabéns!!!! Agora é só esperar a aprovação ;)" );
     }
 </script>
     

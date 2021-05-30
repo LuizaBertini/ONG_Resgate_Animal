@@ -270,7 +270,7 @@ public class Usuario {
         Exception methodException = null;
         try {
             con = dbListener.getConnection();
-            stmt = con.prepareStatement("SELECT * FROM USUARIO "
+            stmt = con.prepareStatement("SELECT id, username, senha, role, email, dt_aprovacao FROM USUARIO "
                     + "WHERE username = ? AND senha = ?");
             stmt.setString(1, username);
             stmt.setString(2, senha);
