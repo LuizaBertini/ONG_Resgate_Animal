@@ -18,7 +18,39 @@ import java.time.format.DateTimeFormatter;
  */
 public class Usuario {    
 
-    private String username, senha, role, email;
+    private String username, senha, role, email, endereco, rg, cpf, telefone;
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getRg() {
+        return rg;
+    }
+
+    public void setRg(String rg) {
+        this.rg = rg;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
     private String dtAprovacao;
 
     public String getDtAprovacao() {
@@ -71,13 +103,17 @@ public class Usuario {
     }
   
     
-    public Usuario(int id, String username, String senha, String role, String email, String dtAprovacao){        
+    public Usuario(int id, String username, String senha, String role, String email, String dtAprovacao, String endereco, String rg, String cpf, String telefone){        
         this.id = id;
         this.username = username;
         this.senha = senha;
         this.role = role;
         this.email = email;
         this.dtAprovacao = dtAprovacao;
+        this.endereco = endereco;
+        this.rg = rg;
+        this.cpf = cpf;
+        this.telefone = telefone;
     }
      public static String getCreateStatement(){
         return "CREATE TABLE IF NOT EXISTS sql10403882.USUARIO ("      
@@ -98,7 +134,7 @@ public class Usuario {
             con = dbListener.getConnection();
             stmt = con.createStatement(); 
                    
-            rs = stmt.executeQuery("SELECT id, username, senha, role, email, dt_aprovacao FROM USUARIO;");
+            rs = stmt.executeQuery("SELECT id, username, senha, role, email, dt_aprovacao, endereco, registro_geral, cpf, telefone FROM USUARIO;");
             while(rs.next()){
             list.add(new Usuario(
             rs.getInt("id"),
@@ -106,7 +142,11 @@ public class Usuario {
             rs.getString("senha"),       
             rs.getString("role"),
             rs.getString("email"),
-            rs.getString("dt_aprovacao")
+            rs.getString("dt_aprovacao"),
+            rs.getString("endereco"),
+            rs.getString("registro_geral"),
+            rs.getString("cpf"),
+            rs.getString("telefone")
             ));
             
             }
@@ -270,7 +310,7 @@ public class Usuario {
         Exception methodException = null;
         try {
             con = dbListener.getConnection();
-            stmt = con.prepareStatement("SELECT id, username, senha, role, email, dt_aprovacao FROM USUARIO "
+            stmt = con.prepareStatement("SELECT * FROM USUARIO "
                     + "WHERE username = ? AND senha = ?");
             stmt.setString(1, username);
             stmt.setString(2, senha);
@@ -282,7 +322,11 @@ public class Usuario {
                 rs.getString("senha"),
                 rs.getString("role"),
                 rs.getString("email"),
-                rs.getString("dt_aprovacao")        
+                rs.getString("dt_aprovacao"),
+                rs.getString("endereco"),
+                rs.getString("registro_geral"),
+                rs.getString("cpf"),
+                rs.getString("telefone")
                 );
             }
         } catch (Exception ex) {

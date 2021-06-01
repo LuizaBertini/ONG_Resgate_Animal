@@ -46,7 +46,7 @@
 <html>
     <head>       
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Adotar</title>
+        <title>Ong Resgate Animal | Adotar</title>
         
     </head>
             <%@include file="WEB-INF/jspf/style.jspf"%>
@@ -72,40 +72,45 @@
                     String dtResgate = request.getParameter("dtResgate");
                     String pesoAnimal = request.getParameter("pesoAnimal");
                     String nmEspecie = request.getParameter("nmEspecie");
+                    String historico = request.getParameter("historico");
                 %>
                 <table class="table"  style="width: 50%" align="center">
-                    <th style="width: 50%">
-                      
+                    <td style="width: 50%">
+                                
                             <input type="hidden" name="idAnimal" value="<%= idAnimal%>">                                                     
-
+                            
                             <div>
-                                Nome do Animal: <%= nomeAnimal%>
+                                <p><b>Nome do Animal: </b><%= nomeAnimal%></p>
                             </div>
                             
                             <div>
-                                Cor do Animal: <%= corAnimal%>
+                                <p><b>Cor do Animal: </b><%= corAnimal%>
+                            </div>
+          
+                            <div>
+                                <p><b>Data de resgate do Animal: </b><%= historico%>
                             </div>
                             
                             <div>
-                                Peso do Animal: <%= pesoAnimal%>
+                                <p><b>Peso do Animal: </b><%= pesoAnimal%>
                             </div>
                             
                             <div>
-                                Raça do Animal: <%= nmEspecie%>
+                                <p><b>Raça do Animal: </b><%= nmEspecie%>
                             </div>
                                 
                             <div>
-                                Data de resgate do Animal: <%= dtResgate%>
+                                <p><b>Data de resgate do Animal: </b><%= dtResgate%>
                             </div>
                             
                             <div>
-                                Data atual para o registro da adoção do Animal: <%= new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>
+                                <p><b>Data atual para o registro da adoção do Animal: </b><%= new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>
                             </div>
                             <input type="hidden" name="dataAdc" value="<%= new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>">   
                             <input class="btn btn-success" type="submit" name="Adotar" value="Adotar" onclick="return demo();">
                             <input class="btn btn-danger" type="submit" name="cancelar" value="Cancelar">
                         </div>
-                    </th>
+                    </td>
                 </table>
             </form>
             

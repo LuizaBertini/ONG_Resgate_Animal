@@ -19,6 +19,8 @@
 <%@page import="java.io.*"%>
 <%@page import="java.sql.*"%>
 <%@page import="javax.swing.JFileChooser"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -96,7 +98,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Animais</title>
+        <title>Ong Resgate Animal | Animais</title>
         <%@include file="WEB-INF/jspf/style.jspf"%>
     </head>
     <body>
@@ -160,7 +162,7 @@
                                 <div>
                                     <span class="input-group-text">Data de Resgate:</span>
                                 </div>    
-                                <input class="form-control" type="date" name="dtResgate">
+                                <input class="form-control" type="date" max="<%= new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>" name="dtResgate">
                             </div>
 
                             <div class="input-group mb-3"> 
@@ -260,7 +262,7 @@
                                 <div>
                                     <span class="input-group-text">Data de Resgate: </span>
                                 </div>    
-                                <input class="form-control" type="date" name="dtResgate" value="<%= dtResgate%>">
+                                <input class="form-control" type="date" name="dtResgate" max="<%= new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>" value="<%= dtResgate%>">
                             </div>
 
                             <div class="input-group mb-3"> 
@@ -347,7 +349,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <img class="rounded-circle" src="imgs/<%=a.getNomeAnimal()%>.jpg" alt="Generic placeholder image" width="140" height="140">
+                                <img class="rounded-circle" onerror="this.src='imgs/not_found.png';" src="imgs/<%=a.getNomeAnimal()%>.jpg" alt="Generic placeholder image" width="140" height="140">
                                 </td>
                             <td><%= a.getIdAnimal()%></td>
                             <td><%= a.getNomeAnimal()%></td>
@@ -395,16 +397,17 @@
                 <%--<div class="row row-cols-1 row-cols-md-6 justify-content-center">--%>
                 <div class="row justify-content-center">
                     <%for (Animal a : Animal.getListNadt()) {%>
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-auto form-group">
                 <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <img class="rounded-circle" src="imgs/<%=a.getNomeAnimal()%>.jpg" alt="Generic placeholder image" width="140" height="140">
+                    <div class="card-body"  align="center">
+                        <img class="rounded-circle" src="imgs/<%=a.getNomeAnimal()%>.jpg" onerror="this.src='imgs/not_found.png';" alt="Generic placeholder image" width="140" height="140">
                         <p class="card-text"><b>Nome: </b><%= a.getNomeAnimal()%></p>
                         <p class="card-text"><b>Cor: </b><%= a.getCorAnimal()%></p>
                         <p class="card-text"><b>Espécie: </b><%= a.getNmEspecie()%></p>
                         <p class="card-text"><b>Raça: </b><%= a.getNmRaca()%></p>
                         <p class="card-text"><b>Peso: </b><%= a.getPesoAnimal()%> Kg</p>
                         <p class="card-text"><b>Data de Resgate: </b><%= a.getDtResgate()%></p>
+                        <p class="card-text plimit" onmouseover="<%= a.getHistorico()%>"><b>Histórico: </b><%= a.getHistorico()%></p>
                         <form method="post" action="adotar.jsp">
                             <input type="hidden" name="idAnimal" value="<%= a.getIdAnimal()%>">
                             <input type="hidden" name="nomeAnimal" value="<%= a.getNomeAnimal()%>">
@@ -418,7 +421,7 @@
                             <input class="btn btn-success" type="submit" name="prepAdotar" value="Adotar">
                         </form>
                     </div>
-                </div>&nbsp; &nbsp;
+                </div>
                 </div>
                 <%}%> 
             </div>

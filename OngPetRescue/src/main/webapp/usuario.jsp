@@ -83,7 +83,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Usuarios</title>
+        <title>Ong Resgate Animal | Usuarios</title>
     
         <%@include file="WEB-INF/jspf/style.jspf"%>
     </head>
@@ -241,6 +241,31 @@
                                 <th>Email</th>
                                 <td><%= session.getAttribute("session.email")%></td>
                             </tr>
+                                                    
+                            <tr>
+                                <th>Endereço</th>
+                                <td>
+                                    <%= session.getAttribute("session.endereco")%>
+                                </td>
+                            </tr> 
+                            <tr>
+                                <th>RG</th>
+                                <td>
+                                    <%= session.getAttribute("session.rg")%>
+                                </td>
+                            </tr> 
+                            <tr>
+                                <th>CPF</th>
+                                <td>
+                                    <%= session.getAttribute("session.cpf")%>
+                                </td>
+                            </tr> 
+                            <tr>
+                                <th>Telefone</th>
+                                <td>
+                                    <%= session.getAttribute("session.telefone")%>
+                                </td>
+                            </tr> 
                             
                             <tr>
                                 <th>Alterar Senha</th>
@@ -253,8 +278,8 @@
                                         <input type="submit" class="btn btn-info" name="trocaSenha" value="Alterar">
                                     </form>
                                 </td>
-                            </tr>                            
-                                
+                            </tr>  
+                            
                         </tbody>
                     </table>
                 </div>
@@ -285,11 +310,13 @@
                                
                             </tbody>
                              <%}%>
+                             
+                        
+                        <%}else{%>
+                        <div align="center"><h4>Nenhum animal!!</h4></div>
+                        <%}%>
                         </table>
                         </main>
-                        <%}else{%>
-                        <div align="center"><h4>Você ainda não adotou nenhuma animal!!</h4></div>
-                        <%}%>
                         <br>
                         <br>
                         <br>
@@ -298,7 +325,7 @@
 
 
                         <%}%>
-                                                <%@include file="WEB-INF/jspf/footer.jspf"%>
+                        <%@include file="WEB-INF/jspf/footer.jspf"%>
 
                         </body>
                         </html>

@@ -29,7 +29,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Usuarios</title>    
+        <title>Ong Resgate Animal | Pedidos de Adoção</title>    
         <%@include file="WEB-INF/jspf/style.jspf"%>
     </head>
     <body>

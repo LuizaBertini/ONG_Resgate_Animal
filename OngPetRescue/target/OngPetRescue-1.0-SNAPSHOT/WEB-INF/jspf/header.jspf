@@ -19,6 +19,10 @@
             session.setAttribute("session.id", u.getId());
             session.setAttribute("session.role", u.getRole());
             session.setAttribute("session.email", u.getEmail());
+            session.setAttribute("session.endereco", u.getEndereco());
+            session.setAttribute("session.rg", u.getRg());
+            session.setAttribute("session.cpf", u.getCpf());
+            session.setAttribute("session.telefone", u.getTelefone());
             requestSuccessMessage = "Login efetuado com sucesso!!";
         }
     }
@@ -28,6 +32,10 @@
         session.removeAttribute("session.id");
         session.removeAttribute("session.role");
         session.removeAttribute("session.email");
+        session.removeAttribute("session.endereco");
+        session.removeAttribute("session.rg");
+        session.removeAttribute("session.cpf");
+        session.removeAttribute("session.telefone");
         response.sendRedirect(request.getRequestURI());
     }
 %>
@@ -46,7 +54,7 @@
         <ul class="navbar-nav mr-auto">
             <%--Essa lista é para colocar os links das páginas--%>
             <li class="nav-item">
-                <a class="nav-link text-light" href='<%= request.getContextPath()%>/index.jsp'>Inicio</a>
+                <a class="nav-link text-light" href='<%= request.getContextPath()%>/index.jsp'>Início</a>
             </li>
             
             
@@ -78,10 +86,11 @@
                 <%if (session.getAttribute("session.username") == null) {%>
 
                 <form class="d-flex justify-content-center" method="GET">
-                    <a class="btn btn-outline-danger my-2 my-sm-0" href='<%= request.getContextPath()%>/registerUser.jsp'>Cadastrar</a>&nbsp;
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="LoginInput">Login</button>&nbsp;                  
+                                     
                     <input class="form-control" type="text" name="username" placeholder="Nome">&nbsp;
-                    <input class="form-control" type="password" name="senha" placeholder="Senha">
+                    <input class="form-control" type="password" name="senha" placeholder="Senha">&nbsp;
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="LoginInput">Login</button>&nbsp; 
+                    <a class="btn btn-outline-danger my-2 my-sm-0" href='<%= request.getContextPath()%>/registerUser.jsp'>Cadastrar</a>
                 </form> 
                 <%} else {%>
                 <form class="d-flex" method="post">
