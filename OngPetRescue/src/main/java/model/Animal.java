@@ -29,9 +29,17 @@ public class Animal {
     private int idAnimal, idRacaFK, idEspecieFK;
     private float pesoAnimal;
     String imgAnimal; //uiam
+
+    public String getImgAnimal() {
+        return imgAnimal;
+    }
+
+    public void setImgAnimal(String imgAnimal) {
+        this.imgAnimal = imgAnimal;
+    }
     
     
-    public Animal(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK, String nmRaca, String nmEspecie, String historico) {
+    public Animal(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK, String nmRaca, String nmEspecie, String historico, String imgAnimal) {
         this.nomeAnimal = nomeAnimal;
         this.corAnimal = corAnimal;
         this.dtResgate = dtResgate;
@@ -43,6 +51,7 @@ public class Animal {
         this.nmRaca = nmRaca;
         this.nmEspecie = nmEspecie;
         this.historico = historico;
+        this.imgAnimal = imgAnimal;
     }
 
     public static String getCreateStatement() {
@@ -83,7 +92,8 @@ public class Animal {
                         rs.getInt("idEspecieFK"),
                         rs.getString("nmRaca"),
                         rs.getString("nmEspecie"),
-                        rs.getString("historico")
+                        rs.getString("historico"),
+                        rs.getString("imgAnimal")
                 ));
             }
         } catch (Exception ex) {
@@ -124,7 +134,8 @@ public class Animal {
                         rs.getInt("idEspecieFK"),
                         rs.getString("nmRaca"),
                         rs.getString("nmEspecie"),
-                        rs.getString("historico")
+                        rs.getString("historico"),
+                        rs.getString("imgAnimal")
                 ));
             }
         } catch (Exception ex) {
@@ -143,7 +154,7 @@ public class Animal {
         return list;
     }
 
-    public static void InsertList(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK) //uiam
+    public static void InsertList(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK, String imgAnimal) //uiam
     throws Exception {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -155,7 +166,7 @@ public class Animal {
             con = dbListener.getConnection();
             stmt = con.prepareStatement("INSERT INTO ANIMAIS"
                     + "(nomeAnimal, corAnimal, dtResgate, dtAdocao, idAnimal, pesoAnimal, idRacaFK, idEspecieFK, imgAnimal)" //uiam
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"); //uiam
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"); //uiam
             stmt.setString(1, nomeAnimal);
             stmt.setString(2, corAnimal);
             stmt.setString(3, dtResgate);
@@ -164,6 +175,7 @@ public class Animal {
             stmt.setFloat(6, pesoAnimal);
             stmt.setInt(7, idRacaFK);
             stmt.setInt(8, idEspecieFK);
+            stmt.setString(9, imgAnimal);
             /*File image= new File(imgAnimal);
             fis=new FileInputStream(image);
             stmt.setBinaryStream(9, (InputStream) fis, (int) (image.length()));*/
@@ -184,7 +196,7 @@ public class Animal {
     }
 
     public static void Insert(String nomeAnimal, String corAnimal, String dtResgate, float pesoAnimal, int idRacaFK, int idEspecieFK
-      ,String historico ) throws Exception {
+      ,String historico, String imgAnimal) throws Exception {
         Connection con = null;
         PreparedStatement stmt = null;
         Statement st;
@@ -197,8 +209,8 @@ public class Animal {
             st = con.createStatement();
             rs = st.executeQuery("SELECT idAnimal FROM ANIMAIS;");
             stmt = con.prepareStatement("INSERT INTO ANIMAIS"
-                    + "(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK, historico)" //uiam , imgAnimal, urlImgAnimal
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)"); /*, ?, ?*/
+                    + "(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK, historico, imgAnimal)" //uiam , imgAnimal, urlImgAnimal
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"); /*, ?, ?*/
             stmt.setString(1, nomeAnimal);
             stmt.setString(2, corAnimal);
             stmt.setString(3, dtResgate);
@@ -206,6 +218,7 @@ public class Animal {
             stmt.setInt(5, idRacaFK);
             stmt.setInt(6, idEspecieFK);
             stmt.setString(7, historico);
+            stmt.setString(8, imgAnimal);
             /*stmt.setBinaryStream(7, (InputStream) input, (int) (file.length()));
             stmt.setString(8, imgAnimal);*/
             stmt.execute();
@@ -226,7 +239,7 @@ public class Animal {
     }
 
     public static void Update(String nomeAnimal, String corAnimal, String dtResgate, String dtAdocao, int idAnimal, float pesoAnimal, int idRacaFK, int idEspecieFK
-      ,String historico 
+      ,String historico, String imgAnimal 
     ) throws Exception 
             
     {
@@ -242,7 +255,7 @@ public class Animal {
             stmt = con.prepareStatement("UPDATE ANIMAIS "
                     + "SET nomeAnimal = ?, corAnimal = ?, "
                     + "dtResgate = ?, dtAdocao = ?, pesoAnimal = ?, idRacaFK = ?, idEspecieFK = ?, historico = ? "
-                    /*+ ", imgAnimal = ?, urlImgAnimal = ? "*/
+                    + ",imgAnimal = ? "
                     + "WHERE idAnimal = ?;");
             stmt.setString(1, nomeAnimal);
             stmt.setString(2, corAnimal);
@@ -252,9 +265,10 @@ public class Animal {
             stmt.setFloat(6, idRacaFK);
             stmt.setFloat(7, idEspecieFK); 
             stmt.setString(8, historico);  
+            stmt.setString(9, imgAnimal);
             /*stmt.setBinaryStream(8, (InputStream) input, (int) (file.length()));
-            stmt.setString(9, imgAnimal);*/
-            stmt.setInt(9, idAnimal);
+            */
+            stmt.setInt(10, idAnimal);
             stmt.execute();          
 
         } catch (Exception ex) {
@@ -402,7 +416,8 @@ public class Animal {
                         rs.getInt("idEspecieFK"),
                         rs.getString("nmRaca"),
                         rs.getString("nmEspecie"),
-                        rs.getString("historico")
+                        rs.getString("historico"),
+                        rs.getString("imgAnimal")
                 ));
             }
         } catch (Exception ex) {

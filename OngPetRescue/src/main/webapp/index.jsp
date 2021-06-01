@@ -91,7 +91,7 @@
                     --%>
                     <%for (Animal a : Animal.getListTop3()) { %>
                     <div class="col-lg-4">
-                        <img class="rounded-circle" src="imgs/<%=a.getNomeAnimal()%>.jpg" onerror="this.src='imgs/not_found.png';" alt="Generic placeholder image" width="140" height="140">
+                        <img class="rounded-circle" src="https://docs.google.com/uc?id=<%=a.getImgAnimal()%>" onerror="this.src='imgs/not_found.png';" alt="Generic placeholder image" width="140" height="140">
                         <h2>Esse é <%=a.getNomeAnimal()%></h2>
                         <p><%=a.getHistorico()%></p>                        
                     </div><!-- /.col-lg-4 -->

@@ -40,8 +40,8 @@
             float pesoAnimal = Float.parseFloat(request.getParameter("pesoAnimal"));
             int idRacaFK = Integer.parseInt(request.getParameter("idRacaFK"));
             int idEspecieFK = Integer.parseInt(request.getParameter("idEspecieFK"));
-
-            Animal.Insert(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK, historico); //uiam
+            String imgAnimal = request.getParameter("imgAnimal");
+            Animal.Insert(nomeAnimal, corAnimal, dtResgate, pesoAnimal, idRacaFK, idEspecieFK, historico, imgAnimal); //uiam
             response.sendRedirect(request.getRequestURI());
 
         } catch (Exception ex) {
@@ -63,8 +63,8 @@
             float pesoAnimal = Float.parseFloat(request.getParameter("pesoAnimal"));
             int idRacaFK = Integer.parseInt(request.getParameter("idRacaFK"));
             int idEspecieFK = Integer.parseInt(request.getParameter("idEspecieFK"));
-            
-            Animal.Update(nomeAnimal, corAnimal, dtResgate, dtAdocao, idAnimal, pesoAnimal, idRacaFK, idEspecieFK, historico);//uiam
+            String imgAnimal = request.getParameter("imgAnimal");
+            Animal.Update(nomeAnimal, corAnimal, dtResgate, dtAdocao, idAnimal, pesoAnimal, idRacaFK, idEspecieFK, historico, imgAnimal);//uiam
             response.sendRedirect(request.getRequestURI());
         } catch (Exception ex) {
             exceptionMessage = ex.getLocalizedMessage();
@@ -190,15 +190,13 @@
                                     <%}%>
                                 </select>
                             </div>
-                            <%--uiam  
+                             
                             <div class="input-group mb-3"> 
                                 <div>
-                                    <span class="input-group-text">Foto do Animal:</span>
+                                    <span class="input-group-text">Id da foto do animal:</span>
                                 </div>    
-                                <input class="form-control" type="file" name="imgAnimal">
-                            </div>
-                            uiam --%>  
-
+                                <input class="form-control" title="Adicionar id da imagem que foi armazenada no Repositório" type="text" name="imgAnimal">
+                            </div>                       
                             <input class="btn btn-success" type="submit" name="formInsert" value="Inserir">
                             <input class="btn btn-danger" type="submit" name="cancelar" value="Cancelar">
 
@@ -220,6 +218,7 @@
                     String dtAdocao = request.getParameter("dtAdocao");
                     String pesoAnimal = request.getParameter("pesoAnimal");
                     String historico = request.getParameter("historico");
+                    String imgAnimal = request.getParameter("imgAnimal");
                     if (historico == null){
                         historico = "";
                     }
@@ -291,15 +290,13 @@
                                         <%= e.getNmEspecie()%></option>
                                     <%}%>
                                 </select>
-                            </div>    
-                            <%--uiam      
+                            </div> 
                             <div class="input-group mb-3"> 
                                 <div>
-                                    <span class="input-group-text">Foto do Animal:</span>
+                                    <span class="input-group-text">Id da foto do animal:</span>
                                 </div>    
-                                <input class="form-control" type="file" name="imgAnimal">
-                            </div>    
-                            uiam --%>    
+                                <input class="form-control" title="Adicionar id da imagem que foi armazenada no Repositório" type="text" name="imgAnimal" value="<%= imgAnimal%>">
+                            </div>      
                             <input class="btn btn-info" type="submit" name="formUpdate" value="Alterar">
                             <input class="btn btn-danger" type="submit" name="cancelar" value="Cancelar">
 
@@ -349,7 +346,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <img class="rounded-circle" onerror="this.src='imgs/not_found.png';" src="imgs/<%=a.getNomeAnimal()%>.jpg" alt="Generic placeholder image" width="140" height="140">
+                                <img class="rounded-circle" onerror="this.src='imgs/not_found.png';" src="https://docs.google.com/uc?id=<%=a.getImgAnimal()%>" alt="Generic placeholder image" width="140" height="140">
                                 </td>
                             <td><%= a.getIdAnimal()%></td>
                             <td><%= a.getNomeAnimal()%></td>
@@ -372,6 +369,7 @@
                                     <input type="hidden" name="idE" value="<%= a.getIdEspecieFK()%>">
                                     <input type="hidden" name="idR" value="<%= a.getIdRacaFK()%>">
                                     <input type="hidden" name="historico" value="<%= a.getHistorico()%>">
+                                    <input type="hidden" name="imgAnimal" value="<%= a.getImgAnimal()%>">
                                     <input class="btn btn-info" type="submit" name="prepUpdate" value="Alterar">
                                     <input class="btn btn-danger" type="submit" name="prepDelete" value="Excluir">
                                 </form>
@@ -400,7 +398,7 @@
                     <div class="col-md-auto form-group">
                 <div class="card" style="width: 18rem;">
                     <div class="card-body"  align="center">
-                        <img class="rounded-circle" src="imgs/<%=a.getNomeAnimal()%>.jpg" onerror="this.src='imgs/not_found.png';" alt="Generic placeholder image" width="140" height="140">
+                        <img class="rounded-circle" src="https://docs.google.com/uc?id=<%=a.getImgAnimal()%>" onerror="this.src='imgs/not_found.png';" alt="Generic placeholder image" width="140" height="140">
                         <p class="card-text"><b>Nome: </b><%= a.getNomeAnimal()%></p>
                         <p class="card-text"><b>Cor: </b><%= a.getCorAnimal()%></p>
                         <p class="card-text"><b>Espécie: </b><%= a.getNmEspecie()%></p>
@@ -418,6 +416,7 @@
                             <input type="hidden" name="idE" value="<%= a.getIdEspecieFK()%>">
                             <input type="hidden" name="idR" value="<%= a.getIdRacaFK()%>">
                             <input type="hidden" name="historico" value="<%= a.getHistorico()%>">
+                            <input type="hidden" name="imgAnimal" value="<%= a.getImgAnimal()%>">
                             <input class="btn btn-success" type="submit" name="prepAdotar" value="Adotar">
                         </form>
                     </div>
