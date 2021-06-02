@@ -7,7 +7,7 @@
 <%@page import="java.util.Date"%>
 <%@page import="javax.xml.crypto.Data"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@page import="web.dbListener"%>
 <%@page import="model.Usuario"%>
 <%@page import="model.Animal"%>
@@ -45,7 +45,7 @@
 <!DOCTYPE html>
 <html>
     <head>       
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>Ong Resgate Animal | Adotar</title>
         
     </head>
@@ -56,13 +56,13 @@
         <main role="main">
         <div>
             <div align="center" class="h-50 p-2" style="background-color: #FFB84B; color: white"> 
-                <h2>Lista de Animais</h2>
+                <h2>Adotar</h2>
             </div>
             <br>     
             
-        <h4 align="center">Ado√ß√£o √© um assunto de extrema import√¢ncia e deve ser levado com cautela.</h4>
-        <h4 align="center">Ao clicar no bot√£o abaixo voc√™ dever√° ter completa certeza pois um animal √© uma vida, e uma vida deve ser espeitada.</h4>
-        <h4 align="center">Por-favor, se n√£o tiver certeza que ir√° cuidar do seu novo amigo, n√£o continue.</h4>
+        <h4 align="center">AdoÁ„o È um assunto de extrema import‚ncia e deve ser levado com cautela.</h4>
+        <h4 align="center">Ao clicar no bot„o abaixo vocÍ dever· ter completa certeza pois um animal È uma vida, e uma vida deve ser respeitada.</h4>
+        <h4 align="center">Por-favor, se n„o tiver certeza que ir· cuidar do seu novo amigo, n„o continue.</h4>
         
         <form method="POST">
             <%
@@ -88,7 +88,7 @@
                             </div>
           
                             <div>
-                                <p><b>Data de resgate do Animal: </b><%= historico%>
+                                <p><b>HistÛrico do Animal: </b><%= historico%>
                             </div>
                             
                             <div>
@@ -96,7 +96,7 @@
                             </div>
                             
                             <div>
-                                <p><b>Ra√ßa do Animal: </b><%= nmEspecie%>
+                                <p><b>RaÁa do Animal: </b><%= nmEspecie%>
                             </div>
                                 
                             <div>
@@ -104,7 +104,7 @@
                             </div>
                             
                             <div>
-                                <p><b>Data atual para o registro da ado√ß√£o do Animal: </b><%= new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>
+                                <p><b>Data atual para o registro da adoÁ„o do Animal: </b><%= new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>
                             </div>
                             <input type="hidden" name="dataAdc" value="<%= new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>">   
                             <input class="btn btn-success" type="submit" name="Adotar" value="Adotar" onclick="return demo();">
@@ -117,7 +117,7 @@
         </form>
         </main>
         <%}else{%>
-        <h1 align="center">Voc√™ precisa estar cadastrado para adotar!!!</h1>
+        <h1 align="center">VocÍ precisa estar cadastrado para adotar!!!</h1>
         <%}%>
         
         <%@include file="WEB-INF/jspf/footer.jspf"%>
@@ -128,7 +128,7 @@
     
 <script>
     function demo(){
-    alert ("Parab√©ns!!!! Agora √© s√≥ esperar a aprova√ß√£o ;)" );
+    alert ("ParabÈns!!!! Agora È sÛ esperar a aprovaÁ„o ;)" );
     }
 </script>
     

@@ -6,7 +6,7 @@
 --%>
 <%@page import="model.Adotados"%>
 <%@page import="model.Usuario"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <%
     String exceptionMessage = null;
@@ -66,9 +66,9 @@
             String novaSenha = request.getParameter("novaSenha");
             String novaSenha2 = request.getParameter("novaSenha2");
             if (Usuario.getUsuario(username, senha) == null) {
-                exceptionMessage = "Senha Inv√°lida!";
+                exceptionMessage = "Senha Inv·lida!";
             } else if (!novaSenha.equals(novaSenha2)) {
-                exceptionMessage = "Senhas n√£o conferem";
+                exceptionMessage = "Senhas n„o conferem";
             } else {
                 Usuario.changePassword(username, novaSenha);
                 response.sendRedirect(request.getRequestURI());
@@ -82,7 +82,7 @@
 %>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>Ong Resgate Animal | Usuarios</title>
     
         <%@include file="WEB-INF/jspf/style.jspf"%>
@@ -91,13 +91,13 @@
         <%@include file="WEB-INF/jspf/header.jspf"%>
 
         <div align="center" class="h-50 p-2" style="background-color: #FFB84B; color: white"> 
-            <h2>Portal do Usu√°rio</h2>
+            <h2>Portal do Usu·rio</h2>
         </div>
         <br>
 
         <%if (session.getAttribute("session.username") == null) {%>
 
-        <div align="center"><h1>Voc√™ n√£o tem permiss√£o de acesso</h1></div>
+        <div align="center"><h1>VocÍ n„o tem permiss„o de acesso</h1></div>
 
         <%} else {%>
 
@@ -175,13 +175,13 @@
             <input class="btn btn-dark" type="submit" name="cancelar" value="Cancelar">
         </form>
         <%} else if (request.getParameter("prepAprove") != null) {%>
-        <h3 align="center">Aprovar Usu√°rio</h3>
+        <h3 align="center">Aprovar Usu·rio</h3>
         <form align="center">
             <%String username = request.getParameter("username");
                 int id = Integer.parseInt(request.getParameter("id"));%>
             <input type="hidden" name="username" value="<%= username%>">
             <input type="hidden" name="id" value="<%= id%>">
-            Deseja aprovar a inscri√ß√£o do usuario <b><%= username%></b>?
+            Deseja aprovar a inscriÁ„o do usuario <b><%= username%></b>?
             <input class="btn btn-secondary" type="submit" name="formAprove" value="Aprovar">
             <input class="btn btn-dark" type="submit" name="cancelar" value="Cancelar">
         </form>
@@ -193,14 +193,14 @@
 
         <%if (session.getAttribute("session.role") != null) {%>
         <main role="main">
-        <h3 align="center">Lista de Usu√°rios</h3>
+        <h3 align="center">Lista de Usu·rios</h3>
         <div class="table p-4 row-cols-2 justify-content-center">
             <table class="table thead-dark"  align="center">
                 <thead>
                     <tr>
                         <th>Id</th>
                         <th>Usuario</th>
-                        <th>Data Aprova√ß√£o</th>
+                        <th>Data AprovaÁ„o</th>
                         <th>Comandos</th>
                         <th></th>
                     </tr>
@@ -228,13 +228,13 @@
                 </main>
                 <%} else {%>
                 <main role="main">
-                <h3 align="center">Configura√ß√µes</h3>
+                <h3 align="center">ConfiguraÁıes</h3>
                 <div align="center">
                 <div class="card p-4 d-flex" style="width: 45rem;">
                 <div class="table-responsive">
                     <table class="table" align="center">
                             <tr>
-                                <th>Nome de usu√°rio</th>
+                                <th>Nome de usu·rio</th>
                                 <td><%= session.getAttribute("session.username")%></td>
                             </tr>    
                             <tr>    
@@ -243,7 +243,7 @@
                             </tr>
                                                     
                             <tr>
-                                <th>Endere√ßo</th>
+                                <th>EndereÁo</th>
                                 <td>
                                     <%= session.getAttribute("session.endereco")%>
                                 </td>
@@ -273,7 +273,7 @@
                                     <form method="post">
                                         <div>Senha atual:<div> <input type="password" name="senha"></div></div>
                                         <div>Nova senha:<div> <input type="password" name="novaSenha"></div></div>
-                                        <div>Confirma√ß√£o nova senha:<div><input type="password" name="novaSenha2"></div></div>
+                                        <div>ConfirmaÁ„o nova senha:<div><input type="password" name="novaSenha2"></div></div>
                                         <br/>
                                         <input type="submit" class="btn btn-info" name="trocaSenha" value="Alterar">
                                     </form>
@@ -297,7 +297,7 @@
                                 <tr>
                                     <th>Nome do Animal</th>
                                     <th>Cor do Animal</th>
-                                    <th>Data de Ado√ß√£o</th>
+                                    <th>Data de AdoÁ„o</th>
                                 </tr>
                             </thead>
                             <%for (Adotados ad : Adotados.getListADT(id)) { %>

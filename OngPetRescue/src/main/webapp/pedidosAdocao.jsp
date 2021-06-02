@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="model.AguardaAdocao"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@page import="model.Adotados"%>
 <%@page import="model.Adocao"%>
 <%@page import="java.time.*"%>
@@ -28,20 +28,20 @@
 
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Ong Resgate Animal | Pedidos de AdoÃ§Ã£o</title>    
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title>Ong Resgate Animal | Pedidos de Adoção</title>    
         <%@include file="WEB-INF/jspf/style.jspf"%>
     </head>
     <body>
         <%@include file="WEB-INF/jspf/header.jspf"%>
         <%if(session.getAttribute("session.role")==null){%>
-            <div align="center"><h1>VocÃª nÃ£o tem permissÃ£o de acesso</h1></div>
+            <div align="center"><h1>Você não tem permissão de acesso</h1></div>
         <%}else{%>
         <table class="table" align="center">
             <thead align="center">
                  <tr>
                     <th>Nome do Animal</th>
-                    <th>Data de RequisiÃ§Ã£o</th>
+                    <th>Data de Requisição</th>
                     <th>Requisitante</th>
                     <th></th>
                 </tr>
@@ -56,7 +56,7 @@
                     <form>
                         <input type="hidden" name="idUsuario" value="<%= ad.getIdUsuario()%>">
                         <input type="hidden" name="idAnimal" value="<%= ad.getIdAnimal()%>">
-                        <input class="btn btn-success" type="submit" name="Aprovar" value="Aprovar AdoÃ§Ã£o">
+                        <input class="btn btn-success" type="submit" name="Aprovar" value="Aprovar Adoção">
                     </form>
                         </td>
                 </tr>                               

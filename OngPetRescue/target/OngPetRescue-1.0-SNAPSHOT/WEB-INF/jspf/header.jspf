@@ -1,7 +1,7 @@
 <%-- any content can be specified here e.g.: --%>
 <%@page import="web.dbListener"%>
 <%@page import="model.Usuario"%>
-<%@page pageEncoding="UTF-8" %>
+<%@page pageEncoding="ISO-8859-1" %>
 
 <%
     String requestExceptionMessage = null;
@@ -12,7 +12,7 @@
         String senha = request.getParameter("senha");
         Usuario u = Usuario.getUsuario(username, senha);
         if (u == null) {
-            requestExceptionMessage = "Usu√°rio e/ou Senha Inv√°lido(s)";
+            requestExceptionMessage = "Usu·rio e/ou Senha Inv·lido(s)";
         } else {
             session.setAttribute("session.username", u.getUsername());
             session.setAttribute("session.senha", u.getSenha());
@@ -52,30 +52,30 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
-            <%--Essa lista √© para colocar os links das p√°ginas--%>
+            <%--Essa lista È para colocar os links das p·ginas--%>
             <li class="nav-item">
-                <a class="nav-link text-light" href='<%= request.getContextPath()%>/index.jsp'>In√≠cio</a>
+                <a class="nav-link text-light" href='<%= request.getContextPath()%>/index.jsp'>InÌcio</a>
             </li>
             
             
-            <%--Link para vizualiza√ß√£o dos animais registrados--%>  
+            <%--Link para vizualizaÁ„o dos animais registrados--%>  
             <li class="nav-item">
                 <a class="nav-link text-light" href='<%= request.getContextPath()%>/animais.jsp'>Lista dos Animais</a>
             </li>
             
-            <%--Link para vizualiza√ß√£o das ado√ß√µes pendentes(a√ß√£o exclusiva para administradores)--%>  
+            <%--Link para vizualizaÁ„o das adoÁıes pendentes(aÁ„o exclusiva para administradores)--%>  
             <%if (session.getAttribute("session.role") != null) {%>
             <li class="nav-item">
-                <a class="nav-link text-light" href='<%= request.getContextPath()%>/pedidosAdocao.jsp'>Pedidos de Ado√ß√£o</a>
+                <a class="nav-link text-light" href='<%= request.getContextPath()%>/pedidosAdocao.jsp'>Pedidos de AdoÁ„o</a>
             </li>
             <%}%>          
 
         </ul>       
         <hr/>
         <ul class="navbar-nav  my-2 my-lg-0">        
-            <%--Essa lista √© somente para a p√°gina do usu√°rio--%>
+            <%--Essa lista È somente para a p·gina do usu·rio--%>
             <%--<li class="nav-item">
-                <a class="nav-link" href='<%= request.getContextPath()%>/usuario.jsp'>Usu√°rio</a>
+                <a class="nav-link" href='<%= request.getContextPath()%>/usuario.jsp'>Usu·rio</a>
             </li>--%>
 
             <%--<li class="nav-item">
@@ -98,10 +98,10 @@
                     <input class="btn btn-outline-danger my-2 my-sm-0" type="submit" name="LogoutForm" value="Sair">
                     <%--<a href='<%= request.getContextPath()%>/perfil.jsp'>PERFIL</a>
                     //<%if(session.getAttribute("session.papel").equals("ADMINISTRADOR")){%>    
-                        | <a href='<%= request.getContextPath()%>/admin.jsp'>ADMINISTRA√á√ÉO DO SITE</a>
+                        | <a href='<%= request.getContextPath()%>/admin.jsp'>ADMINISTRA«√O DO SITE</a>
                     <%}%>
                     | <a href='<%= request.getContextPath()%>/categorias.jsp'>CATEGORIAS</a>
-                    | <a href='<%= request.getContextPath()%>/transacoes.jsp'>TRANSA√á√ïES</a> --%>
+                    | <a href='<%= request.getContextPath()%>/transacoes.jsp'>TRANSA«’ES</a> --%>
                 </form>
                 <%}%>
             </li>
@@ -115,7 +115,7 @@
             <%}else{%>
             <div style="background-color: #F28526">&nbsp;</div>
             <%}%>
-<%--Esta fun√ß√£o mostra se houve algum erro na hora de conectar ao banco de dados
+<%--Esta funÁ„o mostra se houve algum erro na hora de conectar ao banco de dados
 <%if (dbListener.exceptionMessage != null) {%>
 <div style="background-color: red; color: white">
     <%= dbListener.exceptionMessage%>

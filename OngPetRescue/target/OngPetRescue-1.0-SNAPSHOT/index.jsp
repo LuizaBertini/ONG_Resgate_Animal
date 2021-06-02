@@ -4,12 +4,12 @@
 <%@page import="model.Role"%>
 <%@page import="model.Animal"%>
 <%@page import="model.Teste"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="iso-8859-1"%>
 <!DOCTYPE html>
 <html>
     <head>
         <%@include file="WEB-INF/jspf/style.jspf"%>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 
         <title>ONG Resgate Animal</title>
@@ -31,8 +31,8 @@
                     <div class="card" style="background-color: #FFB84B">
                         <div class="card-body">
                             <h4 class="">ONG Resgate Animal</h4>
-                            <p class="">Somos uma ONG rec√©m formada para o resgate de animais abandonados ou com provas de maus tratos</p>
-                            <p>Cadastre-se no nosso site e voc√™ ver√° aquele que poder√° ser seu novo(a) melhor amigo(a)</p>
+                            <p class="">Somos uma ONG recÈm formada para o resgate de animais abandonados ou com provas de maus tratos</p>
+                            <p>Cadastre-se no nosso site e vocÍ ver· aquele que poder· ser seu novo(a) melhor amigo(a)</p>
                         </div>
                     </div>
                 </div>
@@ -72,27 +72,27 @@
                 <div class="row">
                    <%--<div class="col-lg-4">
                         <img class="rounded-circle" src="imgs/cao1.jpg" alt="Generic placeholder image" width="140" height="140">
-                        <h2>Esse √© o Tony</h2>
-                        <p>Ele foi resgatado ap√≥s comer carne estragada dada por seu dono e encontrado com marcas de agress√£o</p>
-                        <p>Foi rec√©m adotado e est√° sendo muito bem tratado! Recebemos ele na nossa sede semana passada para brincar com seus antigos amigos</p>
+                        <h2>Esse È o Tony</h2>
+                        <p>Ele foi resgatado apÛs comer carne estragada dada por seu dono e encontrado com marcas de agress„o</p>
+                        <p>Foi recÈm adotado e est· sendo muito bem tratado! Recebemos ele na nossa sede semana passada para brincar com seus antigos amigos</p>
                     </div><!-- /.col-lg-4 -->
                     <div class="col-lg-4">
                         <img class="rounded-circle" src="imgs/gato1.jpg" alt="Generic placeholder image" width="140" height="140">
-                        <h2>Esse √© o Camelo</h2>
-                        <p>Foi resgatado ap√≥s ser abandonado na rodovia por seus ex-donos</p>
+                        <h2>Esse È o Camelo</h2>
+                        <p>Foi resgatado apÛs ser abandonado na rodovia por seus ex-donos</p>
 
                     </div><!-- /.col-lg-4 -->
                     <div class="col-lg-4">
                         <img class="rounded-circle" src="imgs/cao2.jpg" alt="Generic placeholder image" width="140" height="140">
-                        <h2>Essa √© a Bela</h2>
-                        <p>Encontramos ela perdida no centro da cidade, ligamos para seus donos e eles recusaram n√≥s devolvermos ela</p>
+                        <h2>Essa È a Bela</h2>
+                        <p>Encontramos ela perdida no centro da cidade, ligamos para seus donos e eles recusaram nÛs devolvermos ela</p>
                         <p>Foi adotada semana passada por um casal</p>
                     </div><!-- /.col-lg-4 --> 
                     --%>
                     <%for (Animal a : Animal.getListTop3()) { %>
                     <div class="col-lg-4">
                         <img class="rounded-circle" src="https://docs.google.com/uc?id=<%=a.getImgAnimal()%>" onerror="this.src='imgs/not_found.png';" alt="Generic placeholder image" width="140" height="140">
-                        <h2>Esse √© <%=a.getNomeAnimal()%></h2>
+                        <h2>Esse È <%=a.getNomeAnimal()%></h2>
                         <p><%=a.getHistorico()%></p>                        
                     </div><!-- /.col-lg-4 -->
                     <%}%>

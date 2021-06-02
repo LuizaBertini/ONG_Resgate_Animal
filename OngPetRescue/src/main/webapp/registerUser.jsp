@@ -6,7 +6,7 @@
 
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@page import="model.Usuario"%>
 <!DOCTYPE html>
 <%
@@ -43,7 +43,7 @@
 <html>
     <head>
         <title>Ong Resgate Animal | Cadastro</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <%@include file="WEB-INF/jspf/style.jspf"%>
     </head>
     <body>
@@ -58,12 +58,12 @@
            <table class="table" style="width: 50%" align="center">
              <th style="width: 50%">
             <div class="input-group mb-3"><div ><span class="input-group-text" id="basic-addon1">Nome</span> </div>
-            <input type="text" class="form-control" min="4" max="70" name="nome" placeholder="JosÃ© Oliveira da Silva" aria-describedby="basic-addon1" required> </div>
+            <input type="text" class="form-control" min="4" max="70" name="nome" placeholder="José Oliveira da Silva" aria-describedby="basic-addon1" required> </div>
             <div class="input-group mb-3"><div ><span class="input-group-text" id="basic-addon1">Username</span> </div>
-            <input type="text" class="form-control"  min="4" max="10" placeholder="Seu username deverÃ¡ conter de 4 atÃ© 10 caracteres" name="username" aria-describedby="basic-addon1" required> </div>
+            <input type="text" class="form-control"  min="4" max="10" placeholder="Seu username deverá conter de 4 até 10 caracteres" name="username" aria-describedby="basic-addon1" required> </div>
             <div class="input-group mb-3"><div ><span class="input-group-text" id="basic-addon1">Senha</span> </div>
-            <input type="password" class="form-control" placeholder="Sua senha deverÃ¡ conter de 5 atÃ© 20 caracteres" name="senha" min="5" max="20" aria-describedby="basic-addon1" required> </div>
-           <div class="input-group mb-3"><div ><span class="input-group-text" id="basic-addon1">EndereÃ§o</span> </div>
+            <input type="password" class="form-control" placeholder="Sua senha deverá conter de 5 até 20 caracteres" name="senha" min="5" max="20" aria-describedby="basic-addon1" required> </div>
+           <div class="input-group mb-3"><div ><span class="input-group-text" id="basic-addon1">Endereço</span> </div>
                <input type="text" class="form-control" name="endereco" placeholder="Rua X 123" aria-describedby="basic-addon1" required></div>
            <div class="input-group mb-3"><div ><span class="input-group-text" id="basic-addon1">Email</span> </div>
                <input type="email" class="form-control" name="email" placeholder="exmpl@exmpl.com" aria-describedby="basic-addon1" required></div>

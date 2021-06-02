@@ -261,17 +261,18 @@ public class Usuario {
                 id = rs.getInt("id");
             } 
             stmt = con.prepareStatement("INSERT INTO USUARIO "
-                            + "(id, nome, username, senha, endereco, email, registro_geral, cpf, telefone) VALUES "
-                           + "(?, ?, ?, ?, ?, ?, ?, ?, ? );");  
+                            + "(id, nome, username, senha, endereco, email, dt_nascimento, registro_geral, cpf, telefone) VALUES "
+                           + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ? );");  
             stmt.setInt(1, id);
             stmt.setString(2, nome);
             stmt.setString(3, username);
             stmt.setString(4, senha);
             stmt.setString(5, endereco);
             stmt.setString(6, email);            
-            stmt.setString(7, rg);
-            stmt.setString(8, cpf);
-            stmt.setString(9, telefone);           
+            stmt.setString(7, dtnascimento);            
+            stmt.setString(8, rg);
+            stmt.setString(9, cpf);
+            stmt.setString(10, telefone);           
             stmt.execute();
         } catch(Exception ex){
             methodException =  ex;
