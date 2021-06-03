@@ -13,16 +13,12 @@ public class JavaMailApp
 {
     static Session session; //declarar como um atributo de classe e static(global)
 
-      public static void SendEmail() {
+      public static void SendEmail(String email) {
             Properties props = new Properties();
-            /** Parâmetros de conexão com servidor Hotmail */
-            props.put("mail.transport.protocol", "smtp");
-            props.put("mail.smtp.host", "smtp.gmail.com");
-            props.put("mail.smtp.socketFactory.port", "465");
-            props.put("mail.smtp.socketFactory.fallback", "false");
-            props.put("mail.smtp.starttls.enable", "true");
-            props.put("mail.smtp.auth", "true");
-            props.put("mail.smtp.port", "465");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true"); //TLS
 
              session = Session.getDefaultInstance(props,
                         new javax.mail.Authenticator() {
@@ -42,7 +38,7 @@ public class JavaMailApp
                   message.setFrom(new InternetAddress("ongrescuepet@gmail.com")); //Remetente
 
                   message.setRecipients(Message.RecipientType.TO,
-                                    InternetAddress.parse("uilsantos09@hotmail.com")); //Destinatário(s)
+                                    InternetAddress.parse(email)); //Destinatário(s)
                   message.setSubject("Enviando email com JavaMail");//Assunto
                   message.setText("Enviei este email utilizando JavaMail com minha conta Hotmail!");
                   /**Método para enviar a mensagem criada*/

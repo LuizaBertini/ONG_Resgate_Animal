@@ -5,15 +5,16 @@
 <%
    String result="";
    String etapa = "0 - ";   
-
+   if(request.getParameter("envio")!= null){
    try {
-      
+        String email = request.getParameter("email");
             JavaMailApp lmail = new JavaMailApp();
-            //mail.sendMail("ongrescuepet@gmail.com", "uilsantos09@hotmail.com", "TESTE JAVAMAIL", "TESTE");
-       lmail.SendEmail();
+            lmail.SendEmail(email);
+            result="Enviado com sucesso";
    } catch (Exception mex) {
       mex.printStackTrace();
       result = etapa+mex.getMessage();
+   }
    }
 %>
 
@@ -27,6 +28,12 @@
          <h1>Send Email using JSP</h1>
       </center>
       
+   <form method="POST" align="center">
+       <span>email:</span>
+       <input type="email" name="email">
+       <input type="submit" name="envio">
+   </form>
+   
       <p align = "center">
          <% 
             out.println("Result: " + result + "\n");
