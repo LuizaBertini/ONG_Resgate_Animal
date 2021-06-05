@@ -4,6 +4,7 @@
     Author     : uilsa
 --%>
 
+<%@page import="model.JavaMailApp"%>
 <%@page import="model.AguardaAdocao"%>
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@page import="model.Adotados"%>
@@ -19,6 +20,31 @@
             int idAnimal = Integer.parseInt(request.getParameter("idAnimal"));
             exceptionMessage = "ponto A";                  
             AguardaAdocao.InsertDtAdocao(idAnimal);
+            String email = request.getParameter("email");
+             try {
+                JavaMailApp lmail = new JavaMailApp();
+                lmail.SendEmailAprovacaoA(email);
+            } catch (Exception mex) {
+                mex.printStackTrace();
+            }
+            //response.sendRedirect("aprovarAdocao.jsp");
+        } catch (Exception ex) {
+            exceptionMessage = ex.getLocalizedMessage();
+        }
+    }    
+    if (request.getParameter("Reprovar") != null) {
+        try {            
+            int idAnimal = Integer.parseInt(request.getParameter("idAnimal"));
+            int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
+            String email = request.getParameter("email");
+            exceptionMessage = "ponto A";                  
+            AguardaAdocao.DeleteRequisicao(idUsuario, idAnimal);
+             try {
+                JavaMailApp lmail = new JavaMailApp();
+                lmail.SendEmailReprovacaoA(email);
+            } catch (Exception mex) {
+                mex.printStackTrace();
+            }
             //response.sendRedirect("aprovarAdocao.jsp");
         } catch (Exception ex) {
             exceptionMessage = ex.getLocalizedMessage();
@@ -37,13 +63,14 @@
         <%if(session.getAttribute("session.role")==null){%>
             <div align="center"><h1>Você não tem permissão de acesso</h1></div>
         <%}else{%>
-        <table class="table" align="center">
+        <div class="table p-4">
+        <table class="table thead-light table-hover" align="center">
             <thead align="center">
                  <tr>
                     <th>Nome do Animal</th>
                     <th>Data de Requisição</th>
                     <th>Requisitante</th>
-                    <th></th>
+                    <th>Comandos</th>
                 </tr>
             </thead>            
             <% for (AguardaAdocao ad : AguardaAdocao.getListAguarAdocao()) { %>
@@ -51,18 +78,23 @@
                 <tr>
                     <td><%= ad.getNomeAnimal()%></td>
                     <td><%= ad.getDtRequisicao()%></td>
-                    <td><%= ad.getNmUsuario()%></td>
+                    <td><%= ad.getNmUsuario()%>
+                    <hr><%= ad.getEmailUsuario()%></td>
                     <td>
                     <form>
                         <input type="hidden" name="idUsuario" value="<%= ad.getIdUsuario()%>">
+                        <input type="hidden" name="idUsuario" value="<%= ad.getIdUsuario()%>">
                         <input type="hidden" name="idAnimal" value="<%= ad.getIdAnimal()%>">
+                        <input type="hidden" name="email" value="<%= ad.getEmailUsuario()%>">
                         <input class="btn btn-success" type="submit" name="Aprovar" value="Aprovar Adoção">
+                        <input class="btn btn-danger" type="submit" name="Reprovar" value="Reprovar Adoção">
                     </form>
                         </td>
                 </tr>                               
             </tbody>
             <%}%>
         </table>
+        </div>
         <%}%>
         <%@include file="WEB-INF/jspf/footer.jspf"%>   
     </body>  

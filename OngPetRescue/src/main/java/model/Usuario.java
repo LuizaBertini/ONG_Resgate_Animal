@@ -160,7 +160,7 @@ public class Usuario {
     return list;
     }
    
-    public static void InsertList(int id,  String username, String senha) throws Exception{
+    /*public static void InsertList(int id,  String username, String senha) throws Exception{
         Connection con = null;
         PreparedStatement stmt = null;
         Exception methodException = null;
@@ -218,7 +218,7 @@ public class Usuario {
         }   
     }
    
-   public static void Update(int id, String username, String senha) throws Exception{
+  */ public static void Update(int id, String username, String senha) throws Exception{
         Connection con = null;
         PreparedStatement stmt = null;
         Exception methodException = null;
@@ -242,7 +242,7 @@ public class Usuario {
            try{ con.close();}catch(Exception ex2){}     
         }   
     }
-   
+
    public static String InsertNewUsuario(String nome,String username, String senha, String endereco, String email, String dtnascimento, String rg, String cpf, String telefone) throws Exception{
        Connection con = null;
         PreparedStatement stmt = null;
@@ -252,8 +252,6 @@ public class Usuario {
         int id = 0;
         String ponto = "";
         try{        
-            
-
             con = dbListener.getConnection(); 
             st = con.createStatement(); 
             rs = st.executeQuery("SELECT max(id)+1 id FROM USUARIO;");           
@@ -268,12 +266,16 @@ public class Usuario {
             stmt.setString(3, username);
             stmt.setString(4, senha);
             stmt.setString(5, endereco);
-            stmt.setString(6, email);            
+            try{
+            stmt.setString(6, email);   
+            }catch(Exception e){ System.out.println(e); }
             stmt.setString(7, dtnascimento);            
             stmt.setString(8, rg);
             stmt.setString(9, cpf);
-            stmt.setString(10, telefone);           
+            stmt.setString(10, telefone);  
+            try{
             stmt.execute();
+            }catch(Exception e1){System.out.println(e1);}
         } catch(Exception ex){
             methodException =  ex;
             ponto = methodException.toString();

@@ -4,6 +4,7 @@
     Author     : uilsa
 
 --%>
+<%@page import="model.JavaMailApp"%>
 <%@page import="model.Adotados"%>
 <%@page import="model.Usuario"%>
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
@@ -14,7 +15,7 @@
         response.sendRedirect(request.getRequestURI());
 
     }
-    if (request.getParameter("formInsert") != null) {
+    /*if (request.getParameter("formInsert") != null) {
         try {
             String username = request.getParameter("username");
             String senha = request.getParameter("senha");
@@ -25,7 +26,7 @@
             exceptionMessage = ex.getLocalizedMessage();
 
         }
-    }
+    }*/
     if (request.getParameter("formUpdate") != null) {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -52,15 +53,23 @@
     }
     if (request.getParameter("formAprove") != null) {
         try {
+            String email = request.getParameter("email");
             int id = Integer.parseInt(request.getParameter("id"));
             Usuario.AproveUser(id);
             response.sendRedirect(request.getRequestURI());
+            try {
+                JavaMailApp lmail = new JavaMailApp();
+                lmail.SendEmailAprovacao(email);
+            } catch (Exception mex) {
+                mex.printStackTrace();
+            }
         } catch (Exception ex) {
             exceptionMessage = ex.getLocalizedMessage();
         }
     }
     if (request.getParameter("trocaSenha") != null) {
         try {
+            String email = (String) session.getAttribute("session.email");
             String username = (String) session.getAttribute("session.username");
             String senha = request.getParameter("senha");
             String novaSenha = request.getParameter("novaSenha");
@@ -70,6 +79,12 @@
             } else if (!novaSenha.equals(novaSenha2)) {
                 exceptionMessage = "Senhas não conferem";
             } else {
+                try {
+            JavaMailApp lmail = new JavaMailApp();
+            lmail.SendEmailAlterarSenha(email);
+            } catch (Exception mex) {
+               mex.printStackTrace();
+            }
                 Usuario.changePassword(username, novaSenha);
                 response.sendRedirect(request.getRequestURI());
             }
@@ -84,7 +99,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>Ong Resgate Animal | Usuarios</title>
-    
+
         <%@include file="WEB-INF/jspf/style.jspf"%>
     </head>
     <body>
@@ -135,7 +150,7 @@
             </table>
         </form>
         <%} else if (request.getParameter("prepUpdate") != null) {%>
-        
+
         <form>
             <h3 align="center">Alterar Registro</h3>
             <table class="table" style="width: 50%" align="center">
@@ -178,61 +193,97 @@
         <h3 align="center">Aprovar Usuário</h3>
         <form align="center">
             <%String username = request.getParameter("username");
+                String email = request.getParameter("email");
                 int id = Integer.parseInt(request.getParameter("id"));%>
             <input type="hidden" name="username" value="<%= username%>">
+            <input type="hidden" name="email" value="<%= email%>">
             <input type="hidden" name="id" value="<%= id%>">
             Deseja aprovar a inscrição do usuario <b><%= username%></b>?
             <input class="btn btn-secondary" type="submit" name="formAprove" value="Aprovar">
             <input class="btn btn-dark" type="submit" name="cancelar" value="Cancelar">
         </form>
         <%} else {%>
-        
+
         <%}%>
 
-        <br/>
 
         <%if (session.getAttribute("session.role") != null) {%>
         <main role="main">
-        <h3 align="center">Lista de Usuários</h3>
-        <div class="table p-4 row-cols-2 justify-content-center">
-            <table class="table thead-dark"  align="center">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Usuario</th>
-                        <th>Data Aprovação</th>
-                        <th>Comandos</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%for (Usuario u : Usuario.getList()) {%>
-                    <tr>
-                        <td><%= u.getId()%></td>
-                        <td><%= u.getUsername()%></td>
-                        <td><%= u.getDtAprovacao()%></td>
-                        <td>
-                            <form>
-                                <input type="hidden" name="id" value="<%= u.getId()%>">
-                                <input type="hidden" name="username" value="<%= u.getUsername()%>">
-                                <input class="btn btn-info" type="submit" name="prepUpdate" value="Alterar">
-                                <input class="btn btn-danger" type="submit" name="prepDelete" value="Excluir">
-                                <input class="btn btn-success" type="submit" name="prepAprove" value="Aprovar">
-                            </form>
-                        </td>
-                    </tr>
-                    <%}%>
-                </tbody>
-            </table>
-            <div>
-                </main>
-                <%} else {%>
-                <main role="main">
-                <h3 align="center">Configurações</h3>
-                <div align="center">
-                <div class="card p-4 d-flex" style="width: 45rem;">
-                <div class="table-responsive">
-                    <table class="table" align="center">
+            <span><h3 align="center">Lista de Usuários</h3></span>
+            <div class="table p-4 table-responsive">
+                <table class="table thead-light table-hover"  align="center">
+
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Usuario</th>
+                            <th>Email do usuário</th>
+                            <th>Data Aprovação</th>
+                            <th>Comandos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%for (Usuario u : Usuario.getList()) {%>
+                        <tr>
+                            <td><%= u.getId()%></td>
+                            <td><%= u.getUsername()%></td>
+                            <td><%= u.getEmail()%></td>
+                            <td><%= u.getDtAprovacao()%></td>
+                            <td>
+                                <form>
+                                    <input type="hidden" name="id" value="<%= u.getId()%>">
+                                    <input type="hidden" name="username" value="<%= u.getUsername()%>">
+                                    <input type="hidden" name="email" value="<%= u.getEmail()%>">
+                                    <%--<input class="btn btn-info" type="submit" name="prepUpdate" value="Alterar">--%>
+                                    <input class="btn btn-danger" type="submit" name="prepDelete" value="Excluir">
+                                    <input class="btn btn-success" type="submit" name="prepAprove" value="Aprovar">
+                                </form>
+                            </td>
+                        </tr>
+                        <%}%>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <%} else {%>
+
+        <main role="main">
+            <h3 align="center">Configurações</h3>
+
+
+
+            <%--Métodos de config do usuario--%>
+            <div align="center">
+                <%if (request.getParameter("PrepTrocaSenha") != null) {%>
+                <hr>
+                <form method="post">
+                    <div>Senha atual:<div> <input type="password" name="senha"></div></div>
+                    <div>Nova senha:<div> <input type="password" name="novaSenha"></div></div>
+                    <div>Confirmação nova senha:<div><input type="password" name="novaSenha2"></div></div>
+                    <br/>
+                    <input type="submit" class="btn btn-info" name="trocaSenha" value="Alterar">
+                    <input type="submit" class="btn btn-danger" name="cancelar" value="Cancelar">
+                </form>
+                <hr>
+                <%} else if (request.getParameter("PrepTrocaNome") != null) {%>
+                <%}%>
+            </div>                    
+
+
+
+            <div align="center">
+                <div class="card p-auto col-auto d-flex" style="width: 45rem;">
+                    <div class="table-responsive">
+                        <table class="table" align="center">
+
+                            <tr>
+                                <th>Status Aprovação</th>
+                                    <%if (session.getAttribute("session.dtAprovacao") != null) {%>
+                                <td style="color: green">Aprovado</td>
+                                <%} else {%>
+                                <td style="color: orange">Esperando Aprovação</td>
+                                <%}%>
+                            </tr>    
                             <tr>
                                 <th>Nome de usuário</th>
                                 <td><%= session.getAttribute("session.username")%></td>
@@ -241,7 +292,7 @@
                                 <th>Email</th>
                                 <td><%= session.getAttribute("session.email")%></td>
                             </tr>
-                                                    
+
                             <tr>
                                 <th>Endereço</th>
                                 <td>
@@ -266,66 +317,62 @@
                                     <%= session.getAttribute("session.telefone")%>
                                 </td>
                             </tr> 
-                            
+
                             <tr>
-                                <th>Alterar Senha</th>
+                                <th>Senha</th>
                                 <td>
                                     <form method="post">
-                                        <div>Senha atual:<div> <input type="password" name="senha"></div></div>
-                                        <div>Nova senha:<div> <input type="password" name="novaSenha"></div></div>
-                                        <div>Confirmação nova senha:<div><input type="password" name="novaSenha2"></div></div>
-                                        <br/>
-                                        <input type="submit" class="btn btn-info" name="trocaSenha" value="Alterar">
+                                        <input type="submit" class="btn btn-info" name="PrepTrocaSenha" value="Alterar">
                                     </form>
                                 </td>
                             </tr>  
-                            
-                        </tbody>
-                    </table>
-                </div>
-                </div>
-                </div>
-                                </hr>
-                                </br>
-                                
-                    <h3 align="center">Animais Adotados:</h3>
-                    <%int id = (int) session.getAttribute("session.id");
-                                if(Adotados.getListADT(id).size() != 0){%>
-                    <div class="d-flex p-4 table-responsive">
-                        <table class="table table-bordered table-hover" align="center">
-                            <thead align="center">
-                                <tr>
-                                    <th>Nome do Animal</th>
-                                    <th>Cor do Animal</th>
-                                    <th>Data de Adoção</th>
-                                </tr>
-                            </thead>
-                            <%for (Adotados ad : Adotados.getListADT(id)) { %>
-                            <tbody align="center">
-                                <tr>
-                                    <td><%= ad.getNomeAnimal()%></td>
-                                    <td><%= ad.getCorAnimal()%></td>
-                                    <td><%= ad.getDtAdocao()%></td>
-                                </tr>
-                               
+
                             </tbody>
-                             <%}%>
-                             
-                        
-                        <%}else{%>
-                        <div align="center"><h4>Nenhum animal!!</h4></div>
-                        <%}%>
                         </table>
-                        </main>
-                        <br>
-                        <br>
-                        <br>
+                    </div>
+                </div>
+            </div>
+            </hr>
+            </br>
 
-                        <%}%>
+            <h3 align="center">Animais Adotados:</h3>
+            <%int id = (int) session.getAttribute("session.id");
+                if (Adotados.getListADT(id).size() != 0) {%>
+            <div class="table table-responsive p-4">
+                <table class="table table-bordered table-hover thead-light" align="center">
+                    <thead align="center">
+                        <tr>
+                            <th>Nome do Animal</th>
+                            <th>Cor do Animal</th>
+                            <th>Data de Adoção</th>
+                        </tr>
+                    </thead>
+                    <%for (Adotados ad : Adotados.getListADT(id)) {%>
+                    <tbody align="center">
+                        <tr>
+                            <td><%= ad.getNomeAnimal()%></td>
+                            <td><%= ad.getCorAnimal()%></td>
+                            <td><%= ad.getDtAdocao()%></td>
+                        </tr>
+
+                    </tbody>
+                    <%}%>
 
 
-                        <%}%>
-                        <%@include file="WEB-INF/jspf/footer.jspf"%>
+                    <%} else {%>
+                    <div align="center"><h4>Nenhum animal!!</h4></div>
+                    <%}%>
+                </table>
+        </main>
+        <br>
+        <br>
+        <br>
 
-                        </body>
-                        </html>
+        <%}%>
+
+
+        <%}%>
+        <%@include file="WEB-INF/jspf/footer.jspf"%>
+
+    </body>
+</html>

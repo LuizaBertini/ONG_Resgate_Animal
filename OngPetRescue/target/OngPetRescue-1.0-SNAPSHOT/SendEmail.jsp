@@ -9,7 +9,7 @@
    try {
         String email = request.getParameter("email");
             JavaMailApp lmail = new JavaMailApp();
-            lmail.SendEmail(email);
+            lmail.SendEmailCadastro(email);
             result="Enviado com sucesso";
    } catch (Exception mex) {
       mex.printStackTrace();

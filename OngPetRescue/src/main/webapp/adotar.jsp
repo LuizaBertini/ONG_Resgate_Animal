@@ -4,6 +4,7 @@
     Author     : trize
 --%>
 
+<%@page import="model.JavaMailApp"%>
 <%@page import="java.util.Date"%>
 <%@page import="javax.xml.crypto.Data"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -29,13 +30,18 @@
             int idAnimal = Integer.parseInt(request.getParameter("idAnimal"));
             int idUsuario = (int) session.getAttribute("session.id");
             String dataAdc = request.getParameter("dataAdc");
+            String email = (String) session.getAttribute("session.email");
             Adocao.InsertList(idAnimal, idUsuario);
             //Adocao.InsertDtAdocao(dataAdc, idAnimal);
-            response.sendRedirect("animais.jsp");
-        
+            try {
+                JavaMailApp lmail = new JavaMailApp();
+                lmail.SendEmailPedidoAdocao(email);
+            } catch (Exception mex) {
+                mex.printStackTrace();
+            }
         } catch (Exception ex) {
             exceptionMessage = ex.getLocalizedMessage();
-        }
+        }response.sendRedirect("animais.jsp");
     }
     if (request.getParameter("cancelar") != null) {
         response.sendRedirect("animais.jsp");
@@ -52,7 +58,7 @@
             <%@include file="WEB-INF/jspf/style.jspf"%>
     <body>
         <%@include file="WEB-INF/jspf/header.jspf"%>
-        <%if (session.getAttribute("session.username") != null) {%>
+        <%if ((session.getAttribute("session.username") != null)&&(session.getAttribute("session.dtAprovacao") != null)) {%>
         <main role="main">
         <div>
             <div align="center" class="h-50 p-2" style="background-color: #FFB84B; color: white"> 
@@ -116,6 +122,8 @@
             
         </form>
         </main>
+        <%}else if (session.getAttribute("session.dtAprovacao") == null) {%>
+        <h1 align="center">Você precisa esperar sua aprovação para adotar!!!</h1>
         <%}else{%>
         <h1 align="center">Você precisa estar cadastrado para adotar!!!</h1>
         <%}%>
@@ -128,7 +136,7 @@
     
 <script>
     function demo(){
-    alert ("Parabéns!!!! Agora é só esperar a aprovação ;)" );
+    alert ("Parabéns!!!! Agora é só esperar a aprovação de seu pedido!!!" );
     }
 </script>
     

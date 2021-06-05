@@ -8,9 +8,9 @@
     String requestSuccessMessage = null;
     
     if (request.getParameter("LoginInput") != null) {
-        String username = request.getParameter("username");
-        String senha = request.getParameter("senha");
-        Usuario u = Usuario.getUsuario(username, senha);
+        String user = request.getParameter("user");
+        String password = request.getParameter("password");
+        Usuario u = Usuario.getUsuario(user, password);
         if (u == null) {
             requestExceptionMessage = "Usuário e/ou Senha Inválido(s)";
         } else {
@@ -23,6 +23,7 @@
             session.setAttribute("session.rg", u.getRg());
             session.setAttribute("session.cpf", u.getCpf());
             session.setAttribute("session.telefone", u.getTelefone());
+            session.setAttribute("session.dtAprovacao", u.getDtAprovacao());
             requestSuccessMessage = "Login efetuado com sucesso!!";
         }
     }
@@ -85,10 +86,10 @@
             <li class="nav-item text-light">
                 <%if (session.getAttribute("session.username") == null) {%>
 
-                <form class="d-flex justify-content-center" method="GET">
+                <form class="d-flex justify-content-center" method="POST">
                                      
-                    <input class="form-control" type="text" name="username" placeholder="Nome">&nbsp;
-                    <input class="form-control" type="password" name="senha" placeholder="Senha">&nbsp;
+                    <input class="form-control" type="text" name="user" placeholder="Nome">&nbsp;
+                    <input class="form-control" type="password" name="password" placeholder="Senha">&nbsp;
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="LoginInput">Login</button>&nbsp; 
                     <a class="btn btn-outline-danger my-2 my-sm-0" href='<%= request.getContextPath()%>/registerUser.jsp'>Cadastrar</a>
                 </form> 

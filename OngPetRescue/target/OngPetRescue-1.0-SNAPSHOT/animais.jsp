@@ -328,7 +328,7 @@
             <br/>
             <main role="main">
             <div class="table d-flex p-4">
-                <table class="thead-dark" align="center">
+                <table class="table thead-light table-responsive table-hover" align="center">
                     <thead>
                         <tr>
                             <th></th>

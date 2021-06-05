@@ -19,7 +19,7 @@ import web.dbListener;
  * @author uilsa
  */
 public class AguardaAdocao {
-    private String nomeAnimal, dtRequisicao, corAnimal, nmUsuario; 
+    private String nomeAnimal, dtRequisicao, corAnimal, nmUsuario, emailUsuario; 
     private int idUsuario, idAnimal;
 
     public String getDtRequisicao() {
@@ -77,18 +77,27 @@ public class AguardaAdocao {
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
-    public AguardaAdocao(int idAnimal, String nomeAnimal, String dtRequisicao, String corAnimal, String nmUsuario, int idUsuario) {
+    
+    public String getEmailUsuario() {
+        return emailUsuario;
+    }
+
+    public void setEmailUsuario(String emailUsuario) {
+        this.emailUsuario = emailUsuario;
+    }
+    public AguardaAdocao(int idAnimal, String nomeAnimal, String dtRequisicao, String corAnimal, String nmUsuario, int idUsuario, String emailUsuario) {
+        this.idAnimal = idAnimal;
         this.nomeAnimal = nomeAnimal;
         this.dtRequisicao = dtRequisicao;
         this.corAnimal = corAnimal;
         this.nmUsuario = nmUsuario;
         this.idUsuario = idUsuario;
-        this.idAnimal = idAnimal;
+        this.emailUsuario = emailUsuario;
     }
        public static ArrayList<AguardaAdocao> getListAguarAdocao() throws Exception{
         ArrayList<AguardaAdocao> lista = new ArrayList<>();              
         Connection con = null; Statement stmt = null; ResultSet rs;
-        String query = ("SELECT a.idAnimal, a.nomeAnimal, ad.dtRequisicao, a.corAnimal, u.nome, u.id FROM ADOCAO ad, ANIMAIS a, USUARIO u "
+        String query = ("SELECT a.idAnimal, a.nomeAnimal, ad.dtRequisicao, a.corAnimal, u.nome, u.id, u.email FROM ADOCAO ad, ANIMAIS a, USUARIO u "
                     + " WHERE ad.idUsuario = u.id"
                     + " AND a.dtAdocao IS NULL"
                     + " AND ad.idAnimal = a.idAnimal;");
@@ -106,7 +115,8 @@ public class AguardaAdocao {
             rs.getString("dtRequisicao"),
             rs.getString("corAnimal"),
             rs.getString("nome"),
-            rs.getInt("id")        
+            rs.getInt("id"),
+            rs.getString("email")        
             ));            
             }
         } catch(Exception ex){
@@ -134,6 +144,31 @@ public class AguardaAdocao {
             stmt = con.prepareStatement("UPDATE ANIMAIS SET dtAdocao = ?"
                             + " WHERE idAnimal = ?;"); 
             stmt.setString(1, dataFormatada);
+            stmt.setInt(2, idAnimal);
+            
+            stmt.execute();
+            
+        } catch(Exception ex){
+            methodException =  ex;
+        }finally{            
+           try{stmt.close(); }catch(Exception ex2){}         
+           try{ con.close();}catch(Exception ex2){}     
+        }   
+    }
+        public static void DeleteRequisicao(int idUsuario, int idAnimal) throws Exception{
+        Connection con = null;
+        PreparedStatement stmt = null;
+        Exception methodException = null;
+        ResultSet rs = null;
+        try{                   
+            LocalDateTime agora = LocalDateTime.now();
+            // formatar a data
+            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataFormatada = formatterData.format(agora);
+            
+            con = dbListener.getConnection();
+            stmt = con.prepareStatement("DELETE FROM ADOCAO WHERE idUsuario = ? AND idAnimal = ?"); 
+            stmt.setInt(1, idUsuario);
             stmt.setInt(2, idAnimal);
             
             stmt.execute();
