@@ -31,6 +31,9 @@ public class Animal {
     String imgAnimal; //uiam
 
     public String getImgAnimal() {
+        if (imgAnimal == null) {
+            return "";
+        }
         return imgAnimal;
     }
 
@@ -335,6 +338,7 @@ public class Animal {
         if (dtResgate.indexOf("-") > 0) {
             dtResgate = dtResgate.substring(8, 10)+"/"+dtResgate.substring(5, 7)+"/"+dtResgate.substring(0, 4);
         }
+        
         return dtResgate;
     }
 
@@ -343,6 +347,9 @@ public class Animal {
     }
 
     public String getDtAdocao() {
+        if (dtAdocao == null) {
+            return "";
+        }
         return dtAdocao;
     }
 
