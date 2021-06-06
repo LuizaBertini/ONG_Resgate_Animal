@@ -15,6 +15,9 @@
 <%@page import="model.Raca"%>
 <%@page import="model.Especie"%>
 <%@page import="model.Adocao"%>
+<%@page import="java.time.*"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
+
 
 <%
     String exceptionMessage = null;
@@ -78,7 +81,7 @@
                     String dtResgate = request.getParameter("dtResgate");
                     String pesoAnimal = request.getParameter("pesoAnimal");
                     String nmEspecie = request.getParameter("nmEspecie");
-                    String historico = request.getParameter("historico");
+                    String historico = request.getParameter("historico");                    
                 %>
                 <table class="table"  style="width: 50%" align="center">
                     <td style="width: 50%">
@@ -110,9 +113,9 @@
                             </div>
                             
                             <div>
-                                <p><b>Data atual para o registro da adoção do Animal: </b><%= new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>
+                                <p><b>Data atual para o registro da adoção do Animal: </b><%= new SimpleDateFormat("dd/MM/yyyy").format(new Date())%>
                             </div>
-                            <input type="hidden" name="dataAdc" value="<%= new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>">   
+                            <input type="hidden" name="dataAdc" value="<%= new SimpleDateFormat("dd/MM/yyyy").format(new Date())%>">   
                             <input class="btn btn-success" type="submit" name="Adotar" value="Adotar" onclick="return demo();">
                             <input class="btn btn-danger" type="submit" name="cancelar" value="Cancelar">
                         </div>

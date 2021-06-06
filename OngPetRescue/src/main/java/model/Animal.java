@@ -121,7 +121,8 @@ public class Animal {
         try {
             con = dbListener.getConnection();
             stmt = con.createStatement();
-            rs = stmt.executeQuery("SELECT e.nmEspecie, r.nmRaca, a.*    FROM ESPECIES e, RACAS r, ANIMAIS a   WHERE r.idRaca = a.idRacaFK    AND e.idEspecie = a.idEspecieFK AND dtAdocao IS NULL;");
+            rs = stmt.executeQuery("SELECT e.nmEspecie, r.nmRaca, a.*    FROM ESPECIES e, RACAS r, ANIMAIS a   WHERE r.idRaca = a.idRacaFK    AND e.idEspecie = a.idEspecieFK AND dtAdocao IS NULL "
+                    + " AND NOT EXISTS (SELECT 'x' FROM ADOCAO c  where c.idAnimal = a.idAnimal);");
             while (rs.next()) {
                 list.add(new Animal(
                         rs.getString("nomeAnimal"),
@@ -331,6 +332,9 @@ public class Animal {
     }
 
     public String getDtResgate() {
+        if (dtResgate.indexOf("-") > 0) {
+            dtResgate = dtResgate.substring(8, 10)+"/"+dtResgate.substring(5, 7)+"/"+dtResgate.substring(0, 4);
+        }
         return dtResgate;
     }
 

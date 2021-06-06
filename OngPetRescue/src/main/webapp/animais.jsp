@@ -134,7 +134,7 @@
                                     <span class="input-group-text">Nome Animal:</span>
                                 </div>
 
-                                <input class="form-control" type="text" name="nomeAnimal" pattern="[A-Za-z]{1,30}">
+                                <input class="form-control" type="text" name="nomeAnimal" ">
                             </div>
 
                             <div class="input-group mb-3">
@@ -163,7 +163,7 @@
                                 <div>
                                     <span class="input-group-text">Data de Resgate:</span>
                                 </div>    
-                                <input class="form-control" type="date" max="<%= new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>" name="dtResgate">
+                                <input class="form-control" type="date" max="<%= new SimpleDateFormat("dd/MM/yyyy").format(new Date())%>" name="dtResgate">
                             </div>
 
                             <div class="input-group mb-3"> 
@@ -235,7 +235,7 @@
                                 <div>
                                     <span class="input-group-text">Nome Animal:</span>
                                 </div>
-                                <input class="form-control" type="text" name="nomeAnimal"  pattern="[A-Za-z]{1,30}" value="<%= nomeAnimal%>">
+                                <input class="form-control" type="text" name="nomeAnimal"" value="<%= nomeAnimal%>">
                             </div>
 
                             <div class="input-group mb-3">
@@ -262,7 +262,7 @@
                                 <div>
                                     <span class="input-group-text">Data de Resgate: </span>
                                 </div>    
-                                <input class="form-control" type="date" name="dtResgate" max="<%= new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>" value="<%= dtResgate%>">
+                                <input class="form-control" type="date" name="dtResgate" max="<%= new SimpleDateFormat("dd/MM/yyyy").format(new Date())%>" value="<%= dtResgate%>">
                             </div>
 
                             <div class="input-group mb-3"> 

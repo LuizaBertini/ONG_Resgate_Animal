@@ -93,7 +93,8 @@
                     <div class="col-lg-4">
                         <img class="rounded-circle" src="https://docs.google.com/uc?id=<%=a.getImgAnimal()%>" onerror="this.src='imgs/not_found.png';" alt="Generic placeholder image" width="140" height="140">
                         <h2>Esse é <%=a.getNomeAnimal()%></h2>
-                        <p><%=a.getHistorico()%></p>                        
+                        <p><%=a.getHistorico()%> <a  href='<%= request.getContextPath()%>/animais.jsp'>ver mais...</a> </p>
+                       
                     </div><!-- /.col-lg-4 -->
                     <%}%>
                 </div><!-- /.row -->
