@@ -18,8 +18,19 @@ public class JavaMailApp
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.socketFactory.port", "587");
+        props.put("mail.smtp.socketFactory.fallback", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.starttls.required", "true");
+        props.put("mail.smtp.ssl.enable", "false");
+        
+        
+        props.put("mail.smtp.starttls.port", "587");
+        props.put("mail.smtp.ssl.port", "465");
+        
         props.put("mail.smtp.starttls.enable", "true"); //TLS
-
+        props.put("mail.username", "ongrescuepet@gmail.com"); //TLS
+        props.put("mail.password", "OngRescuePet123"); //TLS
              session = Session.getDefaultInstance(props,
                         new javax.mail.Authenticator() {
                             @Override
