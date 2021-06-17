@@ -61,7 +61,7 @@
     <body>
         <%@include file="WEB-INF/jspf/header.jspf"%>
         <%if(session.getAttribute("session.role")==null){%>
-            <div align="center"><h1>Você não tem permissão de acesso</h1></div>
+            <div align="center"><h4>Você não tem permissão de acesso</h4></div>
         <%}else{%>
         <div class="table p-4">
         <table class="table thead-light table-hover" align="center">

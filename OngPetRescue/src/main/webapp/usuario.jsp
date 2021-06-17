@@ -112,7 +112,7 @@
 
         <%if (session.getAttribute("session.username") == null) {%>
 
-        <div align="center"><h1>Você não tem permissão de acesso</h1></div>
+        <div align="center"><h4>Você não tem permissão de acesso</h4></div>
 
         <%} else {%>
 

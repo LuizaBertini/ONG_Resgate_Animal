@@ -125,10 +125,12 @@
             
         </form>
         </main>
-        <%}else if (session.getAttribute("session.dtAprovacao") == null) {%>
-        <h1 align="center">Você precisa esperar sua aprovação para adotar!!!</h1>
+       
+        <%}else if(session.getAttribute("session.username")!=null && session.getAttribute("session.dtAprovacao") == null) {%>
+        <h4 align="center">Você precisa esperar sua aprovação para adotar!!!</h4>
+        
         <%}else{%>
-        <h1 align="center">Você precisa estar cadastrado para adotar!!!</h1>
+        <h4 align="center">Você precisa estar cadastrado para adotar!!!</h4>
         <%}%>
         
         <%@include file="WEB-INF/jspf/footer.jspf"%>

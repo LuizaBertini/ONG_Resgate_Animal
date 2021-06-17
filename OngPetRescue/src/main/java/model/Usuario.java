@@ -134,7 +134,7 @@ public class Usuario {
             con = dbListener.getConnection();
             stmt = con.createStatement(); 
                    
-            rs = stmt.executeQuery("SELECT id, username, senha, role, email, dt_aprovacao, endereco, registro_geral, cpf, telefone FROM USUARIO;");
+            rs = stmt.executeQuery("SELECT id, username, senha, role, email, dt_aprovacao, endereco, registro_geral, cpf, telefone FROM USUARIO WHERE username != 'admin1';");
             while(rs.next()){
             list.add(new Usuario(
             rs.getInt("id"),
